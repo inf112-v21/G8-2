@@ -1,6 +1,10 @@
-# INF112 Maven template 
-Simple skeleton with libgdx. 
+# SiD RoboRally 
 
+### INFO:
+* Se Wiki for aktuell prosjektinformasjon.
+
+Libraries:
+- libgdx. 
 
 ## Known bugs
 
