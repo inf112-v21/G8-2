@@ -12,5 +12,11 @@ Utvikling: <br/>
 Libraries:
 - libgdx. 
 
+## How to run and play the game
+Run the Main file under main/java/inf112/skeleton/app to start up the game.
+
+Once you've started up the game you use the WASD keybinds or the arrow keys to move the player around.
+The goal of the game is to reach the flag in order to win, and avoid any hazards on the map to not die.
+
 ## Known bugs
 
