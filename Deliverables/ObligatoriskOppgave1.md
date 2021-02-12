@@ -56,7 +56,7 @@ Bruker GitHub project (og dets project-board). Brettet er delt opp i 4 faner. <b
 <h4>Arbeidsprosess:<h4/>
     
 <p>
-- Vi har valgt Scrum for å ha klar struktur, bl.a med sprintlengde, så prosessen vår blir 	oversiktlig. Vi ser også et behov for mer definerte ansvarsområder. <br>
+Vi har valgt Scrum for å ha klar struktur, bl.a med sprintlengde, så prosessen vår blir 	oversiktlig. Vi ser også et behov for mer definerte ansvarsområder. <br>
 	
 Vi er ikke hundre prosent Scrum, men tar heller trekk fra Scrum deriblant: Teamet 	velger en viss mengde oppgaver pr. iterasjon, og forholder seg til de oppgavene. Sprinten blir oppdatert hver uke (det som ikke blir fullført blir med i neste sprint). 	Planlenlegging blir gjort grundig for uka, mindre fastsatt for neste måned, og veldig 	lite satt i stein på lang sikt. Åpen for forandringer. <br/>
 
