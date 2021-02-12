@@ -113,6 +113,10 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         if(hole.getCell((int)playerPos.x,(int)playerPos.y)!=null) {
             //Update player sprite to dead
             player.setCell((int) playerPos.x, (int) playerPos.y, playerDead);
+
+            //Lose text displays
+            JOptionPane.showMessageDialog(null, "You lose!");
+
             //Quit game
             Gdx.app.exit();
         }
@@ -120,6 +124,10 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         if(flag.getCell((int)playerPos.x,(int)playerPos.y)!=null){
             //Update player sprite to win
             player.setCell((int)playerPos.x,(int)playerPos.y,playerWin);
+
+            //Victory text displays
+            JOptionPane.showMessageDialog(null, "Victory!");
+
             //Exit game
             Gdx.app.exit();
         }
