@@ -120,6 +120,7 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
             //Quit game
             Gdx.app.exit();
         }
+
         //If player steps over flag tile
         if(flag.getCell((int)playerPos.x,(int)playerPos.y)!=null){
             //Update player sprite to win
