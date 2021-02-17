@@ -5,7 +5,8 @@ import java.util.Objects;
 /**
  * This Position class keeps track of an x and y value
  * and can print out in the format (x,y) with a toString method.
- * Uses getters and setters to retrieve and set x & y value
+ * Uses getters and setters to retrieve and set x & y value.
+ * Using own equals method to compare positions of two entities.
  *
  * @author Markus Edlin
  */
@@ -13,9 +14,9 @@ public class Position {
     private int x;
     private int y;
 
-    public Position(int i, int j){
-        x = i;
-        y = j;
+    public Position(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {
