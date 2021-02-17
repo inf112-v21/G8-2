@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * This EntityTest class tests creating a new entity with a x and y coordinate which is then
  * stored as a position with the Position class. Also testing getters and setters for Entity using Position
+ * Will test for Direction once Direction is setup.
  *
  * @author Markus Edlin
  */
@@ -51,4 +52,6 @@ public class  EntityTest{
         int result = e.pos.getX();
         assertEquals(1, result);
     }
+    //TODO Tests for Direction
+
 }
