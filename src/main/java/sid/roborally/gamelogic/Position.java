@@ -1,6 +1,4 @@
-package sid.roborally;
-
-import java.util.Objects;
+package sid.roborally.gamelogic;
 
 /**
  * This Position class keeps track of an x and y value
