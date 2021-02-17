@@ -30,7 +30,12 @@ public class Player {
      * @param pos Player position
      */
     public Player(Position pos)
-    { new Player(pos, 0); }
+    {
+        playerState = State.Active;
+        position = pos;
+        this.p_graphic = new PlayerGraphic(this, 0);
+        robot = new Robot(pos.getX(), pos.getY());
+    }
 
     public Position getPosition() { return position; }
 
