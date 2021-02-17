@@ -1,6 +1,7 @@
 package sid.roborally;
 
 import sid.roborally.game_mechanics.Position;
+import sid.roborally.game_mechanics.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
 
 /**
@@ -13,19 +14,23 @@ public class Player {
     private Position position;
     private PlayerGraphic p_graphic;
 
+    private Robot robot; //The player-instance's robot
+
     public Player(Position pos, int textureIndex)
     {
         playerState = State.Active;
         position = pos;
         this.p_graphic = new PlayerGraphic(this, textureIndex);
+        robot = new Robot(pos.getX(), pos.getY());
     }
 
+    /**
+     * <p>Player constructor that does not specify a chosen texture</p>
+     *
+     * @param pos Player position
+     */
     public Player(Position pos)
-    {
-        playerState = State.Active;
-        position = pos;
-        this.p_graphic = new PlayerGraphic(this, 0);
-    }
+    { new Player(pos, 0); }
 
     public Position getPosition() { return position; }
 
