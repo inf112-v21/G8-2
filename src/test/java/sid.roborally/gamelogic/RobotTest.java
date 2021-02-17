@@ -3,7 +3,6 @@ package sid.roborally.gamelogic;
 import org.junit.Before;
 import org.junit.Test;
 import sid.roborally.game_mechanics.Robot;
-import sid.roborally.Position;
 import sid.roborally.game_mechanics.Position;
 
 import static org.junit.Assert.*;
@@ -33,6 +32,20 @@ public class RobotTest {
     public void StartPlayerAsAliveTest() {
         boolean result = r.isDead();
         assertFalse(result);
+    }
+
+    @Test
+    public void SetPlayerAsDeadTest() {
+        r.setIsDead(true);
+        boolean result = r.isDead();
+        assertTrue(result);
+    }
+
+    @Test
+    public void SetHasWonToTrueTest() {
+        r.setHasWon(true);
+        boolean result = r.hasWon();
+        assertTrue(result);
     }
 
     @Test

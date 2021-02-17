@@ -2,7 +2,6 @@ package sid.roborally.gamelogic;
 
 import org.junit.Test;
 import sid.roborally.game_mechanics.Hole;
-import sid.roborally.Position;
 import sid.roborally.game_mechanics.Position;
 
 import static org.junit.Assert.assertTrue;

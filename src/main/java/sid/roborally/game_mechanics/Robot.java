@@ -11,7 +11,7 @@ public class Robot extends GridObject {
     private boolean hasWon;
     ArrayList<Flag> flags;
     private int health;
-    Direction orientation;
+    //Direction orientation;
 
     public Robot(int x, int y) {
         super(x,y);
@@ -31,5 +31,13 @@ public class Robot extends GridObject {
 
     public int getHealth() {
         return this.health;
+    }
+
+    public void setIsDead(boolean b) {
+        this.isDead = b;
+    }
+
+    public void setHasWon(boolean b) {
+        this.hasWon = b;
     }
 }
