@@ -33,7 +33,7 @@ public class FlagTest {
     public void FlagPositionShouldBeZeroZero() {
         Flag f = new Flag(0,0,1);
         Position expected = new Position(0,0);
-        Position result = f.pos;
+        Position result = f.getPosition();
         assertTrue(expected.equals(result));
     }
 

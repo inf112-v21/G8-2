@@ -1,14 +1,12 @@
 package sid.roborally;
 
-import org.lwjgl.system.CallbackI;
-
 /**
  * This flag class extends Entity, and has an id which is used to identify
  * and separate the different flags on the board.. for win condition/flag collecting
  *
  * @author Markus Edlin
  */
-public class Flag extends Entity{
+public class Flag extends GridObject {
     int id;
 
     public Flag(int x, int y, int id) {

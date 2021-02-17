@@ -11,7 +11,7 @@ public class HoleTest {
     public void HolePositionShouldEqualInitializedPosition() {
         Hole h = new Hole(0,0);
         Position expected = new Position(0,0);
-        Position result = h.pos;
+        Position result = h.getPosition();
         assertTrue(expected.equals(result));
     }
 }

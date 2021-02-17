@@ -11,6 +11,7 @@ import java.util.Objects;
  * @author Markus Edlin
  */
 public class Position {
+
     private int x;
     private int y;
 
@@ -22,19 +23,29 @@ public class Position {
     public int getX() {
         return x;
     }
-    public void setX(int x) {
-        this.x = x;
-    }
     public int getY() {
         return y;
-    }
-    public void setY(int y) {
-        this.y = y;
     }
     public String toString(){
         return "("+x+","+ y+")";
     }
     public boolean equals(Position pos) {
         return (this.x == pos.getX() && this.y == pos.getY());
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * change current position values by x and y
+     *
+     * @param x difference in x direction
+     * @param y difference in y direction
+     */
+    public void increment(int x, int y) {
+        this.x += x;
+        this.y += y;
     }
 }
