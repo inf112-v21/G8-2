@@ -8,30 +8,36 @@ import sid.roborally.Position;
 import static org.junit.Assert.*;
 
 public class RobotTest {
-    private Robot p;
+    private Robot r;
 
     @Before
     public void setUp(){
-        p = new Robot(0,0);
+        r = new Robot(0,0);
     }
 
     @Test
-    public void PlayerStartingPositionShouldEqualZeroZero() {
+    public void PlayerStartingPositionShouldEqualZeroZeroTest() {
         Position expected = new Position(0,0);
-        Position result = p.getPosition();
+        Position result = r.getPosition();
         assertTrue(expected.equals(result));
     }
 
     @Test
     public void InitializedPlayerHasWonShouldEqualFalseTest() {
-        boolean result = p.hasWon();
+        boolean result = r.hasWon();
         assertFalse(result);
     }
 
     @Test
     public void StartPlayerAsAliveTest() {
-        boolean result = p.isDead();
+        boolean result = r.isDead();
         assertFalse(result);
+    }
+
+    @Test
+    public void GetLivesShouldReturnOneTest() {
+        int result = r.getHealth();
+        assertEquals(1,result);
     }
     //TODO test for getting and setting number of player lives
 }
