@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import sid.roborally.MockPlayer;
+import sid.roborally.Player;
 
 /**
  * <p>This class will be connected to the Player class and
@@ -19,10 +19,10 @@ public class PlayerGraphic {
     TiledMapTileLayer.Cell playerDead;
     TiledMapTileLayer.Cell playerWin;
 
-    MockPlayer player;
+    Player player;
 
     //TODO: Change MockPlayer
-    public PlayerGraphic(MockPlayer player, int playerTextureIndex)
+    public PlayerGraphic(Player player, int playerTextureIndex)
     {
         this.player = player;
 
@@ -48,5 +48,5 @@ public class PlayerGraphic {
         else return playerLive;
     }
 
-    public MockPlayer getPlayer() { return player; }
+    public Player getPlayer() { return player; }
 }
