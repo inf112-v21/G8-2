@@ -2,6 +2,7 @@ package sid.roborally.gamelogic;
 
 import org.junit.Test;
 import sid.roborally.Position;
+import sid.roborally.game_mechanics.Position;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

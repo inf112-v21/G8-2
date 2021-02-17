@@ -1,4 +1,7 @@
-package sid.roborally;
+package sid.roborally.game_mechanics;
+
+import sid.roborally.game_mechanics.Flag;
+import sid.roborally.game_mechanics.GridObject;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package sid.roborally;
 
-import sid.roborally.gamelogic.Position;
+import sid.roborally.game_mechanics.Position;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
 
 /**

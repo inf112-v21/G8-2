@@ -1,4 +1,4 @@
-package sid.roborally;
+package sid.roborally.game_mechanics;
 
 /**
  * This Entity class contains the position of an entity.

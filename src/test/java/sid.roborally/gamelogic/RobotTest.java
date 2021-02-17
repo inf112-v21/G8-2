@@ -2,8 +2,9 @@ package sid.roborally.gamelogic;
 
 import org.junit.Before;
 import org.junit.Test;
-import sid.roborally.Robot;
+import sid.roborally.game_mechanics.Robot;
 import sid.roborally.Position;
+import sid.roborally.game_mechanics.Position;
 
 import static org.junit.Assert.*;
 
