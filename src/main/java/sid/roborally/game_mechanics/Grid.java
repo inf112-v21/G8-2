@@ -64,6 +64,7 @@ public class Grid {
     }
 
     public void removeGridObjectFromGrid(GridObject o) {
+
         if(getGridObjectsFromPosition(o.getPosition()).contains(o)) grid.get(o.getPosition().getX()).get(o.getPosition().getY()).remove(o);
         else throw new IllegalArgumentException("Position"+ o.getPosition() + "does not contain this object.");
     }
