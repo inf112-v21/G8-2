@@ -5,8 +5,18 @@ import sid.roborally.game_mechanics.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
 
 /**
- * This shall not be pushed. It is only a placeholder for the Player-class
- */
+ * <h3>Player</h3>
+ *
+ * <p>The goal of this class is to provide a mechanism and entity to keep
+ *    information on a current player (user/AI).<br>
+ *    To connect the graphics-part of a player and player-mechanisms for taking
+ *    part in a game and communicating player-graphics and other player-information.</p><br>
+ *
+ * <p>This class will be instantiated in GameRunner and will also be associated with one or more
+ *    game-instances.<br>
+ *    The Player-instance shouldn't communicate it's orders directly with robot or grid; it should
+ *    communicate its input trough the game-instance.</p>
+ * */
 public class Player {
 
     private enum OwnerLocation {Local, AI, External} //Local: is the user of this application, External: multiplayers
@@ -18,11 +28,16 @@ public class Player {
 
     private Robot robot; //The player-instance's robot
 
-
+    /**
+     * <p>Player constructor that specifies a chosen skin-texture index.</p>
+     *
+     * @param pos Player position
+     * @param textureIndex Texture-index
+     */
     public Player(Position pos, int textureIndex)
     {
         playerState = State.Active;
-        ownerLocation = OwnerLocation.AI; //AI basic setting for now.
+        ownerLocation = OwnerLocation.AI; //TODO: AI basic setting for now.
         p_graphic = new PlayerGraphic(this, textureIndex);
         robot = new Robot(pos.getX(), pos.getY());
     }
@@ -44,22 +59,44 @@ public class Player {
     /*
      * Owner locality methods:
      */
+
+    /**
+     * <p>Sets Player-instance as a local-player</p>
+     */
     public void setLocal() { ownerLocation = OwnerLocation.Local; }
 
+    /**
+     * <p>Sets Player-instance as a AI-player</p>
+     */
     public void setAI() { ownerLocation = OwnerLocation.AI; }
 
+    /**
+     * <p>Sets Player-instance as a external-player</p>
+     */
     public void setExternal() { ownerLocation = OwnerLocation.External; }
 
+    /**
+     * <p>Informs if Player-instance is Local</p>
+     * @return boolean Is player local
+     */
     public boolean isLocal() { return ownerLocation == OwnerLocation.Local; }
 
+    /**
+     * <p>Informs if Player-instance is AI</p>
+     * @return boolean Is player AI
+     */
     public boolean isAI() { return ownerLocation == OwnerLocation.AI; }
 
+    /**
+     * <p>Informs if Player-instance is External</p>
+     * @return boolean Is player external
+     */
     public boolean isExternal() { return ownerLocation == OwnerLocation.External; }
 
     /*
      * Movement
      */
-
+    //TODO: Reconsider if this is how this gets implemented.
     public void moveUp() { getRobot().getPosition().increment(0,1); }
 
     public void moveDown() { getRobot().getPosition().increment(0,-1); }
@@ -72,6 +109,7 @@ public class Player {
     /*
      * Player-state methods
      */
+    //TODO: Reconsider if this should be taken from robot instead, or from game.
     public void playerWon() { playerState = State.Won; }
 
     public boolean isDead() { return playerState == State.Dead; }
@@ -83,7 +121,16 @@ public class Player {
     /*
      * Other getter and setters
      */
+
+    /**
+     * <p>Gets Robot associated with this Player-instance.</p>
+     * @return robot Robot-instance
+     */
     public Robot getRobot() { return robot; }
 
+    /**
+     * <p>Gets PlayerGraphic associated with this Player-instance.</p>
+     * @return p_graphic PlayerGraphic-instance.
+     */
     public PlayerGraphic getPlayerGraphic() { return p_graphic; }
 }

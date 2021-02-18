@@ -15,7 +15,11 @@ import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RoboRallyApplication;
 
 /**
- * @author Emil-E/Daniel-J
+ * <h3>RoboRallyAppListener</h3>
+ * <p>This class implements ApplicationListener (libgdx) and contains functionality
+ *    to tell the Lwjgl3Application how and what to display, take in and so on.</p><br>
+ * <p>The goal is for this class to impact the rest of the program as little as possible
+ *     internally.</p>
  */
 public class RoboRallyAppListener extends InputAdapter implements ApplicationListener {
 
