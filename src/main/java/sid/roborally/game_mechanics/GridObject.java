@@ -1,7 +1,5 @@
 package sid.roborally.game_mechanics;
 
-import sid.roborally.Direction;
-
 /**
  * This Entity class contains the position of an entity.
  * Starting Direction is facing North.
@@ -12,7 +10,7 @@ import sid.roborally.Direction;
 public class GridObject {
 
     private Position pos;
-    private Direction orientation = Direction.NORTH;
+    private Direction orientation;
 
     public GridObject(int x, int y) {
         pos = new Position(x,y);
@@ -26,12 +24,8 @@ public class GridObject {
         this.getPosition().setPosition(x,y);
     }
 
- public Direction getOrientation() {
-     return orientation;
- }
+    public Direction getOrientation() { return orientation; }
 
- public void setOrientation(Direction orientation) {
-     this.orientation = orientation;
- }
+    public void setOrientation(Direction orientation) { this.orientation = orientation; }
 
 }

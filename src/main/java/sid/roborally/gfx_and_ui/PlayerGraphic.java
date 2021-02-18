@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import sid.roborally.Player;
+import sid.roborally.application_functionality.Player;
 
 /**
  * <p>This class will be connected to the Player class and
@@ -21,18 +21,17 @@ public class PlayerGraphic {
 
     Player player;
 
-    //TODO: Change MockPlayer
-    public PlayerGraphic(Player player, int playerTextureIndex)
+    public PlayerGraphic(Player player, int textureIndex)
     {
         this.player = player;
 
-        /* Giving player its different graphics */
-        setSelectedStateGraphics(playerTextureIndex);
+        /* Giving player its chosen textures */
+        setSelectedStateGraphics(textureIndex);
     }
 
     private void setSelectedStateGraphics(int index)
     {
-        TextureRegion tex = new TextureRegion(new Texture("player.png"));
+        TextureRegion tex = new TextureRegion(new Texture("assets/player.png"));
         //[][0]:Alive; [][1]:Dead; [][2]:Won;
         TextureRegion[][] playerTextures = tex.split(300,300);
 

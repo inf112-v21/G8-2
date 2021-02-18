@@ -5,12 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import sid.roborally.Player;
-import sid.roborally.RoboRallyApplication;
+import sid.roborally.application_functionality.Player;
+import sid.roborally.application_functionality.RoboRallyApplication;
 
 /**
  * @author Emil-E/Daniel-J
@@ -18,6 +20,12 @@ import sid.roborally.RoboRallyApplication;
 public class RoboRallyAppListener extends InputAdapter implements ApplicationListener {
 
     private RoboRallyApplication rr_app; //The wrapper app which controls the whole program
+
+    private SpriteBatch batch;
+    private BitmapFont font;
+
+    private boolean drawVictory;
+    private boolean drawLoss;
 
     //Renderer and camera
     OrthogonalTiledMapRenderer rend;
@@ -30,6 +38,12 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
      */
     @Override
     public void create() {
+
+        drawVictory = false;
+        drawLoss = false;
+
+        batch = new SpriteBatch();
+        font = new BitmapFont();
 
         //Application wrapper
         rr_app = new RoboRallyApplication();
@@ -49,7 +63,11 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
     }
 
     @Override
-    public void dispose() {}
+    public void dispose()
+    {
+        batch.dispose();
+        font.dispose();
+    }
 
     @Override
     public void render()
@@ -57,22 +75,15 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        /* Check if game is lost */
-        //TODO: Check if game is lost, if so:
-        //Lose text displays
-        //TODO:JOptionPane.showMessageDialog(null, "You lose!");
-
-
-        /* Check if game is won */
-        //TODO: Check if game is won, if so:
-        //Victory text displays
-        //TODO: JOptionPane.showMessageDialog(null, "Victory!");
+        /* Check if game is lost */ //TODO: Find a better place for this
+        /* Check if game is won */ //TODO: Find a better place for this
+        if(drawVictory) displayVictory();
+        if(drawLoss) displayLoss();
 
         for(Player player : rr_app.getPlayers())
-        {
-            rr_app.getPlayerLayer().setCell(player.getPosition().getX(),
-                    player.getPosition().getY(), player.getPlayerGraphic().getPlayerTexture());
-        }
+            rr_app.getPlayerLayer().setCell(player.getRobot().getPosition().getX(),
+                    player.getRobot().getPosition().getY(),
+                    player.getPlayerGraphic().getPlayerTexture());
 
         /* Render the map */
         rend.render();
@@ -89,9 +100,23 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
     @Override
     public void resume() {
     }
-    //Removes a sprite on a given layer in a given position
-    private void removeSprite(int posX, int posY, TiledMapTileLayer layer){
-        layer.setCell(posX,posY, null);
+
+    private void displayVictory()
+    {
+        batch.begin();
+        font.setColor(Color.CYAN);
+
+        font.draw(batch, "Victory!", 10, 10);
+        batch.end();
+    }
+
+    private void displayLoss()
+    {
+        batch.begin();
+        font.setColor(Color.RED);
+
+        font.draw(batch, "You Lost!", 10, 10);
+        batch.end();
     }
 
     /*
@@ -110,6 +135,8 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
             rr_app.moveDownInput();
         if(Input.Keys.ESCAPE == keyCode)
             rr_app.escapeInput();
+        if(Input.Keys.V == keyCode) drawVictory = true;
+        if(Input.Keys.L == keyCode) drawVictory = true;
         return false;
     }
 }

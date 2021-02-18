@@ -1,9 +1,5 @@
 package sid.roborally.game_mechanics;
 
-import sid.roborally.Direction;
-import sid.roborally.game_mechanics.Flag;
-import sid.roborally.game_mechanics.GridObject;
-
 import java.util.ArrayList;
 
 public class Robot extends GridObject {

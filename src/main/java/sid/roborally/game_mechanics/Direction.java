@@ -1,4 +1,4 @@
-package sid.roborally;
+package sid.roborally.game_mechanics;
 
 /**
  *  Directions that can be used by any GridObject.

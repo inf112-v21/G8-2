@@ -1,7 +1,6 @@
 package sid.roborally.game_mechanics;
 
 import org.junit.Test;
-import sid.roborally.Direction;
 
 import static org.junit.Assert.*;
 
