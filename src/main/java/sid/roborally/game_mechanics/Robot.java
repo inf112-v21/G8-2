@@ -1,5 +1,6 @@
 package sid.roborally.game_mechanics;
 
+import sid.roborally.Direction;
 import sid.roborally.game_mechanics.Flag;
 import sid.roborally.game_mechanics.GridObject;
 
@@ -11,7 +12,7 @@ public class Robot extends GridObject {
     private boolean hasWon;
     ArrayList<Flag> flags;
     private int health;
-    //Direction orientation;
+    Direction orientation;
 
     public Robot(int x, int y) {
         super(x,y);
