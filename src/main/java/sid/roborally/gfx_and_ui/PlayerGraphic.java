@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import sid.roborally.application_functionality.Player;
 
 /**
- * <h3>Player Graphic</h3>
+ * <h3>PlayerGraphic</h3>
  *
  * <p>This class will be connected to a Player instance, and will be passed
  *    by the Player outwards when graphics-information about the Player is needed.</p>

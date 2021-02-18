@@ -8,7 +8,14 @@ import sid.roborally.game_mechanics.*;
 import java.util.HashSet;
 
 /**
- * Sets up a and runs game. Input and output from game is passed here.
+ * <h3>GameRunner</h3>
+ * <p>The goal of this class is to provide mechanisms for creating, setting-up and running
+ * instances of Game.<br>
+ * This class will also communicate information and requests internal to external and external to
+ * internal; also executing requests toward the current Game-instance<br>
+ * </p><br>
+ * <p>GameRunner will be instantiated in RoboRallyApplication and will itself contain instances of
+ *    Game, TiledMap and TiledMapTileLayer.</p>
  */
 public class GameRunner {
 
@@ -20,21 +27,42 @@ public class GameRunner {
             flag_layer; //When these layers are edited the gui is edited.
 
     private Game game;
-    
-    public GameRunner() 
-    { game = new Game(); }
-    
-    public void setUpGameWithTexture(String texturePath)
-    {
+
+    /**
+     * <p>GameRunner constructor.</p>
+     */
+    public GameRunner() {
+        game = new Game();
+    }
+
+    /**
+     * <p>Sets the currentGameTexture</p>
+     *
+     * @param texturePath Path to chosen texture.
+     */
+    public void setGameTexture(String texturePath) {
         map = new TmxMapLoader().load(texturePath);
         board_layer = (TiledMapTileLayer) map.getLayers().get("Board");
         player_layer = (TiledMapTileLayer) map.getLayers().get("Player");
         hole_layer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flag_layer = (TiledMapTileLayer) map.getLayers().get("Flag");
+
+        adjustSetup();
     }
 
     /**
-     * <p>This method will go trough the map-elements and add them to the grid-element in game</p>
+     * <p>Will be called when the Game-instance needs to set-up itself again.
+     * Grid and layout will be reset to current setting. Player-instances
+     * not be removed from game.</p>
+     */
+    private void adjustSetup()
+    {
+        game.newGrid(board_layer.getWidth(), board_layer.getHeight());
+        giveMapDataToGrid();
+    }
+
+    /**
+     * <p>This method will go trough the map-elements and add them to the grid-instance in game</p>
      */
     private void giveMapDataToGrid()
     {
@@ -46,9 +74,12 @@ public class GameRunner {
             }
     }
 
+    /**
+     * Sets up a demo-game
+     */
     public void setUpDemoGame()
     {
-        setUpGameWithTexture("assets/example.tmx");
+        setGameTexture("assets/example.tmx");
 
         Player demoPlayer = new Player(new Position(1,1), true);
         demoPlayer.setLocal();
@@ -69,72 +100,105 @@ public class GameRunner {
      * <p>This method will be called when something happened and the application has to check
      *    if anything should be handled from the game and passed out</p>
      */
-    public void somethingHappenedToGame()
-    {
-
-    }
+    public void somethingHappenedToGame() {}
 
     /*
-     * Tiled methods
+     * * * * * Tiled methods:
+     */
+
+    /**
+     * <p>Returns local TiledMap instance</p>
+     * @return map - TiledMap instance
      */
     public TiledMap getMap() { return map; }
 
+    /**
+     * <p>Returns local TiledMapTileLayer (player-layer) instance</p>
+     * @return player_layer - TiledMapTileLayer instance
+     */
     public TiledMapTileLayer getPlayerLayer() { return player_layer; }
 
+    /**
+     * <p>Returns local TiledMapTileLayer (hole-layer) instance</p>
+     * @return hole_layer - TiledMapTileLayer instance
+     */
     public TiledMapTileLayer getHoleLayer() { return hole_layer; }
 
+    /**
+     * <p>Returns local TiledMapTileLayer (flag-layer) instance</p>
+     * @return flag_layer - TiledMapTileLayer instance
+     */
     public TiledMapTileLayer getFlagLayer() { return flag_layer; }
 
+    /**
+     * <p>Returns local TiledMapTileLayer (board-layer) instance</p>
+     * @return board_layer - TiledMapTileLayer instance
+     */
     public TiledMapTileLayer getBoardLayer() { return board_layer; }
 
-    public HashSet<Player> getPlayers() { return game.getPlayers(); }
 
     /*
-     * Keyboard-input
+     * * * * * Player-related-methods
      */
 
-    private void resetPlayerTexture()
+    /**
+     * <p>Returns a set with the Player-instances associated with the current Game-instance.</p>
+     * @return players - Set of Players
+     */
+    public HashSet<Player> getPlayers() { return game.getPlayers(); }
+
+    /**
+     * Resets the local position of the given Player-instance in the player-layer.
+     * @param p
+     */
+    private void resetPlayerTexture(Player p)
     {
-        Position localPlayerPos = game.getLocal().getRobot().getPosition();
+        Position localPlayerPos = p.getRobot().getPosition();
         player_layer.setCell(localPlayerPos.getX(), localPlayerPos.getY(), null);
     }
 
+    /*
+     * * * * * Keyboard-input:
+     */
+
     /**
-     * W and ArrowUp
+     * <p>Tells the gamerunner that it has recieved a UP-input
+     * <br>W and ArrowUp</p>
      */
     public void moveUpInput()
     {
-        game.printGrid();
-        resetPlayerTexture();
+        resetPlayerTexture(game.getLocal());
         //TODO: game.moveRobot(game.getLocal().getRobot(), Direction.NORTH);
         game.getLocal().moveUp();
     }
 
     /**
-     * S and ArrowDown
+     * <p>Tells the gamerunner that it has recieved a DOWN-input
+     * <br>S and ArrowDown</p>
      */
     public void moveDownInput()
     {
-        resetPlayerTexture();
+        resetPlayerTexture(game.getLocal());
         game.getLocal().moveDown();
     }
 
     /**
-     * A and ArrowLeft
+     * <p>Tells the gamerunner that it has recieved a LEFT-input
+     * <br>A and ArrowLeft</p>
      */
     public void moveLeftInput()
     {
-        resetPlayerTexture();
+        resetPlayerTexture(game.getLocal());
         game.getLocal().moveLeft();
     }
 
     /**
-     * D and ArrowRight
+     * <p>Tells the gamerunner that it has recieved a RIGHT-input
+     * <br>D and ArrowRight</p>
      */
     public void moveRightInput()
     {
-        resetPlayerTexture();
+        resetPlayerTexture(game.getLocal());
         game.getLocal().moveRight();
     }
-
 }

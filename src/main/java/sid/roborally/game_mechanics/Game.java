@@ -8,26 +8,34 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * <p>The responsibility of game is to keep track of a single running game-instance.
- *    In-game it will communicate internally with Player-, Grid- and GridObject-instances.
+ * <h3>Game</h3>
+ * <p>The goal of this class is to provide a mechanism for controlling and monitoring a single
+ *    instance of a game.<br>
+ *    It will also have functionalities for the different parts of the RoboRally game to run the
+ *    game as it is specified to work.<br>
+ *    The Game-instance will also be able to pass information to external holder of this instance, and
+ *    to recieve and execute requests toward the running of the game.</p><br>
+ *
+ * <p>In-game it will communicate internally with Player-, Grid- and GridObject-instances.
  *    Externally it will communicate with GameRunner</p>
  */
 public class Game {
-
 
     private HashMap<Flag, Player> flags_have_player; //TODO: Flags in game, player can only be added if he already have the earlier flags
     private ArrayList<Flag> flags; //TODO: Flags in the order to be moved to
     private HashSet<Player> players;
     private Grid grid; //TODO: Connect this
 
-
+    /**
+     * <p>Game constructor.</p>
+     */
     public Game()
     {
         players = new HashSet<>();
     }
 
     /*
-     * Adding game-elements.
+     * * * * * Editing game-elements.
      */
 
     /**
@@ -40,36 +48,46 @@ public class Game {
         grid = new Grid(width, height);
     }
 
+    /**
+     * <p>Adds a GridObject-instance to the Game's Grid.</p>
+     * @param go GridObject
+     */
     public void addGridObjectToGrid(GridObject go) { grid.addGridObjectToGrid(go);}
 
-    public void printGrid() { System.out.println(grid.toString()); }
+    /*
+     * * * * * Player Methods:
+     */
 
     /**
-     * <p>Method to add a element to grid when setting up game.</p>
-     *
-     * @param gridObject Object to be added to game
-     */
-    public void addGameElement(GridObject gridObject)
-    { grid.addGridObjectToGrid(gridObject); }
-
-    /*
-     * Player Methods
+     * <p>Adds a player to the Game's Player-set.</p>
+     * @param p Player-instance.
      */
     public void addPlayer(Player p)
     { players.add(p); }
 
+    /**
+     * <p>Checks if Game's Player-set has Player-instance.</p>
+     * @param p Player
+     * @return boolean Game has Player
+     */
     public boolean hasPlayer(Player p)
     { return players.contains(p); }
 
+    /**
+     * <p>Removes Player-instance from game.</p>
+     * @param p Player-instance.
+     */
     public void remove(Player p)
     { players.remove(p); }
 
+    /**
+     * <p>Gets the Game's Player-set.</p>
+     * @return players - Player set.
+     */
     public HashSet<Player> getPlayers()
     { return players; }
 
     //TODO: public void moveRobot(Robot r, Direction d){grid.moveRobot(r,d);}
-
-    public Grid getGrid() { return grid; }
 
     /**
      * <p>Gets the local player instance (not AI or External)</p>
