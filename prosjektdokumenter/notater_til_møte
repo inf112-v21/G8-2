@@ -2,15 +2,8 @@ NOTATER TIL NESTE MØTE:
 Slettes etter det er tatt opp og vurdert av gruppa
 
 TIL FREDAG:
-- gjøre til fredag - gå gjennom tutorial, se på koden, (leke med det, forstå koden)
-  på fredag: gjøre ferdig brukerhistorier for 6-9, kriterier og fordele oppgaver.
 - Fortsette å utvikle prosessen vår med å skrive brukerhistorier. (Foreleser påpekte at programmering
   er en veldig liten del av å utvikle et program/system. Den store jobben er å definere produktet og 
   hva det skal gjøre [og hvorfor]).
-- Må huske å påpeke i innleveringen at vi valgte å ta utgangspunkt i tutorialkode og utvikle systemet derifra
-  og at dette var et bevisst prosessvalg/prosjektvalg.
-- Dele opp programmet slik at spillet foregår logisk på en måte som er lettere å få innsikt i og mer atomær.
-  Slik blir det også lettere å teste spillet. (Bør det grafiske bare overette den eksisterende spillinformasjonen til grafikk
-  og kommunisere spillinput til "backendenden".
 
 TIL TIRSDAG:
