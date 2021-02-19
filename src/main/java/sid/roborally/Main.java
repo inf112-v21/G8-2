@@ -10,7 +10,6 @@ public class Main {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Robo rally");
         config.setWindowedMode(500, 500);
-        config.setWindowIcon("assets/player.png");
 
         new Lwjgl3Application(new RoboRallyAppListener(), config);
     }
