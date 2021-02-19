@@ -1,40 +1,39 @@
 package sid.roborally.game_mechanics;
 
+import sid.roborally.application_functionality.Player;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Robot extends GridObject {
 
     private boolean isDead;
     private boolean hasWon;
-    ArrayList<Flag> flags;
-    private int health;
-    Direction orientation;
+    HashSet<Flag> flags;
+    private int healthPoints;
+
 
     public Robot(int x, int y) {
         super(x,y);
         this.isDead = false;
         this.hasWon = false;
-        this.health = 1;
-        flags = new ArrayList<>();
+        this.healthPoints = 1;
+        flags = new HashSet<>();
     }
 
-    public boolean isDead() {
-        return this.isDead;
-    }
+    public void setHasWon(boolean b) { this.hasWon = b; }
+    public boolean hasWon() { return this.hasWon; }
 
-    public boolean hasWon() {
-        return this.hasWon;
-    }
+    public int getHealth() { return this.healthPoints; }
+    public void setHealth(int health) { this.healthPoints = health; }
 
-    public int getHealth() {
-        return this.health;
-    }
+    /**
+     * @param i Change Robot health by i (positive or negative)
+     */
+    public void changeHealth(int i) { healthPoints+=i; }
 
-    public void setIsDead(boolean b) {
-        this.isDead = b;
-    }
+    public void setIsDead(boolean b) { this.isDead = b; }
+    public boolean isDead() { return this.isDead; }
 
-    public void setHasWon(boolean b) {
-        this.hasWon = b;
-    }
+
 }

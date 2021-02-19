@@ -10,10 +10,13 @@ import static org.junit.Assert.*;
 
 public class GridTest {
     Grid g;
+    private Robot r;
 
     @Before
     public void setUp() {
         g = new Grid(5,5);
+        r = new Robot(1,1);
+        g.addGridObject(r);
     }
 
     @Test
@@ -25,16 +28,14 @@ public class GridTest {
                 expected.get(i).add(new HashSet<>());
             }
         }
+        g.removeGridObject(r);
         ArrayList<ArrayList<HashSet<GridObject>>> result = g.grid;
         assertEquals(expected, result);
     }
 
     @Test
     public void CheckIfRobotIsAtPositionTest() {
-        int x = 0;
-        int y = 0;
-        Robot r = new Robot(x,y);
-        g.grid.get(x).get(y).add(r);
+        g.grid.get(r.getPosition().getX()).get(r.getPosition().getY()).add(r);
         assertTrue(g.containsRobot(r.getPosition()));
     }
 
@@ -51,8 +52,6 @@ public class GridTest {
 
     @Test
     public void AddGridObjectToGridTest() {
-        Robot r = new Robot(1,1);
-        g.addGridObjectToGrid(r);
         HashSet<GridObject> result = g.getGridObjectsFromPosition(new Position(1,1));
         HashSet<GridObject> expected = new HashSet<>();
         expected.add(r);
@@ -61,31 +60,47 @@ public class GridTest {
 
     @Test
     public void MoveGridObjectToNewPositionTest() {
-        Robot r = new Robot(1,1);
-        g.addGridObjectToGrid(r);
         g.moveGridObjectToNewPosition(r, new Position(2,2));
         HashSet<GridObject> result = g.getGridObjectsFromPosition(new Position(2,2));
+
         HashSet<GridObject> expected = new HashSet<>();
         expected.add(r);
+
         assertEquals(expected, result);
+    }
+    @Test
+    public void MoveRobotDirectionEastShouldIncrementX() {
+        System.out.println(r.getPosition());
+
+        g.moveRobot(r, Direction.EAST);
+        System.out.println(r.getPosition());
+
+        HashSet<GridObject> result = g.getGridObjectsFromPosition(new Position(2,1));
+
+        assertTrue(result.contains(r));
     }
     @Test
     public void removeGridObjectFromGridTest() {
-        Robot r = new Robot(1,1);
         HashSet<GridObject> expected = new HashSet<>();
-        g.addGridObjectToGrid(r);
-        HashSet<GridObject> result = g.getGridObjectsFromPosition(r.getPosition());
-        //assertFalse(result.equals(expected));
-        g.removeGridObjectFromGrid(r);
+
+        HashSet<GridObject> result = g.getGridObjectsFromPosition(new Position(1,1));
+        g.removeGridObject(r);
         assertEquals(expected, result);
     }
+
     @Test
     public void CheckGridPositionForGridObjectTest() {
-        Robot r = new Robot(1,1);
-        g.addGridObjectToGrid(r);
-        HashSet<GridObject> result = g.getGridObjectsFromPosition(r.getPosition());
+        HashSet<GridObject> result = g.getGridObjectsFromPosition(new Position(1,1));
         HashSet<GridObject> expected = new HashSet<>();
         expected.add(r);
         assertEquals(expected,result);
+    }
+
+    @Test
+    public void GetNewPositionFromPositionWithDirectionTest() {
+        Position expected = new Position(2,1);
+        Position result = g.getNewPositionFromDirection(r,Direction.EAST);
+
+        assertTrue(expected.equals(result));
     }
 }

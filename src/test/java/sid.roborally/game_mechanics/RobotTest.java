@@ -2,6 +2,7 @@ package sid.roborally.game_mechanics;
 
 import org.junit.Before;
 import org.junit.Test;
+import sid.roborally.application_functionality.Player;
 
 import static org.junit.Assert.*;
 
@@ -9,9 +10,7 @@ public class RobotTest {
     private Robot r;
 
     @Before
-    public void setUp(){
-        r = new Robot(0,0);
-    }
+    public void setUp(){ r = new Robot(0,0); }
 
     @Test
     public void PlayerStartingPositionShouldEqualZeroZeroTest() {
@@ -51,5 +50,21 @@ public class RobotTest {
         int result = r.getHealth();
         assertEquals(1,result);
     }
-    //TODO test for getting and setting number of player lives
+
+    @Test
+    public void SettingRobotLivesToFiveShouldEqualFiveTest() {
+        r.setHealth(5);
+        int result = r.getHealth();
+        assertEquals(5,result);
+    }
+
+    @Test
+    public void changeRobotHealthByOneTest() {
+        int currentHealth = r.getHealth();
+        r.changeHealth(1);
+        int result = r.getHealth();
+        int expected = r.getHealth()+1;
+        assertEquals(expected, result);
+    }
+
 }
