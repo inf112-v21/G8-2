@@ -49,7 +49,7 @@ public class Game {
      * <p>Adds a GridObject-instance to the Game's Grid.</p>
      * @param go GridObject
      */
-    public void addGridObjectToGrid(GridObject go) { grid.addGridObjectToGrid(go);}
+    public void addGridObjectToGrid(GridObject go) { grid.addGridObject(go);}
 
     /*
      * * * * * Player Methods:
@@ -62,7 +62,7 @@ public class Game {
     public void addPlayer(Player p)
     {
         players.add(p);
-        grid.addGridObjectToGrid(p.getRobot());
+        grid.addGridObject(p.getRobot());
     }
 
     /**

@@ -42,7 +42,7 @@ public class Grid {
      *
      * @param o GridObject
      */
-    public void addGridObjectToGrid(GridObject o) {
+    public void addGridObject(GridObject o) {
         if(checkInBounds(o.getPosition())) grid.get(o.getPosition().getX()).get(o.getPosition().getY()).add(o);
     }
 
@@ -57,10 +57,10 @@ public class Grid {
      */
     public void moveGridObjectToNewPosition(GridObject o, Position newPos) {
             //first removes the object from the grid, temporarily
-            removeGridObjectFromGrid(o);
+            removeGridObject(o);
             //sets the position of the GridObject
             o.setPosition(newPos);
-            addGridObjectToGrid(o);
+            addGridObject(o);
     }
     public boolean robotCanMoveToPosition(Robot r, Position pos){
         if(!checkInBounds(pos)) return false;
@@ -68,7 +68,7 @@ public class Grid {
         return true;
     }
 
-    public void removeGridObjectFromGrid(GridObject o) {
+    public void removeGridObject(GridObject o) {
         if(getGridObjectsFromPosition(o.getPosition()).contains(o)) grid.get(o.getPosition().getX()).get(o.getPosition().getY()).remove(o);
         else throw new IllegalArgumentException("Position"+ o.getPosition() + "does not contain this object.");
     }
