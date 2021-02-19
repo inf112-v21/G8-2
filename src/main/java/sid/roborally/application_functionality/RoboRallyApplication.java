@@ -49,6 +49,12 @@ public class RoboRallyApplication {
      */
     public void quitApplication() { Gdx.app.exit(); }
 
+    /**
+     * <p>Gives a message from the gamerunner about the game.</p>
+     * @return message
+     */
+    public String getGameMessage() { return grunner.getAppMessage(); }
+
     /*
      * Tiled methods:
      */

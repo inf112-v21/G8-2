@@ -1,7 +1,6 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
-import sid.roborally.game_mechanics.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,8 +87,6 @@ public class Game {
     public HashSet<Player> getPlayers()
     { return players; }
 
-    //TODO: public void moveRobot(Robot r, Direction d){grid.moveRobot(r,d);}
-
     /**
      * <p>Gets the local player instance (not AI or External)</p>
      */
@@ -103,9 +100,32 @@ public class Game {
     /**
      * <p>Moves robot in direction in grid</p>
      */
-    public void moveRobot(Robot r, Direction dir)
+    public void movePlayerRobot(Player p, Direction dir)
     {
-        grid.moveRobot(r, dir);
+        grid.moveRobot(p.getRobot(), dir);
+        updatePlayerStatus(p); //TODO: In the future updateRobotStatus should only be called when it has finished its moves.
+    }
+
+    /**
+     * <p>When something changes with Player, its instance should update
+     *    its information.</p>
+     * @param p Player-instance
+     */
+    private void updatePlayerStatus(Player p)
+    {
+        /* Check for possible damage */
+        if(grid.positionHasHole(p.getRobot().getPosition()))
+        {
+            p.getRobot().setIsDead(true); //TODO: Foreløpig så har player bare én gang robot kan ødelegges.
+            p.killPlayer();
+        }
+
+        /* Check if possible flag (for now this will check for "a" flag and give a win */
+        if(grid.positionHasFlag(p.getRobot().getPosition())) //TODO: Midlertidig
+        {
+            p.getRobot().setHasWon(true);
+            p.playerWon();
+        }
     }
 
 }

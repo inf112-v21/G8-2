@@ -11,8 +11,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RoboRallyApplication;
+
+import javax.swing.*;
 
 /**
  * <h3>RoboRallyAppListener</h3>
@@ -32,8 +38,10 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
     private boolean drawLoss;
 
     //Renderer and camera
-    OrthogonalTiledMapRenderer rend;
-    OrthographicCamera cam;
+    private OrthogonalTiledMapRenderer rend;
+    private OrthographicCamera cam;
+
+    private Stage stage;
 
     /**
      * Create() function finds maps, tile layers and sprites,
@@ -90,6 +98,18 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
                     player.getRobot().getPosition().getX(),
                     player.getRobot().getPosition().getY(),
                     player.getPlayerGraphic().getPlayerTexture());
+
+        /* Render message */
+        if(rr_app.getGameMessage().length() > 0)
+        {
+            JFrame frame = new JFrame();
+            frame.setSize(50,50);
+            JLabel label = new JLabel();
+            label.setText(rr_app.getGameMessage());
+            label.setSize(40,40);
+            frame.add(label);
+            frame.setVisible(true);
+        }
 
         /* Render the map */
         rend.render();

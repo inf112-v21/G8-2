@@ -3,8 +3,10 @@ package sid.roborally.application_functionality;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import org.lwjgl.system.CallbackI;
 import sid.roborally.game_mechanics.*;
 
+import javax.swing.*;
 import java.util.HashSet;
 
 /**
@@ -27,13 +29,19 @@ public class GameRunner {
             flag_layer; //When these layers are edited the gui is edited.
 
     private Game game;
+    private boolean inputActive; //TODO: Can shut of input to game
+    private String appMessage;
 
     /**
      * <p>GameRunner constructor.</p>
      */
     public GameRunner() {
         game = new Game();
+        inputActive = true;
+        appMessage = "";
     }
+
+    public String getAppMessage() { return appMessage; }
 
     /**
      * <p>Sets the currentGameTexture</p>
@@ -86,6 +94,7 @@ public class GameRunner {
         demoPlayer.setLocal();
 
         game.newGrid(5,5);
+        giveMapDataToGrid();
         game.addPlayer(demoPlayer);
     }
 
@@ -101,7 +110,22 @@ public class GameRunner {
      * <p>This method will be called when something happened and the application has to check
      *    if anything should be handled from the game and passed out</p>
      */
-    public void somethingHappenedToGame() {}
+    public void somethingHappenedToGame()
+    {
+        /* Checking for possible win or loss */
+        if(game.getLocal().hasWon())
+        {
+            inputActive = false;
+            //TODO: Print victory
+            appMessage = "YOU WON!";
+        }
+        if(game.getLocal().isDead())
+        {
+            inputActive = false;
+            //TODO: Print loss
+            appMessage = "YOU LOST!";
+        }
+    }
 
     /*
      * * * * * Tiled methods:
@@ -168,8 +192,10 @@ public class GameRunner {
      */
     public void moveUpInput()
     {
+        somethingHappenedToGame();
+        if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.moveRobot(game.getLocal().getRobot(), Direction.NORTH);
+        game.movePlayerRobot(game.getLocal(), Direction.NORTH);
     }
 
     /**
@@ -178,8 +204,10 @@ public class GameRunner {
      */
     public void moveDownInput()
     {
+        somethingHappenedToGame();
+        if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.moveRobot(game.getLocal().getRobot(), Direction.SOUTH);
+        game.movePlayerRobot(game.getLocal(), Direction.SOUTH);
     }
 
     /**
@@ -188,8 +216,10 @@ public class GameRunner {
      */
     public void moveLeftInput()
     {
+        somethingHappenedToGame();
+        if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.moveRobot(game.getLocal().getRobot(), Direction.WEST);
+        game.movePlayerRobot(game.getLocal(), Direction.WEST);
     }
 
     /**
@@ -198,7 +228,9 @@ public class GameRunner {
      */
     public void moveRightInput()
     {
+        somethingHappenedToGame();
+        if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.moveRobot(game.getLocal().getRobot(), Direction.EAST);
+        game.movePlayerRobot(game.getLocal(), Direction.EAST);
     }
 }
