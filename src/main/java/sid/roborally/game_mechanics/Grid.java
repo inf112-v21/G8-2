@@ -56,16 +56,47 @@ public class Grid {
      * @param newPos new Position to move GridObject to
      */
     public void moveGridObjectToNewPosition(GridObject o, Position newPos) {
-        if(getGridObjectsFromPosition(o.getPosition()).contains(o)){
+            //first removes the object from the grid, temporarily
             removeGridObjectFromGrid(o);
-            o.setPosition(newPos.getX(), newPos.getY());
+            //sets the position of the GridObject
+            o.setPosition(newPos);
             addGridObjectToGrid(o);
-        }
+    }
+    public boolean robotCanMoveToPosition(Robot r, Position pos){
+        if(!checkInBounds(pos)) return false;
+        if(containsRobot(pos)) return false;
+        return true;
     }
 
     public void removeGridObjectFromGrid(GridObject o) {
-
         if(getGridObjectsFromPosition(o.getPosition()).contains(o)) grid.get(o.getPosition().getX()).get(o.getPosition().getY()).remove(o);
         else throw new IllegalArgumentException("Position"+ o.getPosition() + "does not contain this object.");
+    }
+
+    /**
+     * Move GridObject 1 value in 1 Direction
+     *
+     * @param r Grid Object
+     * @param dir Direction
+     */
+    public void moveRobot(Robot r, Direction dir) {
+        Position newPos = getNewPositionFromDirection(r,dir);
+        if(!robotCanMoveToPosition(r,newPos)) return;
+        moveGridObjectToNewPosition(r, newPos);
+    }
+
+    public Position getNewPositionFromDirection(GridObject o, Direction dir){
+        Position currentPos = o.getPosition();
+        switch(dir){
+            case NORTH:
+                return new Position(currentPos.getX(), currentPos.getY()+1);
+            case EAST:
+                return new Position(currentPos.getX()+1, currentPos.getY());
+            case SOUTH:
+                return new Position(currentPos.getX(), currentPos.getY()-1);
+            case WEST:
+                return new Position(currentPos.getX()-1, currentPos.getY());
+        }
+        return o.getPosition();
     }
 }

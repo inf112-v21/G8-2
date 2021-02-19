@@ -43,7 +43,7 @@ public class GridObjectTest {
 
     @Test
     public void SettingPositionToOneOneShouldEqualThatTest() {
-        e.setPosition(1,1);
+        e.setPosition(new Position(1,1));
         Position expected = new Position(1,1);
         Position result = e.getPosition();
         assertTrue(expected.equals(result));

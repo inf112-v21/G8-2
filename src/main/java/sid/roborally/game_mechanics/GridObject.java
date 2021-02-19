@@ -20,8 +20,8 @@ public class GridObject {
         return this.pos;
     }
 
-    public void setPosition(int x, int y) {
-        this.getPosition().setPosition(x,y);
+    public void setPosition(Position newPos) {
+        this.getPosition().setPosition(newPos);
     }
 
     public Direction getOrientation() { return orientation; }

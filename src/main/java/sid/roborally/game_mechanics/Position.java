@@ -31,19 +31,19 @@ public class Position {
         return (this.x == pos.getX() && this.y == pos.getY());
     }
 
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public void setPosition(Position newPos) {
+        this.x = newPos.getX();
+        this.y = newPos.getY();
     }
 
     /**
      * change current position values by x and y
-     *
-     * @param x difference in x direction
+     *  @param x difference in x direction
      * @param y difference in y direction
+     * @return Position
      */
-    public void increment(int x, int y) {
-        this.x += x;
-        this.y += y;
+    public Position increment(int x, int y) {
+        setPosition(new Position(this.x+x, this.y+y));
+        return this;
     }
 }
