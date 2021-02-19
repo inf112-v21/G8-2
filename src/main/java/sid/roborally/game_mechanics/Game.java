@@ -63,7 +63,10 @@ public class Game {
      * @param p Player-instance.
      */
     public void addPlayer(Player p)
-    { players.add(p); }
+    {
+        players.add(p);
+        grid.addGridObjectToGrid(p.getRobot());
+    }
 
     /**
      * <p>Checks if Game's Player-set has Player-instance.</p>
@@ -97,6 +100,14 @@ public class Game {
         for(Player p : players) if(p.isLocal()) return p;
         //Game should always have a local player.
         return null;
+    }
+
+    /**
+     * <p>Moves robot in direction in grid</p>
+     */
+    public void moveRobot(Robot r, Direction dir)
+    {
+        grid.moveRobot(r, dir);
     }
 
 }

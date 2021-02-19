@@ -169,7 +169,8 @@ public class GameRunner {
     {
         resetPlayerTexture(game.getLocal());
         //TODO: game.moveRobot(game.getLocal().getRobot(), Direction.NORTH);
-        game.getLocal().moveUp();
+        //game.getLocal().moveUp();
+        game.moveRobot(game.getLocal().getRobot(), Direction.NORTH);
     }
 
     /**
@@ -179,7 +180,8 @@ public class GameRunner {
     public void moveDownInput()
     {
         resetPlayerTexture(game.getLocal());
-        game.getLocal().moveDown();
+        //game.getLocal().moveDown();
+        game.moveRobot(game.getLocal().getRobot(), Direction.SOUTH);
     }
 
     /**
@@ -189,7 +191,8 @@ public class GameRunner {
     public void moveLeftInput()
     {
         resetPlayerTexture(game.getLocal());
-        game.getLocal().moveLeft();
+        //game.getLocal().moveLeft();
+        game.moveRobot(game.getLocal().getRobot(), Direction.WEST);
     }
 
     /**
@@ -199,6 +202,7 @@ public class GameRunner {
     public void moveRightInput()
     {
         resetPlayerTexture(game.getLocal());
-        game.getLocal().moveRight();
+        //game.getLocal().moveRight();
+        game.moveRobot(game.getLocal().getRobot(), Direction.EAST);
     }
 }
