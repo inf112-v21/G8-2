@@ -29,23 +29,18 @@ public class Grid {
         return false;
     }
 
-    public boolean checkInBounds(Position pos) {
-        return ((pos.getX()<width && pos.getX()>=0) && (pos.getY()<height && pos.getY()>=0));
-    }
+    public boolean checkInBounds(Position pos) { return ((pos.getX()<width && pos.getX()>=0) && (pos.getY()<height && pos.getY()>=0)); }
 
-    public HashSet<GridObject> getGridObjectsFromPosition(Position pos) {
-        return grid.get(pos.getX()).get(pos.getY());
-    }
+    public HashSet<GridObject> getGridObjectsFromPosition(Position pos) { return grid.get(pos.getX()).get(pos.getY()); }
 
     /**
      * Adds to grid if position is inbounds and if there isn't a robot at that same position
      *
      * @param o GridObject
      */
-    public void addGridObjectToGrid(GridObject o) {
+    public void addGridObject(GridObject o) {
         if(checkInBounds(o.getPosition())) grid.get(o.getPosition().getX()).get(o.getPosition().getY()).add(o);
     }
-
 
     /**
      * Removes current GridObject from grid.
@@ -56,19 +51,19 @@ public class Grid {
      * @param newPos new Position to move GridObject to
      */
     public void moveGridObjectToNewPosition(GridObject o, Position newPos) {
-            //first removes the object from the grid, temporarily
-            removeGridObjectFromGrid(o);
-            //sets the position of the GridObject
-            o.setPosition(newPos);
-            addGridObjectToGrid(o);
+        //first removes the object from the grid, temporarily
+        removeGridObject(o);
+        //sets the position of the GridObject
+        o.setPosition(newPos);
+        addGridObject(o);
     }
-    public boolean robotCanMoveToPosition(Robot r, Position pos){
-        if(!checkInBounds(pos)) return false;
-        if(containsRobot(pos)) return false;
+    public boolean robotCanMoveToPosition(Robot r, Position newPos){
+        if(!checkInBounds(newPos)) return false;
+        if(containsRobot(newPos)) return false;
         return true;
     }
 
-    public void removeGridObjectFromGrid(GridObject o) {
+    public void removeGridObject(GridObject o) {
         if(getGridObjectsFromPosition(o.getPosition()).contains(o)) grid.get(o.getPosition().getX()).get(o.getPosition().getY()).remove(o);
         else throw new IllegalArgumentException("Position"+ o.getPosition() + "does not contain this object.");
     }
