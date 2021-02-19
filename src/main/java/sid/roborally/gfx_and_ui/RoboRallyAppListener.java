@@ -100,7 +100,8 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
                     player.getPlayerGraphic().getPlayerTexture());
 
         /* Render message */
-        if(rr_app.getGameMessage().length() > 0)
+        /*
+        if(rr_app.getGameMessage().length() > 0) //TODO: bug to fix
         {
             JFrame frame = new JFrame();
             frame.setSize(50,50);
@@ -110,6 +111,8 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
             frame.add(label);
             frame.setVisible(true);
         }
+
+         */
 
         /* Render the map */
         rend.render();
