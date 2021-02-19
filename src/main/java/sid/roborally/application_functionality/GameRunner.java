@@ -72,6 +72,7 @@ public class GameRunner {
                 if(hole_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Hole(x,y));
                 if(flag_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Flag(x,y, 0)); //TODO: Find a better way to assign flags their ID.
             }
+        //TODO: Gå gjennom feks JSON getFlagID
     }
 
     /**
@@ -168,8 +169,6 @@ public class GameRunner {
     public void moveUpInput()
     {
         resetPlayerTexture(game.getLocal());
-        //TODO: game.moveRobot(game.getLocal().getRobot(), Direction.NORTH);
-        //game.getLocal().moveUp();
         game.moveRobot(game.getLocal().getRobot(), Direction.NORTH);
     }
 
@@ -180,7 +179,6 @@ public class GameRunner {
     public void moveDownInput()
     {
         resetPlayerTexture(game.getLocal());
-        //game.getLocal().moveDown();
         game.moveRobot(game.getLocal().getRobot(), Direction.SOUTH);
     }
 
@@ -191,7 +189,6 @@ public class GameRunner {
     public void moveLeftInput()
     {
         resetPlayerTexture(game.getLocal());
-        //game.getLocal().moveLeft();
         game.moveRobot(game.getLocal().getRobot(), Direction.WEST);
     }
 
@@ -202,7 +199,6 @@ public class GameRunner {
     public void moveRightInput()
     {
         resetPlayerTexture(game.getLocal());
-        //game.getLocal().moveRight();
         game.moveRobot(game.getLocal().getRobot(), Direction.EAST);
     }
 }

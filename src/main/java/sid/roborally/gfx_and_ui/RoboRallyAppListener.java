@@ -28,7 +28,7 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
     private SpriteBatch batch;
     private BitmapFont font;
 
-    private boolean drawVictory;
+    private boolean drawVictory; //TODO: Gjør elegant.
     private boolean drawLoss;
 
     //Renderer and camera
@@ -84,8 +84,10 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
         if(drawVictory) displayVictory();
         if(drawLoss) displayLoss();
 
+        /* Sets cell-texture based on Player-texture-information */
         for(Player player : rr_app.getPlayers())
-            rr_app.getPlayerLayer().setCell(player.getRobot().getPosition().getX(),
+            rr_app.getPlayerLayer().setCell(
+                    player.getRobot().getPosition().getX(),
                     player.getRobot().getPosition().getY(),
                     player.getPlayerGraphic().getPlayerTexture());
 
@@ -139,7 +141,7 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
             rr_app.moveDownInput();
         if(Input.Keys.ESCAPE == keyCode)
             rr_app.escapeInput();
-        if(Input.Keys.V == keyCode) drawVictory = true;
+        if(Input.Keys.V == keyCode) drawVictory = true; //TODO: Remove
         if(Input.Keys.L == keyCode) drawVictory = true;
         return false;
     }

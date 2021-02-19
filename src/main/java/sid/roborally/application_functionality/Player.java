@@ -93,18 +93,6 @@ public class Player {
      */
     public boolean isExternal() { return ownerLocation == OwnerLocation.External; }
 
-    /*
-     * Movement
-     */
-    //TODO: Reconsider if this is how this gets implemented.
-    public void moveUp() { getRobot().getPosition().increment(0,1); }
-
-    public void moveDown() { getRobot().getPosition().increment(0,-1); }
-
-    public void moveLeft() { getRobot().getPosition().increment(-1,0); }
-
-    public void moveRight() { getRobot().getPosition().increment(1,0); }
-
 
     /*
      * Player-state methods

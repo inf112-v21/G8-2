@@ -30,9 +30,7 @@ public class Game {
      * <p>Game constructor.</p>
      */
     public Game()
-    {
-        players = new HashSet<>();
-    }
+    { players = new HashSet<>(); }
 
     /*
      * * * * * Editing game-elements.
