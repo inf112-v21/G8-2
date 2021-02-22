@@ -63,7 +63,7 @@ public class RobotTest {
         int currentHealth = r.getHealth();
         r.changeHealth(1);
         int result = r.getHealth();
-        int expected = r.getHealth()+1;
+        int expected = currentHealth+1;
         assertEquals(expected, result);
     }
 
