@@ -6,7 +6,12 @@ import static org.junit.Assert.*;
 
 public class DirectionTest {
 
-    GridObject testobject = new GridObject(1,2);
+    //To test with GridObject we first need to make a class that inherits from GridObject.
+    private class GridObjectInheriter extends GridObject {
+        public GridObjectInheriter(int x, int y) { super(x, y); }
+    }
+
+    GridObjectInheriter testobject = new GridObjectInheriter(1,2);
     Robot testbot = new Robot(3,3);
     Direction dir1;
 

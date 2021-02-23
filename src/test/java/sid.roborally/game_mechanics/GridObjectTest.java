@@ -14,11 +14,17 @@ import static org.junit.Assert.assertTrue;
  * @author Markus Edlin
  */
 public class GridObjectTest {
-    private GridObject e;
+
+    //To test with GridObject we first need to make a class that inherits from GridObject.
+    private class GridObjectInheriter extends GridObject {
+        public GridObjectInheriter(int x, int y) { super(x, y); }
+    }
+
+    private GridObjectInheriter e;
 
     @Before
     public void setUp(){
-        e = new GridObject(0,0);
+        e = new GridObjectInheriter(0,0);
     }
 
     @Test
@@ -29,14 +35,14 @@ public class GridObjectTest {
 
     @Test
     public void InitialXPositionValueShouldEqualZero() {
-        e = new GridObject(0,1);
+        e = new GridObjectInheriter(0,1);
         int result = e.getPosition().getX();
         assertEquals(0, result);
     }
 
     @Test
     public void InitialYPositionValueShouldEqualZero() {
-        e = new GridObject(1,0);
+        e = new GridObjectInheriter(1,0);
         int result = e.getPosition().getY();
         assertEquals(0, result);
     }

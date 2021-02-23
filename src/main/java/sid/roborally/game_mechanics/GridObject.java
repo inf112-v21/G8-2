@@ -7,7 +7,7 @@ package sid.roborally.game_mechanics;
  *
  * @author Markus Edlin
  */
-public class GridObject {
+abstract public class GridObject {
 
     private Position pos;
     private Direction orientation;
