@@ -8,10 +8,8 @@ import sid.roborally.game_mechanics.grid.Robot;
 import static org.junit.Assert.*;
 
 public class RobotTest {
-    private Robot r;
 
-    @Before
-    public void setUp(){ r = new Robot(0,0); }
+    private Robot r = new Robot(0,0);
 
     @Test
     public void PlayerStartingPositionShouldEqualZeroZeroTest() {

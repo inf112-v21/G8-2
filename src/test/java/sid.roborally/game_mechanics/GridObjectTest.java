@@ -1,6 +1,7 @@
 package sid.roborally.game_mechanics;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import sid.roborally.game_mechanics.grid.GridObject;
 import sid.roborally.game_mechanics.grid.Position;
@@ -22,12 +23,7 @@ public class GridObjectTest {
         public GridObjectInheriter(int x, int y) { super(x, y); }
     }
 
-    private GridObjectInheriter e;
-
-    @Before
-    public void setUp(){
-        e = new GridObjectInheriter(0,0);
-    }
+    private GridObjectInheriter e = new GridObjectInheriter(0,0);
 
     @Test
     public void PositionToStringShouldBeZeroZero(){
@@ -37,14 +33,12 @@ public class GridObjectTest {
 
     @Test
     public void InitialXPositionValueShouldEqualZero() {
-        e = new GridObjectInheriter(0,1);
         int result = e.getPosition().getX();
         assertEquals(0, result);
     }
 
     @Test
     public void InitialYPositionValueShouldEqualZero() {
-        e = new GridObjectInheriter(1,0);
         int result = e.getPosition().getY();
         assertEquals(0, result);
     }

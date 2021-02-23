@@ -13,13 +13,11 @@ import java.util.HashSet;
 import static org.junit.Assert.*;
 
 public class GridTest {
-    Grid g;
-    private Robot r;
+    private Grid g = new Grid(5,5);
+    private Robot r = new Robot(1,1);
 
     @Before
     public void setUp() {
-        g = new Grid(5,5);
-        r = new Robot(1,1);
         g.addGridObject(r);
     }
 

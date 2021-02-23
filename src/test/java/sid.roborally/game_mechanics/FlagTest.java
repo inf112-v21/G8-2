@@ -1,5 +1,6 @@
 package sid.roborally.game_mechanics;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
@@ -14,16 +15,16 @@ import static org.junit.Assert.assertTrue;
  */
 public class FlagTest {
 
+    private Flag f = new Flag(0,0,1);
+
     @Test
     public void FlagCreationGetIDTest() {
-        Flag f = new Flag(0,0,1);
         int result = f.getId();
         assertEquals(1, result);
     }
 
     @Test
     public void SetFlagIdToTwoShouldEqualTwo() {
-        Flag f = new Flag(0,0,1);
         f.setId(2);
         int result = f.getId();
         assertEquals(2, result);
@@ -31,7 +32,6 @@ public class FlagTest {
 
     @Test
     public void FlagPositionShouldBeZeroZero() {
-        Flag f = new Flag(0,0,1);
         Position expected = new Position(0,0);
         Position result = f.getPosition();
         assertTrue(expected.equals(result));
