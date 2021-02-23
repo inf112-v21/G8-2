@@ -1,4 +1,4 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.grid;
 
 /**
  * This Position class keeps track of an x and y value

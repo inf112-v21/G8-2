@@ -1,4 +1,4 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.grid;
 
 /**
  * This flag class extends Entity, and has an id which is used to identify

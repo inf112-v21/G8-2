@@ -1,4 +1,6 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.grid;
+
+import sid.roborally.game_mechanics.Direction;
 
 import java.util.ArrayList;
 import java.util.HashSet;

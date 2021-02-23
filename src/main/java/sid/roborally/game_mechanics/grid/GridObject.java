@@ -1,4 +1,6 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.grid;
+
+import sid.roborally.game_mechanics.Direction;
 
 /**
  * This Entity class contains the position of an entity.

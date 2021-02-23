@@ -1,4 +1,4 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.card;
 
 /**
  * This is the step card
