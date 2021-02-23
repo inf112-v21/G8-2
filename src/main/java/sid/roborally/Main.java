@@ -1,10 +1,9 @@
 package sid.roborally;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+
 import sid.roborally.application_functionality.CommandLineTool;
 import sid.roborally.application_functionality.RoboRallyApplication;
-import sid.roborally.gfx_and_ui.RoboRallyAppListener;
+
 
 public class Main {
     public static void main(String[] args)

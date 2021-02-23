@@ -81,7 +81,6 @@ public class GameRunner {
                 if(hole_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Hole(x,y));
                 if(flag_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Flag(x,y, 0)); //TODO: Find a better way to assign flags their ID.
             }
-        //TODO: Gå gjennom feks JSON getFlagID
     }
 
     /**
