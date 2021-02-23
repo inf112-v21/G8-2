@@ -15,6 +15,10 @@ public class Main {
         RoboRallyApplication rr_app = new RoboRallyApplication();
         clt.giveApp(rr_app);
 
-        rr_app.setUpLibgdxApplication();
+        /* Start program in command-line */
+        clt.run();
+
+        //TODO: Skal ikke starte app automatisk
+        //rr_app.setUpLibgdxApplication();
     }
 }
