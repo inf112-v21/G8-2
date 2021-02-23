@@ -1,8 +1,7 @@
 package sid.roborally.game_mechanics;
 
-import org.hamcrest.Condition;
-import org.junit.Before;
 import org.junit.Test;
+import sid.roborally.game_mechanics.card.TurnCard;
 
 import static org.junit.Assert.assertEquals;
 

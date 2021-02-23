@@ -2,7 +2,8 @@ package sid.roborally.game_mechanics;
 
 import org.junit.Before;
 import org.junit.Test;
-import sid.roborally.application_functionality.Player;
+import sid.roborally.game_mechanics.grid.Position;
+import sid.roborally.game_mechanics.grid.Robot;
 
 import static org.junit.Assert.*;
 

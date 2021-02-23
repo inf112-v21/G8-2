@@ -15,15 +15,15 @@ public enum Direction {
     WEST;
 
 
-    Direction rotateRight() {
+    public Direction rotateRight() {
         return values()[(ordinal() + 1) % 4];
     }
 
-    Direction rotate180() {
+    public Direction rotate180() {
          return values()[(ordinal() + 2) % 4];
      }
 
-    Direction rotateLeft() {
+    public Direction rotateLeft() {
         return values()[(ordinal() + 3) % 4];
     }
 }

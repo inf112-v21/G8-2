@@ -1,6 +1,8 @@
 package sid.roborally.game_mechanics;
 
 import org.junit.Test;
+import sid.roborally.game_mechanics.grid.GridObject;
+import sid.roborally.game_mechanics.grid.Robot;
 
 import static org.junit.Assert.*;
 
