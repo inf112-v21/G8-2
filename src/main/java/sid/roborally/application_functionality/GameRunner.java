@@ -79,7 +79,10 @@ public class GameRunner {
             for(int y = 0; y < board_layer.getHeight(); y++)
             {
                 if(hole_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Hole(x,y));
-                if(flag_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Flag(x,y, 0)); //TODO: Find a better way to assign flags their ID.
+                if(flag_layer.getCell(x,y) != null) {
+                    int index = flag_layer.getCell(x,y).getTile().getId();
+                    game.addGridObjectToGrid(new Flag(x,y,TileIDReference.flagIndexToId(index)));
+                }
             }
     }
 

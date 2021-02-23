@@ -72,13 +72,8 @@ public class GridTest {
     }
     @Test
     public void MoveRobotDirectionEastShouldIncrementX() {
-        System.out.println(r.getPosition());
-
         g.moveRobot(r, Direction.EAST);
-        System.out.println(r.getPosition());
-
         HashSet<GridObject> result = g.getGridObjectsFromPosition(new Position(2,1));
-
         assertTrue(result.contains(r));
     }
     @Test
