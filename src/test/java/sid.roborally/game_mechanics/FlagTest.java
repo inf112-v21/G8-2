@@ -1,6 +1,8 @@
 package sid.roborally.game_mechanics;
 
 import org.junit.Test;
+import sid.roborally.game_mechanics.grid.Flag;
+import sid.roborally.game_mechanics.grid.Position;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

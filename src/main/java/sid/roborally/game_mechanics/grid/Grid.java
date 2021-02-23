@@ -1,10 +1,12 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.grid;
+
+import sid.roborally.game_mechanics.Direction;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Grid {
-    ArrayList<ArrayList<HashSet<GridObject>>> grid;
+    public ArrayList<ArrayList<HashSet<GridObject>>> grid;
 
     private int width;
     private int height;

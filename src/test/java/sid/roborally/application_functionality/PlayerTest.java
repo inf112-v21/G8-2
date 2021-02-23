@@ -2,7 +2,7 @@ package sid.roborally.application_functionality;
 
 import org.junit.Before;
 import org.junit.Test;
-import sid.roborally.game_mechanics.Position;
+import sid.roborally.game_mechanics.grid.Position;
 
 import static org.junit.Assert.assertTrue;
 

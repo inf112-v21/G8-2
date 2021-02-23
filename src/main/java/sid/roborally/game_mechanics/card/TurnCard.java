@@ -1,4 +1,6 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.card;
+
+import sid.roborally.game_mechanics.Direction;
 
 /**
  * This is the turn/rotate card.

@@ -1,6 +1,9 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
+import sid.roborally.game_mechanics.grid.Flag;
+import sid.roborally.game_mechanics.grid.Grid;
+import sid.roborally.game_mechanics.grid.GridObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,8 +1,5 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.grid;
 
-import sid.roborally.application_functionality.Player;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Robot extends GridObject {

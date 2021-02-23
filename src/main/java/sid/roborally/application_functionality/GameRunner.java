@@ -3,10 +3,11 @@ package sid.roborally.application_functionality;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import org.lwjgl.system.CallbackI;
 import sid.roborally.game_mechanics.*;
+import sid.roborally.game_mechanics.grid.Flag;
+import sid.roborally.game_mechanics.grid.Hole;
+import sid.roborally.game_mechanics.grid.Position;
 
-import javax.swing.*;
 import java.util.HashSet;
 
 /**

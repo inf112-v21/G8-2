@@ -1,7 +1,7 @@
 package sid.roborally.application_functionality;
 
-import sid.roborally.game_mechanics.Position;
-import sid.roborally.game_mechanics.Robot;
+import sid.roborally.game_mechanics.grid.Position;
+import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
 
 /**

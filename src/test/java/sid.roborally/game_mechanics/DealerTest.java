@@ -2,6 +2,9 @@ package sid.roborally.game_mechanics;
 
 import org.junit.Before;
 import org.junit.Test;
+import sid.roborally.game_mechanics.card.Card;
+import sid.roborally.game_mechanics.card.CardDealer;
+import sid.roborally.game_mechanics.card.StepCard;
 
 import java.util.Stack;
 

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.Game;
-import sid.roborally.game_mechanics.Position;
+import sid.roborally.game_mechanics.grid.Position;
 
 import static org.junit.Assert.*;
 

@@ -1,4 +1,4 @@
-package sid.roborally.game_mechanics;
+package sid.roborally.game_mechanics.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
