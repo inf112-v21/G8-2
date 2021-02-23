@@ -16,8 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RoboRallyApplication;
 
-import javax.swing.*;
-
 /**
  * <h3>RoboRallyAppListener</h3>
  * <p>This class implements ApplicationListener (libgdx) and contains functionality
