@@ -9,11 +9,14 @@ import java.util.Stack;
  * This class keeps track of the cards in a given round
  * Gives cards to players
  * And keeps track of how many cards are in the game
+ *
+ * @author Emil Eldooen
  */
 public class CardDealer {
     //Deck of cards in the game
-    Stack<Card> deck;
-    ArrayList<Card> usedCards = new ArrayList<Card>();
+    private Stack<Card> deck;
+    private ArrayList<Card> usedCards = new ArrayList<Card>();
+
     //Constructor giving the dealer its deck
     public CardDealer(Stack<Card> givenDeck) {
         this.deck = givenDeck;
@@ -24,6 +27,7 @@ public class CardDealer {
     public Stack<Card> getDeck(){
         return deck;
     }
+
     //Gets the used cards from the dealer
     public ArrayList<Card> getUsedCards(){
         return usedCards;
