@@ -12,9 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RoboRallyApplication;
 
@@ -43,6 +41,10 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
 
     private Stage stage;
 
+    public RoboRallyAppListener(RoboRallyApplication app) {
+        this.rr_app = app;
+    }
+
     /**
      * Create() function finds maps, tile layers and sprites,
      * sets up renderer and camera
@@ -59,6 +61,7 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
 
         //Application wrapper
         rr_app = new RoboRallyApplication();
+        rr_app.setUpAndRunDemo();
 
         //Creates camera
         cam = new OrthographicCamera();
@@ -101,7 +104,7 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
 
         /* Render message */
         /*
-        if(rr_app.getGameMessage().length() > 0) //TODO: bug to fix
+        if(rr_app.getGameMessage().length() > 0) //TODO: bug to fix //TODO: Kan ikke skje pr.rendering, men én gang.
         {
             JFrame frame = new JFrame();
             frame.setSize(50,50);

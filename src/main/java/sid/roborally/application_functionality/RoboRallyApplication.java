@@ -14,7 +14,7 @@ import java.util.HashSet;
  *    To be a convenient way to tie together the different parts of the
  *    program.</p><br>
  *
- * <p>This class will be instantiated in the ApplicationListener, both to
+ * <p>This class will be instantiated in Main, both to
  *    recieve and pass information and requests.<br>
  *    It will contain instances of several parts of the program as this class
  *    is central in tying together the program.</p>
@@ -35,6 +35,14 @@ public class RoboRallyApplication {
         inputHolder = InputHolder.Menu;
 
         grunner = new GameRunner();
+    }
+
+    /*
+     * Demo and Test-functionality:
+     */
+
+    public void setUpAndRunDemo()
+    {
         grunner.setUpDemoGame(); //TODO: Only for now. Later we need a general solution.
         inputHolder = InputHolder.GameRunner;
         grunner.runGame();
