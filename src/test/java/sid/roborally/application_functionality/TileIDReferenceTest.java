@@ -14,4 +14,9 @@ public class TileIDReferenceTest {
         assertEquals(3, TileIDReference.flagIndexToId(71));
         assertEquals(4, TileIDReference.flagIndexToId(79));
     }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void FlagIndexIllegalArgumentThrowsException() {
+        assertEquals(1,TileIDReference.flagIndexToId(54));
+    }
 }
