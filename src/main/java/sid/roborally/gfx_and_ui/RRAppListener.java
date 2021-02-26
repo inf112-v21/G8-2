@@ -5,16 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import sid.roborally.application_functionality.Player;
-import sid.roborally.application_functionality.RoboRallyApplication;
+import sid.roborally.application_functionality.RRApplication;
 
 /**
  * <h3>RoboRallyAppListener</h3>
@@ -23,15 +19,15 @@ import sid.roborally.application_functionality.RoboRallyApplication;
  * <p>The goal is for this class to impact the rest of the program as little as possible
  *     internally.</p>
  */
-public class RoboRallyAppListener extends InputAdapter implements ApplicationListener {
+public class RRAppListener extends InputAdapter implements ApplicationListener {
 
-    private RoboRallyApplication rr_app; //Class that controls the application
+    private RRApplication rr_app; //Class that controls the application
 
     /* Renderer and camera */
     private OrthogonalTiledMapRenderer rend;
     private OrthographicCamera cam;
 
-    public RoboRallyAppListener(RoboRallyApplication app) {
+    public RRAppListener(RRApplication app) {
         this.rr_app = app;
     }
 
@@ -39,7 +35,7 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
     public void create()
     {
         /* This apparently need to be called from AppListener */
-        rr_app.setUpAndRunDemo();
+        rr_app.setUpDemo();
 
         /* Creates camera */
         cam = new OrthographicCamera();

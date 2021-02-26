@@ -3,6 +3,7 @@ package sid.roborally.application_functionality;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import sid.roborally.application_functionality.reference.*;
 import sid.roborally.game_mechanics.*;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Hole;
@@ -31,7 +32,6 @@ public class GameRunner {
 
     private Game game;
     private boolean inputActive; //TODO: Can shut of input to game
-    private String appMessage;
 
     /**
      * <p>GameRunner constructor.</p>
@@ -39,10 +39,7 @@ public class GameRunner {
     public GameRunner() {
         game = new Game();
         inputActive = true;
-        appMessage = "";
     }
-
-    public String getAppMessage() { return appMessage; }
 
     /**
      * <p>Sets the currentGameTexture</p>
@@ -91,7 +88,7 @@ public class GameRunner {
      */
     public void setUpDemoGame()
     {
-        setGameTexture("assets/example.tmx");
+        setGameTexture(TextureReference.getMapPath(Map.DemoMap));
 
         Player demoPlayer = new Player(new Position(1,1), true);
         demoPlayer.setLocal();
@@ -120,13 +117,11 @@ public class GameRunner {
         {
             inputActive = false;
             //TODO: Print victory
-            appMessage = "YOU WON!";
         }
         if(game.getLocal().isDead())
         {
             inputActive = false;
             //TODO: Print loss
-            appMessage = "YOU LOST!";
         }
     }
 
@@ -177,7 +172,7 @@ public class GameRunner {
 
     /**
      * Resets the local position of the given Player-instance in the player-layer.
-     * @param p
+     * @param p Player
      */
     private void resetPlayerTexture(Player p)
     {

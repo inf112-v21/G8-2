@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import sid.roborally.application_functionality.Player;
+import sid.roborally.application_functionality.reference.*;
 
 /**
  * <h3>PlayerGraphic</h3>
@@ -40,7 +41,11 @@ public class PlayerGraphic {
      */
     private void setSelectedStateGraphics(int index)
     {
-        TextureRegion tex = new TextureRegion(new Texture("assets/player.png"));
+        TextureRegion tex = new TextureRegion(
+                new Texture(
+                        TextureReference.getPlayerTexPath(
+                                PlayerTexture.Player1)));
+
         //[][0]:Alive; [][1]:Dead; [][2]:Won;
         TextureRegion[][] playerTextures = tex.split(300,300);
 

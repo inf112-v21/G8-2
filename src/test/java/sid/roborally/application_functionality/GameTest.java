@@ -1,5 +1,6 @@
 package sid.roborally.application_functionality;
 
+import junit.framework.AssertionFailedError;
 import org.junit.Before;
 import org.junit.Test;
 import sid.roborally.game_mechanics.Direction;

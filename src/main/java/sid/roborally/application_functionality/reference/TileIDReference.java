@@ -1,4 +1,4 @@
-package sid.roborally.application_functionality;
+package sid.roborally.application_functionality.reference;
 
 public class TileIDReference {
 

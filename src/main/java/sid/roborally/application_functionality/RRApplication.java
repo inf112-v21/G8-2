@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import sid.roborally.gfx_and_ui.RoboRallyAppListener;
+import sid.roborally.gfx_and_ui.RRAppListener;
 
 import java.util.HashSet;
 
@@ -23,7 +23,7 @@ import java.util.HashSet;
  *    is central in tying together the program.</p>
  *
  * */
-public class RoboRallyApplication {
+public class RRApplication {
 
     private enum InputHolder {Menu, GameRunner} //This is to know where to route input
     private InputHolder inputHolder;
@@ -34,7 +34,7 @@ public class RoboRallyApplication {
     /**
      * <p>RoboRallyApplication constructor.</p>
      */
-    public RoboRallyApplication()
+    public RRApplication()
     {
         inputHolder = InputHolder.Menu;
 
@@ -47,18 +47,21 @@ public class RoboRallyApplication {
         config.setTitle("Robo rally");
         config.setWindowedMode(500, 500);
 
-        new Lwjgl3Application(new RoboRallyAppListener(this), config);
+        new Lwjgl3Application(new RRAppListener(this), config);
+    }
+
+    public GameRunner getGameRunner() {
+        return grunner;
     }
 
     /*
      * Demo and Test-functionality:
      */
 
-    public void setUpAndRunDemo()
+    public void setUpDemo()
     {
         grunner.setUpDemoGame(); //TODO: Only for now. Later we need a general solution.
         inputHolder = InputHolder.GameRunner;
-        grunner.runGame();
     }
 
     /*
@@ -69,12 +72,6 @@ public class RoboRallyApplication {
      * <p>Quits/Shuts down the whole application.</p>
      */
     public void quitApplication() { Gdx.app.exit(); }
-
-    /**
-     * <p>Gives a message from the gamerunner about the game.</p>
-     * @return message
-     */
-    public String getGameMessage() { return grunner.getAppMessage(); }
 
     /*
      * Tiled methods:
