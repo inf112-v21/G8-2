@@ -44,7 +44,7 @@ public class PlayerGraphic {
         TextureRegion tex = new TextureRegion(
                 new Texture(
                         TextureReference.getPlayerTexPath(
-                                TextureReference.PlayerTexture.Player1)));
+                                PlayerTexture.Player1)));
 
         //[][0]:Alive; [][1]:Dead; [][2]:Won;
         TextureRegion[][] playerTextures = tex.split(300,300);

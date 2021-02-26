@@ -88,7 +88,7 @@ public class GameRunner {
      */
     public void setUpDemoGame()
     {
-        setGameTexture(TextureReference.getMapPath(TextureReference.Map.DemoMap));
+        setGameTexture(TextureReference.getMapPath(Map.DemoMap));
 
         Player demoPlayer = new Player(new Position(1,1), true);
         demoPlayer.setLocal();
@@ -172,7 +172,7 @@ public class GameRunner {
 
     /**
      * Resets the local position of the given Player-instance in the player-layer.
-     * @param p
+     * @param p Player
      */
     private void resetPlayerTexture(Player p)
     {

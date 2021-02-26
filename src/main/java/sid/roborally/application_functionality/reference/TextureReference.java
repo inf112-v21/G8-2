@@ -8,9 +8,6 @@ package sid.roborally.application_functionality.reference;
  */
 public class TextureReference {
 
-    public enum Map {DemoMap, TwoPlayerDemo}
-    public enum PlayerTexture {Player1}
-
     private static String MAP_FOLDER_PATH = "assets/maps/";
     private static String PLAYER_FOLDER_PATH = "assets/player_tex/";
 
