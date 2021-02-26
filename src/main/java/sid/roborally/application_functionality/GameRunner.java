@@ -76,10 +76,16 @@ public class GameRunner {
             for(int y = 0; y < board_layer.getHeight(); y++)
             {
                 if(hole_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Hole(x,y));
+                /* Adding flags to Game flags arraylist, then sorting them for the correct order */
                 if(flag_layer.getCell(x,y) != null) {
+                    //adding flag to grid and to game
                     int index = flag_layer.getCell(x,y).getTile().getId();
-                    game.addGridObjectToGrid(new Flag(x,y,TileIDReference.flagIndexToId(index)));
+                    Flag f = new Flag(x,y,TileIDReference.flagIndexToId(index));
+                    game.addGridObjectToGrid(f);
+                    game.addFlag(f);
                 }
+                game.getFlags().sort(new FlagIDComparator());
+
             }
     }
 

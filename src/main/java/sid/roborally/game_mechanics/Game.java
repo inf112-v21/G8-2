@@ -5,9 +5,7 @@ import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Grid;
 import sid.roborally.game_mechanics.grid.GridObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * <h3>Game</h3>
@@ -32,7 +30,10 @@ public class Game {
      * <p>Game constructor.</p>
      */
     public Game()
-    { players = new HashSet<>(); }
+    {
+        players = new HashSet<>();
+        flags = new ArrayList<>();
+    }
 
     /*
      * * * * * Editing game-elements.
@@ -131,4 +132,12 @@ public class Game {
         }
     }
 
+
+    public void addFlag(Flag f) {
+        flags.add(f);
+    }
+
+    public ArrayList<Flag> getFlags() {
+        return this.flags;
+    }
 }

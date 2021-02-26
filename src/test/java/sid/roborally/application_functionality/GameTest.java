@@ -5,7 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.Game;
+import sid.roborally.game_mechanics.FlagIDComparator;
+import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -92,4 +96,32 @@ public class GameTest {
         assertTrue(game.getLocal().equals(p3));
     }
 
+    @Test
+    public void AddFlagToFlagsListTest() {
+        Flag f = new Flag(0,0, 1);
+        game.addFlag(f);
+        assertTrue(game.getFlags().contains(f));
+    }
+
+    @Test
+    public void sortFlagsListBasedOffOfPriority() {
+        ArrayList<Flag> expected = new ArrayList<>();
+        
+        Flag f1 = new Flag(0,0,1);
+        Flag f2 = new Flag(1,1,2);
+        Flag f3 = new Flag(2,2,3);
+
+        expected.add(f1);
+        expected.add(f2);
+        expected.add(f3);
+
+        game.addFlag(f3);
+        game.addFlag(f1);
+        game.addFlag(f2);
+
+        assertNotEquals(expected,game.getFlags());
+
+        game.getFlags().sort(new FlagIDComparator());
+        assertEquals(expected, game.getFlags());
+    }
 }
