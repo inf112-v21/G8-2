@@ -3,6 +3,7 @@ package sid.roborally.application_functionality;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import sid.roborally.application_functionality.reference.TextureReference;
 import sid.roborally.game_mechanics.*;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Hole;
@@ -91,7 +92,7 @@ public class GameRunner {
      */
     public void setUpDemoGame()
     {
-        setGameTexture("assets/example.tmx");
+        setGameTexture(TextureReference.getMapPath(TextureReference.Map.DemoMap));
 
         Player demoPlayer = new Player(new Position(1,1), true);
         demoPlayer.setLocal();
