@@ -14,7 +14,7 @@ public class CardDeck {
     public CardDeck() {
         deck = new Stack<>();
         addMoveCards(deck);
-        addRotatingCards(deck);
+        addRotationCards(deck);
     }
 
     /**
@@ -29,7 +29,7 @@ public class CardDeck {
      * Adds all the rotation cards to the deck
      * @param deck
      */
-    private void addRotatingCards(Stack<Card> deck) {
+    private void addRotationCards(Stack<Card> deck) {
         for (int i = 0; i < 18; i++) {
             deck.push(new TurnCard(generatePriority(80, 420, 20), "right"));
             deck.push(new TurnCard(generatePriority(70, 410, 20), "left"));
