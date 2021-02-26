@@ -25,51 +25,31 @@ import sid.roborally.application_functionality.RoboRallyApplication;
  */
 public class RoboRallyAppListener extends InputAdapter implements ApplicationListener {
 
-    private RoboRallyApplication rr_app; //The wrapper app which controls the whole program
+    private RoboRallyApplication rr_app; //Class that controls the application
 
-    private SpriteBatch batch;
-    private BitmapFont font;
-
-    private boolean drawVictory; //TODO: Gjør elegant.
-    private boolean drawLoss;
-
-    //Renderer and camera
+    /* Renderer and camera */
     private OrthogonalTiledMapRenderer rend;
     private OrthographicCamera cam;
-
-    private Stage stage;
 
     public RoboRallyAppListener(RoboRallyApplication app) {
         this.rr_app = app;
     }
 
-    /**
-     * Create() function finds maps, tile layers and sprites,
-     * sets up renderer and camera
-     * as well as splitting up the sprites for later use in the render function
-     */
     @Override
-    public void create() {
-
-        drawVictory = false;
-        drawLoss = false;
-
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-
-        //Application wrapper
-        rr_app = new RoboRallyApplication();
+    public void create()
+    {
+        /* This apparently need to be called from AppListener */
         rr_app.setUpAndRunDemo();
 
-        //Creates camera
+        /* Creates camera */
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 1500, 1500);
         cam.update();
 
-        //Creates render
+        /* Creates render */
         rend = new OrthogonalTiledMapRenderer(rr_app.getMap());
 
-        //Sets render's view to that of the camera
+        /* Sets render's view to that of the camera */
         rend.setView(cam);
 
         Gdx.input.setInputProcessor(this);
@@ -77,10 +57,7 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
 
     @Override
     public void dispose()
-    {
-        batch.dispose();
-        font.dispose();
-    }
+    { }
 
     @Override
     public void render()
@@ -88,32 +65,12 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        /* Check if game is lost */ //TODO: Find a better place for this
-        /* Check if game is won */ //TODO: Find a better place for this
-        if(drawVictory) displayVictory();
-        if(drawLoss) displayLoss();
-
         /* Sets cell-texture based on Player-texture-information */
         for(Player player : rr_app.getPlayers())
             rr_app.getPlayerLayer().setCell(
-                    player.getRobot().getPosition().getX(),
-                    player.getRobot().getPosition().getY(),
-                    player.getPlayerGraphic().getPlayerTexture());
-
-        /* Render message */
-        /*
-        if(rr_app.getGameMessage().length() > 0) //TODO: bug to fix //TODO: Kan ikke skje pr.rendering, men én gang.
-        {
-            JFrame frame = new JFrame();
-            frame.setSize(50,50);
-            JLabel label = new JLabel();
-            label.setText(rr_app.getGameMessage());
-            label.setSize(40,40);
-            frame.add(label);
-            frame.setVisible(true);
-        }
-
-         */
+                    player.getRobot().getPosition().getX(), //Player x-position
+                    player.getRobot().getPosition().getY(), //Player y-position
+                    player.getPlayerGraphic().getPlayerTexture()); //Player-state texture
 
         /* Render the map */
         rend.render();
@@ -131,28 +88,6 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
     public void resume() {
     }
 
-    private void displayVictory()
-    {
-        batch.begin();
-        font.setColor(Color.CYAN);
-
-        font.draw(batch, "Victory!", 10, 10);
-        batch.end();
-    }
-
-    private void displayLoss()
-    {
-        batch.begin();
-        font.setColor(Color.RED);
-
-        font.draw(batch, "You Lost!", 10, 10);
-        batch.end();
-    }
-
-    /*
-     * Below here are the control functions for the game
-     * Can move with directional keys or W A S D
-     */
     @Override
     public boolean keyUp(int keyCode){
         if(Input.Keys.LEFT == keyCode || Input.Keys.A == keyCode)
@@ -165,8 +100,6 @@ public class RoboRallyAppListener extends InputAdapter implements ApplicationLis
             rr_app.moveDownInput();
         if(Input.Keys.ESCAPE == keyCode)
             rr_app.escapeInput();
-        if(Input.Keys.V == keyCode) drawVictory = true; //TODO: Remove
-        if(Input.Keys.L == keyCode) drawVictory = true;
         return false;
     }
 }

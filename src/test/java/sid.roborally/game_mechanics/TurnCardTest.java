@@ -10,19 +10,19 @@ public class TurnCardTest {
     TurnCard card = new TurnCard(600,"left");
 
     @Test
-    public void TurnCardTurnsLeftTest() {
-        assertEquals(card.getOrientation(),Direction.WEST);
+    public void TurnCardReturnsLeftTest() {
+        assertEquals(card.getTurnDirection(),"left");
     }
     @Test
-    public void TurnCardTurnsRightTest() {
+    public void TurnCardReturnsRightTest() {
         card = new TurnCard(600, "right");
-        assertEquals(card.getOrientation(),Direction.EAST);
+        assertEquals(card.getTurnDirection(),"right");
     }
 
     @Test
-    public void TurnCardTurnsArundTest() {
+    public void TurnCardReturnsAroundTest() {
         card = new TurnCard(600, "around");
-        assertEquals(card.getOrientation(),Direction.SOUTH);
+        assertEquals(card.getTurnDirection(),"around");
     }
 
 

@@ -1,36 +1,32 @@
 package sid.roborally.game_mechanics.card;
 
-import sid.roborally.game_mechanics.Direction;
-
 /**
  * This is the turn/rotate card.
  * It inherits priority from the Card class
- * It also returns a direction relative to your current facing position. Hopefully.
- * This is acquired via the getOrientation() method
+ * It returns a string with which way to turn.
+ * This is acquired via the getTurnDirection() method
  */
 
 public class TurnCard extends Card{
 
-    private Direction orientation;
+    private String turnDirection;
 
     /**
      * @param pri decides priority.  turn left, right or around
-     * @param turn "left", "right" or "around"
+     * @param turnDir "left", "right" or "around"
      */
-    public TurnCard(int pri, String turn) {
+    public TurnCard(int pri, String turnDir) {
         super(pri);
-        this.orientation = Direction.NORTH;
-        //todo akkurat nå setter jeg Direction.NORTH for å kunne bruke rotates. Må finne en måte å hente direction fra spilleren sin robots orientation, I guess?
-        if (turn.equals("left"))
-            this.orientation = orientation.rotateLeft();
-        if (turn.equals("right"))
-            this.orientation = orientation.rotateRight();
-        if (turn.equals("around"))
-            this.orientation = orientation.rotate180();
+        this.turnDirection = turnDir;
+
     }
 
-    public Direction getOrientation(){
-        return orientation;
+
+    /**
+     * @return String turnDirection
+     */
+    public String getTurnDirection(){
+        return turnDirection;
     }
 
 
