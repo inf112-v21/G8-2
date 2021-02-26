@@ -1,10 +1,13 @@
 package sid.roborally.application_functionality;
 
+import sid.roborally.application_functionality.comm_line.GameCommandLine;
+
 import java.util.Scanner;
 
 public class CommandLineTool {
 
-    private RoboRallyApplication rr_app; //RoboRallyApplication
+    private RRApplication rr_app; //RoboRallyApplication
+    private GameCommandLine gcl;
 
     Scanner sc; //Input-scanner
 
@@ -17,9 +20,12 @@ public class CommandLineTool {
             "2. Go back to Main Menu\n" + "0. Quit application";
     private static int NEW_GAME_MENU_OPTIONS_NUM = 3;
 
-    public CommandLineTool() { }
+    public CommandLineTool() {}
 
-    public void giveApp(RoboRallyApplication app) { this.rr_app = app; }
+    public void giveApp(RRApplication app)
+    {
+        this.rr_app = app;
+    }
 
     public void run()
     {
@@ -88,8 +94,9 @@ public class CommandLineTool {
             case 1: //Set up and run demogame (demo_game_option)
                 {
                     rr_app.setUpLibgdxApplication();
-                    rr_app.setUpAndRunDemo();
-                    //TODO: Give clt control of demogame. MOVE RESPONSIBILITES TO APPLICATION_CALLS section.
+                    rr_app.setUpDemo();
+                    gcl = new GameCommandLine(rr_app.getGameRunner());
+                    gcl.startGame();
                     break;
                 }
             case 2:

@@ -1,7 +1,7 @@
 package sid.roborally.application_functionality;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
+import sid.roborally.application_functionality.reference.TileIDReference;
 
 import static org.junit.Assert.assertEquals;
 

@@ -8,8 +8,8 @@ package sid.roborally.application_functionality.reference;
  */
 public class TextureReference {
 
-    private enum Map {DemoMap, TwoPlayerDemo}
-    private enum PlayerTexture {Player1}
+    public enum Map {DemoMap, TwoPlayerDemo}
+    public enum PlayerTexture {Player1}
 
     private static String MAP_FOLDER_PATH = "assets/maps/";
     private static String PLAYER_FOLDER_PATH = "assets/player_tex/";
@@ -19,7 +19,7 @@ public class TextureReference {
      * @param map Map chosen
      * @return MapPath
      */
-    public String getMapPath(Map map)
+    public static String getMapPath(Map map)
     {
         String retMap;
         switch(map)
@@ -38,13 +38,13 @@ public class TextureReference {
      * @param pt Player texture chosen
      * @return Texture-path
      */
-    public String getPlayerTexPath(PlayerTexture pt)
+    public static String getPlayerTexPath(PlayerTexture pt)
     {
         String retTex;
         switch(pt)
         {
             case Player1:
-                retTex = "player1.tsx"; break;
+                retTex = "player1.png"; break;
             default: retTex = ""; break;
         }
         return retTex.equals("") ? "" : PLAYER_FOLDER_PATH + retTex;
