@@ -92,9 +92,9 @@ public class GameRunner {
     /**
      * Sets up a demo-game
      */
-    public void setUpDemoGame()
+    public void setUpDemoGame(Map map)
     {
-        setGameTexture(TextureReference.getMapPath(Map.DemoMap));
+        setGameTexture(TextureReference.getMapPath(map));
 
         Player demoPlayer = new Player(new Position(1,1), true);
         demoPlayer.setLocal();
@@ -146,25 +146,6 @@ public class GameRunner {
      * @return player_layer - TiledMapTileLayer instance
      */
     public TiledMapTileLayer getPlayerLayer() { return player_layer; }
-
-    /**
-     * <p>Returns local TiledMapTileLayer (hole-layer) instance</p>
-     * @return hole_layer - TiledMapTileLayer instance
-     */
-    public TiledMapTileLayer getHoleLayer() { return hole_layer; }
-
-    /**
-     * <p>Returns local TiledMapTileLayer (flag-layer) instance</p>
-     * @return flag_layer - TiledMapTileLayer instance
-     */
-    public TiledMapTileLayer getFlagLayer() { return flag_layer; }
-
-    /**
-     * <p>Returns local TiledMapTileLayer (board-layer) instance</p>
-     * @return board_layer - TiledMapTileLayer instance
-     */
-    public TiledMapTileLayer getBoardLayer() { return board_layer; }
-
 
     /*
      * * * * * Player-related-methods

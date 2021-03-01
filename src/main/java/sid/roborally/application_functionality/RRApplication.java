@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.gfx_and_ui.RRAppListener;
 
 import java.util.HashSet;
@@ -60,7 +61,8 @@ public class RRApplication {
 
     public void setUpDemo()
     {
-        grunner.setUpDemoGame(); //TODO: Only for now. Later we need a general solution.
+        grunner.setUpDemoGame(Map.DemoMap);
+        //grunner.setUpDemoGame(Map.TwoPlayerDemo); //TODO: Only for now. Later we need a general solution.
         inputHolder = InputHolder.GameRunner;
     }
 
@@ -88,24 +90,6 @@ public class RRApplication {
      * @return playerLayer - Local player-layer.
      */
     public TiledMapTileLayer getPlayerLayer() { return grunner.getPlayerLayer(); }
-
-    /**
-     * <p>TiledMapTileLayer (hole-layer>-getter</p>
-     * @return holeLayer - Local hole-layer.
-     */
-    public TiledMapTileLayer getHoleLayer() { return grunner.getHoleLayer(); }
-
-    /**
-     * <p>TiledMapTileLayer (flag-layer>-getter</p>
-     * @return flagLayer - Local flag-layer.
-     */
-    public TiledMapTileLayer getFlagLayer() { return grunner.getFlagLayer(); }
-
-    /**
-     * <p>TiledMapTileLayer (board-layer>-getter</p>
-     * @return boardLayer - Local board-layer.
-     */
-    public TiledMapTileLayer getBoardLayer() { return grunner.getBoardLayer(); }
 
     /**
      * <p>Returns a set of the Player-instances associated with the current game.</p>
