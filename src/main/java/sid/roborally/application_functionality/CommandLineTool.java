@@ -1,7 +1,8 @@
 package sid.roborally.application_functionality;
 
 import sid.roborally.application_functionality.comm_line.GameCommandLine;
-
+import sid.roborally.application_functionality.connection.Client;
+import sid.roborally.application_functionality.connection.Server;
 import java.util.Scanner;
 
 public class CommandLineTool {
@@ -12,12 +13,18 @@ public class CommandLineTool {
     Scanner sc; //Input-scanner
 
     private static String MAIN_MENU_WELCOME = "\nWelcome to RoboRally. Select one of the following options:\n";
+    private static String SETUP_SERVER_OPTIONS = "\n1. Create a new server. (write \"1\"))\n" +
+                                                "2. Join a current game. (write \"2\")\n" +
+                                                "0. Quit application";
+    private static int SETUP_SERVER_OPTIONS_NUM = 3;
+
     private static String MAIN_MENU_OPTIONS = "1. Start a new game (write \"1\")" + "\n0. Quit application";
     private static int MAIN_MENU_OPTIONS_NUM = 2;
 
     private static String NEW_GAME_MENU_WELCOME = "\nNew Game Menu. Select one of the following options:\n";
-    private static String NEW_GAME_MENU_OPTIONS = "1. Start a new demo-game (write \"1\")\n" +
-            "2. Go back to Main Menu\n" + "0. Quit application";
+    private static String NEW_GAME_MENU_OPTIONS =   "1. Start a new demo-game (write \"1\")\n" +
+                                                    "2. Go back to Main Menu\n" +
+                                                    "0. Quit application";
     private static int NEW_GAME_MENU_OPTIONS_NUM = 3;
 
     public CommandLineTool() {}
@@ -30,7 +37,7 @@ public class CommandLineTool {
     public void run()
     {
         sc = new Scanner(System.in);
-        commandLineMainMenu();
+        serverSetupMenu();
     }
 
     /*
@@ -101,6 +108,27 @@ public class CommandLineTool {
                 }
             case 2:
                 commandLineMainMenu(); break; //MAIN MENU OPTION
+            default:
+                throw new IllegalStateException("Unexpected value: " + optionChosen);
+        }
+    }
+    private void serverSetupMenu()
+    {
+        System.out.println(NEW_GAME_MENU_WELCOME + SETUP_SERVER_OPTIONS);
+        int optionChosen = getValidInput(SETUP_SERVER_OPTIONS_NUM);
+        switch (optionChosen)
+        {
+            case 0: return;
+
+
+            case 1: { //Create server
+                Server server = new Server();
+                commandLineMainMenu(); break; }
+            case 2: {
+                //start client here.. type in port number somewhere? Another asking menu
+                Client client = new Client();
+                break;
+            }
             default:
                 throw new IllegalStateException("Unexpected value: " + optionChosen);
         }
