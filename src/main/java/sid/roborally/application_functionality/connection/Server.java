@@ -30,24 +30,32 @@ public class Server {
             System.out.println("Could not listen on port 4321");
             System.exit(-1);
         }
-        /*try{
+        try{
           client = server.accept();
+          System.out.println("Client connected: "+ client.isConnected());
         } catch (IOException e) {
             System.out.println("Accept failed: 4321");
             System.exit(-1);
         }
-        /*
+
         try{
            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+           String str = in.readLine();
+           System.out.println("client: "+ str);
+
            output = new PrintWriter(client.getOutputStream(), true);
         } catch (IOException e) {
             System.out.println("Read failed");
             System.exit(-1);
-        }*/
-        /*
+        }
+
         while(true){
             try{
-                line = in.readLine();
+                System.out.println("client inputstream read");
+                client.getInputStream().read();
+                System.out.println("client: "+ client);
+                //line = in.readLine();
                 //Send data back to client
                 output.println(line);
             } catch (IOException e) {
@@ -56,7 +64,6 @@ public class Server {
             }
         }
 
-         */
     }
     public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
