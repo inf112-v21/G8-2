@@ -12,51 +12,40 @@ import java.net.UnknownHostException;
 
 public class Client {
     private Socket serverSocket;
-    private PrintWriter serverOut;
-    private BufferedReader serverIn;
-    private TextField textField = new TextField("test text",20);
-    private Object button;
+    private PrintWriter clientOutput;
+    private BufferedReader serverInput;
 
     public Client() {
         listenSocket();
     }
 
+    /**
+     * Connects client to server with port num.
+     * Fetches client outputStream and server inputStream.
+     * Reads server input and prints to console.
+     * Catch: Throws exception if host is invalid or I/O operation is invalid.
+     */
     public void listenSocket(){
         //Create socket connection
         try{
             System.out.println("Connecting...");//feedback to user
             serverSocket = new Socket("localhost", 4321);
-            serverOut = new PrintWriter(serverSocket.getOutputStream(),true);
+            clientOutput = new PrintWriter(serverSocket.getOutputStream(),true);
 
             //input from client to server
-            serverOut.println("hello");
-            serverOut.flush();
+            clientOutput.println("hello");
+            clientOutput.flush();
 
-            serverIn = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+            serverInput = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+
+            String str = serverInput.readLine();
+            System.out.println("received: " + str);
+
         } catch (UnknownHostException e) {
             System.out.println("Unknown host: kq6py");
             System.exit(1);
         } catch  (IOException e) {
             System.out.println("No I/O");
-            System.exit(1);
-        }
-    }
-    public void actionPerformed(ActionEvent event){
-        Object source = event.getSource();
-
-        if(source == button){
-            //Send data over socket
-            String text = textField.getText();
-            serverOut.println(text);
-            textField.setText(new String(""));
-            serverOut.println(text);
-        }
-//Receive text from server
-        try{
-            String line = serverIn.readLine();
-            System.out.println("Text received: " + line);
-        } catch (IOException e){
-            System.out.println("Read failed");
             System.exit(1);
         }
     }
