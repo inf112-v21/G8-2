@@ -15,8 +15,8 @@ public class TurnCard extends Card{
      * @param pri decides priority.  turn left, right or around
      * @param turnDir "left", "right" or "around"
      */
-    public TurnCard(int pri, String turnDir) {
-        super(pri);
+    public TurnCard(int pri, String turnDir, String name) {
+        super(pri,name);
         this.turnDirection = turnDir;
 
     }

@@ -41,6 +41,7 @@ public class Game {
     {
         players = new HashSet<>();
         dealer = new CardDealer(new CardDeck().getDeck());
+        flags = new ArrayList<>();
     }
 
     /*

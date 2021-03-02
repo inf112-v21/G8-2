@@ -4,7 +4,7 @@ import sid.roborally.game_mechanics.card.StepCard;
 
 import static org.junit.Assert.assertEquals;
 public class StepCardTest {
-    StepCard movementCard = new StepCard(100,3);
+    StepCard movementCard = new StepCard(100,3, "TESTCARD");
     @Test
     public void cardHasSteps(){
         assertEquals(movementCard.getSteps(),3);

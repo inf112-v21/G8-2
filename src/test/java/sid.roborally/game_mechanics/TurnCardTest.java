@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TurnCardTest {
 
-    TurnCard card = new TurnCard(600,"left");
+    TurnCard card = new TurnCard(600,"left", "TESTCARD");
 
     @Test
     public void TurnCardReturnsLeftTest() {
@@ -15,13 +15,13 @@ public class TurnCardTest {
     }
     @Test
     public void TurnCardReturnsRightTest() {
-        card = new TurnCard(600, "right");
+        card = new TurnCard(600, "right", "TESTCARD");
         assertEquals(card.getTurnDirection(),"right");
     }
 
     @Test
     public void TurnCardReturnsAroundTest() {
-        card = new TurnCard(600, "around");
+        card = new TurnCard(600, "around", "TESTCARD");
         assertEquals(card.getTurnDirection(),"around");
     }
 

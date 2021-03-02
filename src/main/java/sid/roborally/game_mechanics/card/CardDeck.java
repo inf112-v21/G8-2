@@ -31,10 +31,10 @@ public class CardDeck {
      */
     private void addRotationCards(Stack<Card> deck) {
         for (int i = 0; i < 18; i++) {
-            deck.push(new TurnCard(generatePriority(80, 420, 20), "right"));
-            deck.push(new TurnCard(generatePriority(70, 410, 20), "left"));
+            deck.push(new TurnCard(generatePriority(80, 420, 20), "right", "Rotate Right"));
+            deck.push(new TurnCard(generatePriority(70, 410, 20), "left", "Rotate Left"));
             if (i > 11)
-                deck.push(new TurnCard(generatePriority(10, 60), "around"));
+                deck.push(new TurnCard(generatePriority(10, 60), "around", "Turn Around"));
         }
     }
 
@@ -44,15 +44,15 @@ public class CardDeck {
      */
     private void addMoveCards(Stack<Card> deck) {
         for (int i = 0; i < 18; i++) {
-            deck.push(new StepCard(generatePriority(490, 650, 10), 1));
+            deck.push(new StepCard(generatePriority(490, 650, 10), 1, "One Forward"));
 
             if (i > 5) {
-                deck.push(new StepCard(generatePriority(670, 780, 10), 2));
+                deck.push(new StepCard(generatePriority(670, 780, 10), 2, "Two Forward"));
             }
 
             if (i > 11) {
-                deck.push(new StepCard(generatePriority(790, 840, 10), 3));
-                deck.push(new StepCard(generatePriority(430, 480), -1));
+                deck.push(new StepCard(generatePriority(790, 840, 10), 3, "Three Forward"));
+                deck.push(new StepCard(generatePriority(430, 480), -1, "One Back"));
             }
         }
     }

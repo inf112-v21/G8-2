@@ -17,7 +17,7 @@ public class DealerTest {
     public void init(){
         //For-loop creating test cards for test deck
         for(int i = 0; i<10; i++){
-            StepCard testCard = new StepCard(100 + (10*i), i);
+            StepCard testCard = new StepCard(100 + (10*i), i, "TESTCARD");
             testDeck.add(testCard);
         }
         testDealer = new CardDealer(testDeck);

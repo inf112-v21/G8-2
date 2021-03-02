@@ -13,9 +13,9 @@ public class StepCard extends Card{
     private int steps;
 
     //Constructor giving the card priority and steps
-    public StepCard(int pri, int step) {
+    public StepCard(int pri, int step, String name) {
         //Construct card with priority
-        super(pri);
+        super(pri, name);
         this.steps = step;
     }
 
