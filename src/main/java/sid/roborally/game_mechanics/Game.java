@@ -1,11 +1,16 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
+import sid.roborally.game_mechanics.card.Card;
+import sid.roborally.game_mechanics.card.CardDealer;
+import sid.roborally.game_mechanics.card.CardDeck;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Grid;
 import sid.roborally.game_mechanics.grid.GridObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * <h3>Game</h3>
@@ -25,6 +30,9 @@ public class Game {
     private ArrayList<Flag> flags; //TODO: Flags in the order to be moved to
     private HashSet<Player> players;
     private Grid grid; //TODO: Connect this
+    private CardDealer dealer;
+
+    //TODO: DEALER CLASS INSTANCE OG UTDELING OG VELGING AV KORT OG KJØRING AV KORT
 
     /**
      * <p>Game constructor.</p>
@@ -32,7 +40,7 @@ public class Game {
     public Game()
     {
         players = new HashSet<>();
-        flags = new ArrayList<>();
+        dealer = new CardDealer(new CardDeck().getDeck());
     }
 
     /*
@@ -54,6 +62,23 @@ public class Game {
      * @param go GridObject
      */
     public void addGridObjectToGrid(GridObject go) { grid.addGridObject(go);}
+
+    /*
+     * Phase-methods
+     */
+
+    /* Dealing methods */
+
+    public void dealToPlayers()
+    {
+        for(Player p : players)
+        {
+            ArrayList<Card> giveCards = new ArrayList<>();
+            for(int i = 0; i < 9; i++) giveCards.add(dealer.deal());
+            p.giveProgramCards(giveCards);
+        }
+        dealer = new CardDealer(new CardDeck().getDeck());
+    }
 
     /*
      * * * * * Player Methods:
@@ -132,12 +157,4 @@ public class Game {
         }
     }
 
-
-    public void addFlag(Flag f) {
-        flags.add(f);
-    }
-
-    public ArrayList<Flag> getFlags() {
-        return this.flags;
-    }
 }

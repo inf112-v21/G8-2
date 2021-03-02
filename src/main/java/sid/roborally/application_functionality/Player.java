@@ -1,9 +1,13 @@
 package sid.roborally.application_functionality;
 
+import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardDeck;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <h3>Player</h3>
@@ -26,7 +30,7 @@ public class Player {
     private State playerState;
     private OwnerLocation ownerLocation;
     private PlayerGraphic p_graphic;
-    private CardDeck programCards;
+    private ArrayList<Card> programCards;
     private Robot robot; //The player-instance's robot
 
     /**
@@ -43,12 +47,11 @@ public class Player {
         robot = new Robot(pos.getX(), pos.getY());
     }
 
-   public void giveProgramCards (CardDeck cards){ //skal si at mine programmeringskort er disse 5 kortene.
-        this.programCards = cards;
-
+   public void giveProgramCards (List<Card> cards){ //skal si at mine programmeringskort er disse 5 kortene.
+        this.programCards = (ArrayList<Card>) cards;
    }
 
-   public CardDeck getProgramCards () {
+   public ArrayList<Card> getProgramCards () {
         return programCards;
    }
 
