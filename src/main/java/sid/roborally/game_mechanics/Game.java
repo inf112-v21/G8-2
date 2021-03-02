@@ -80,6 +80,10 @@ public class Game {
         dealer = new CardDealer(new CardDeck().getDeck());
     }
 
+    public void addFlag(Flag f) { flags.add(f); }
+
+    public ArrayList<Flag> getFlags() { return flags; }
+
     /*
      * * * * * Player Methods:
      */
