@@ -1,5 +1,6 @@
 package sid.roborally.application_functionality;
 
+import sid.roborally.game_mechanics.card.CardDeck;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
@@ -25,7 +26,7 @@ public class Player {
     private State playerState;
     private OwnerLocation ownerLocation;
     private PlayerGraphic p_graphic;
-
+    private CardDeck programCards;
     private Robot robot; //The player-instance's robot
 
     /**
@@ -41,6 +42,15 @@ public class Player {
         p_graphic = new PlayerGraphic(this, textureIndex);
         robot = new Robot(pos.getX(), pos.getY());
     }
+
+   public void giveProgramCards (CardDeck cards){ //skal si at mine programmeringskort er disse 5 kortene.
+        this.programCards = cards;
+
+   }
+
+   public CardDeck getProgramCards () {
+        return programCards;
+   }
 
     /**
      * <p>Player constructor that does not specify a chosen texture and will
