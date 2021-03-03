@@ -6,6 +6,8 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.application_functionality.reference.TextureReference;
+import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.gfx_and_ui.RRAppListener;
 
 import java.util.HashSet;
@@ -61,8 +63,15 @@ public class RRApplication {
 
     public void setUpDemo()
     {
-        grunner.setUpDemoGame(Map.DemoMap);
+        //grunner.setUpDemoGame(Map.DemoMap);
         //grunner.setUpDemoGame(Map.TwoPlayerDemo); //TODO: Only for now. Later we need a general solution.
+        grunner.setGameTexture(TextureReference.getMapPath(Map.TwoPlayerDemo));
+
+        /* Add player */
+        Player demoPlayer = new Player(new Position(1,1), true);
+        demoPlayer.setLocal();
+        grunner.addPlayer(demoPlayer);
+
         inputHolder = InputHolder.GameRunner;
     }
 
