@@ -47,10 +47,12 @@ public class Player {
         robot = new Robot(pos.getX(), pos.getY());
     }
 
+    //TODO: Tror dette heller kan gjøres i Game, og bruke player sin ID til å finne ut hvem som skal velge hvilke kort
    public void giveProgramCards (List<Card> cards){ //skal si at mine programmeringskort er disse 5 kortene.
         this.programCards = (ArrayList<Card>) cards;
    }
 
+   //TODO: Samme som li:50.
    public ArrayList<Card> getProgramCards () {
         return programCards;
    }

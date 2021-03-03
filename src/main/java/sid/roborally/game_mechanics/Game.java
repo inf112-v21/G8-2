@@ -10,6 +10,7 @@ import sid.roborally.game_mechanics.grid.GridObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * <h3>Game</h3>
@@ -25,13 +26,19 @@ import java.util.HashSet;
  */
 public class Game {
 
-    private HashMap<Flag, Player> flags_have_player; //TODO: Flags in game, player can only be added if he already have the earlier flags
-    private ArrayList<Flag> flags; //TODO: Flags in the order to be moved to
+    private HashMap<Flag, Player> flags_have_player;
+    private ArrayList<Flag> flags;
     private HashSet<Player> players;
-    private Grid grid; //TODO: Connect this
+    private Grid grid;
     private CardDealer dealer;
 
-    //TODO: DEALER CLASS INSTANCE OG UTDELING OG VELGING AV KORT OG KJØRING AV KORT
+    /* Phase-variables */
+    private HashMap<Player, List<Card>> givenProgramCards; //Associating program-cards with given players.
+    private HashMap<Player, ArrayList<Card>> chosenProgramCards;
+
+    /* Constants */
+    private static int DEAL_CARD_AMOUNT = 5;
+
 
     /**
      * <p>Game constructor.</p>
@@ -41,6 +48,8 @@ public class Game {
         players = new HashSet<>();
         dealer = new CardDealer();
         flags = new ArrayList<>();
+        givenProgramCards = new HashMap<>();
+        chosenProgramCards = new HashMap<>();
     }
 
     /*
@@ -80,18 +89,35 @@ public class Game {
         //TODO: CALCULATE DAMAGE (LAZERS)
 
         //TODO: OTHER CHECKS
+
+        doResets();
+    }
+
+    /**
+     * <p>Resets everything that has to be reset at the end of the round</p>
+     */
+    private void doResets() {
+        resetCardAssociations();
+    }
+
+    /**
+     * <p>Resets card-associations.</p>
+     */
+    private void resetCardAssociations() {
+        for(Player p : players) {
+            givenProgramCards.get(p).clear(); //Clears list
+            chosenProgramCards.get(p).clear();
+        }
     }
 
     /* Dealing methods */
 
-    public void dealToPlayers()
-    {
+    /**
+     * <p>Deal a given amount of cards to each player </p>
+     */
+    public void dealToPlayers() {
         for(Player p : players)
-        {
-            ArrayList<Card> giveCards = new ArrayList<>();
-            for(int i = 0; i < 9; i++) giveCards.add(dealer.deal());
-            p.giveProgramCards(giveCards);
-        }
+            p.giveProgramCards(dealer.dealCards(DEAL_CARD_AMOUNT));
         dealer.resetDeck();
     }
 
@@ -102,6 +128,22 @@ public class Game {
     /*
      * * * * * Player Methods:
      */
+
+    /**
+     * <p>Returns the given program cards associated with the player.</p>
+     * @param p Player
+     * @return List of cards
+     */
+    public List<Card> getPlayerProgramCards(Player p)
+    { return givenProgramCards.get(p); }
+
+    /**
+     * <p>Tells game what sequence of cards should be associated with player.</p>
+     * @param p Player
+     * @param cardSequence Card sequence to be used.
+     */
+    public void setChosenProgramCards(Player p, ArrayList<Card> cardSequence)
+    { chosenProgramCards.get(p).addAll(cardSequence); }
 
     /**
      * <p>Adds a player to the Game's Player-set.</p>
