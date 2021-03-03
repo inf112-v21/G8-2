@@ -3,7 +3,6 @@ package sid.roborally.game_mechanics;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardDealer;
-import sid.roborally.game_mechanics.card.CardDeck;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Grid;
 import sid.roborally.game_mechanics.grid.GridObject;
@@ -40,7 +39,7 @@ public class Game {
     public Game()
     {
         players = new HashSet<>();
-        dealer = new CardDealer(new CardDeck().getDeck());
+        dealer = new CardDealer();
         flags = new ArrayList<>();
     }
 
@@ -68,6 +67,21 @@ public class Game {
      * Phase-methods
      */
 
+    public void runRound()
+    {
+        //TODO: DEAL CARDS
+
+        //TODO: GET PLAYER CHOSEN CARDS
+
+        //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
+
+        //TODO: MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
+
+        //TODO: CALCULATE DAMAGE (LAZERS)
+
+        //TODO: OTHER CHECKS
+    }
+
     /* Dealing methods */
 
     public void dealToPlayers()
@@ -78,7 +92,7 @@ public class Game {
             for(int i = 0; i < 9; i++) giveCards.add(dealer.deal());
             p.giveProgramCards(giveCards);
         }
-        dealer = new CardDealer(new CardDeck().getDeck());
+        dealer.resetDeck();
     }
 
     public void addFlag(Flag f) { flags.add(f); }

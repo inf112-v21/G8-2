@@ -23,7 +23,7 @@ public class CardDeckTest {
     public void deckHoldsAllCards() {
         Stack<Card> deck;
         CardDeck deckGenerator = new CardDeck();
-        deck = deckGenerator.getDeck();
+        deck = deckGenerator.getDeckStack();
         assertEquals(84, deck.size());
     }
 
@@ -47,5 +47,11 @@ public class CardDeckTest {
         }
         int priority = deck.generatePriority(70, 410, 20);
         assertTrue(allowedPriorities.contains(priority));
+    }
+
+    @Test
+    public void cardsRemovedWhenDealt(){
+        Card removedCard = deck.getNextCard();
+        assertFalse(deck.getDeckStack().contains(removedCard));
     }
 }

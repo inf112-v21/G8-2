@@ -1,5 +1,6 @@
 package sid.roborally.game_mechanics.card;
 
+import java.util.Collections;
 import java.util.Stack;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Stack;
  */
 public class CardDeck {
 
-    Stack<Card> deck;
+    private Stack<Card> deck;
 
     public CardDeck() {
         deck = new Stack<>();
@@ -21,13 +22,28 @@ public class CardDeck {
      * Gets the current deck
      * @return the current deck
      */
-    public Stack<Card> getDeck() {
+    public Stack<Card> getDeckStack() {
         return deck;
+    }
+
+    public int size() { return deck.size(); }
+
+    /**
+     * Gives the next card (and removes it from the deck)
+     * @return Card
+     */
+    public Card getNextCard() { return deck.pop(); }
+
+    /**
+     * Shuffles the card-deck
+     */
+    public void shuffle() {
+        Collections.shuffle(deck);
     }
 
     /**
      * Adds all the rotation cards to the deck
-     * @param deck
+     * @param deck CardDeck
      */
     private void addRotationCards(Stack<Card> deck) {
         for (int i = 0; i < 18; i++) {
@@ -40,7 +56,7 @@ public class CardDeck {
 
     /**
      * Adds all the movement cards to the deck
-     * @param deck
+     * @param deck CardDeck
      */
     private void addMoveCards(Stack<Card> deck) {
         for (int i = 0; i < 18; i++) {
