@@ -14,7 +14,6 @@ import java.util.List;
 public class CardDealer {
     //Deck of cards in the game
     private CardDeck deck;
-    private ArrayList<Card> usedCards = new ArrayList<>(); //TODO: Tror dette er overflødig når vi har resetDeck()
 
     //Constructor giving the dealer its deck
     public CardDealer() { deck = new CardDeck(); }
@@ -28,11 +27,6 @@ public class CardDealer {
     public CardDeck getDeck(){
         return deck;
     }
-
-    //Gets the used cards from the dealer
-    public ArrayList<Card> getUsedCards(){
-        return usedCards;
-    } //TODO: Tror overflødig
 
     /**
      * <p>Deals a List with a given amount of cards</p>
@@ -53,11 +47,6 @@ public class CardDealer {
     //Shuffles the dealer's cards
     public void shuffleDeck(){
         deck.shuffle();
-    }
-
-    //Adds a card used by a player to the list
-    public void cardUsed(Card card){ //TODO: Tror overflødig
-        usedCards.add(card);
     }
 
 }
