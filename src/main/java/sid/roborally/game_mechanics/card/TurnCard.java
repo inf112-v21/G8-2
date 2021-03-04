@@ -9,24 +9,18 @@ package sid.roborally.game_mechanics.card;
 
 public class TurnCard extends Card{
 
-    private String turnDirection;
-
     /**
      * @param pri decides priority.  turn left, right or around
-     * @param turnDir "left", "right" or "around"
      */
-    public TurnCard(int pri, String turnDir, String name) {
-        super(pri,name);
-        this.turnDirection = turnDir;
-
+    public TurnCard(int pri, CardAction action) {
+        super(pri,action);
     }
-
 
     /**
      * @return String turnDirection
      */
     public String getTurnDirection(){
-        return turnDirection;
+        return this.getName();
     }
 
 

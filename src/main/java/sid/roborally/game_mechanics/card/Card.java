@@ -13,18 +13,18 @@ package sid.roborally.game_mechanics.card;
 public class Card {
     //Priority, determines the order a card is played in, higher priority wins
     private int priority;
-    private String name;
+    private CardAction action;
 
     //Constructor giving card its priority
-    public Card(int pri, String name){
+    public Card(int pri, CardAction action){
         this.priority = pri;
-        this.name = name;
+        this.action = action;
     }
 
     /**
      * <p>Returns card-name/type</p>
      */
-    public String getName() { return name; }
+    public String getName() { return CardAction.getActionName(action); }
 
     //Allows other classes to access a card's priority
     public int getPriority(){
