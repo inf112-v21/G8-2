@@ -1,20 +1,85 @@
 package sid.roborally.application_functionality.connection;
 
+import sid.roborally.application_functionality.GameRunner;
+import sid.roborally.application_functionality.reference.Map;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashSet;
 
 public class Server {
 
     private ServerSocket server;
     private Socket client;
-    private BufferedReader clientInput;
-    private PrintWriter serverOutput;
-    private String line;
+    private ObjectInputStream clientToServerInput;
+    private PrintWriter serverToClientOutput;
+    ObjectOutputStream toClient;
+
+    private Map map;
+    private GameRunner gameRunner;
+    private boolean waitingForPlayers = true;
+    private HashSet<Socket> clients = new HashSet<>();
 
 
-    public Server() {
+    public Server(Map map, GameRunner gameRunner) {
+        this.map = map;
+        this.gameRunner = gameRunner;
+
         listenSocket();
+        listenForClients();
+        sendMapToClients();
+        //sendGameRunnerToClients();
+    }
+
+    public void sendMapToClients(){
+        try{
+            for(Socket c : clients){
+                toClient = new ObjectOutputStream(c.getOutputStream());
+                toClient.writeObject(map);
+                toClient.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void sendGameRunnerToClients(){
+        System.out.println("Sending game runner to client: ");
+        try{
+            for(Socket c : clients){
+                toClient = new ObjectOutputStream(c.getOutputStream());
+                toClient.writeObject(gameRunner);
+                toClient.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendListClientsToClients(){
+        try{
+            for(Socket c : clients){
+                toClient = new ObjectOutputStream(c.getOutputStream());
+                toClient.writeObject(map);
+                toClient.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void listenForClients(){
+        while(waitingForPlayers){
+            waitingForPlayers = false; //setting to false immediately to only run once for currently one client
+            try{
+                client = server.accept();
+                System.out.println("Client connected: "+ client.isConnected());
+                clients.add(client);
+            } catch (IOException e) {
+                System.out.println("Accept failed: 4321");
+                System.exit(-1);
+            }
+        }
     }
 
     /**
@@ -25,7 +90,6 @@ public class Server {
      *  Continually fetches client input.
      *  Catches: if port not available and if I/O operations are invalid.
      */
-
     public void listenSocket(){
         // Tries to create server
         try{
@@ -34,48 +98,21 @@ public class Server {
             System.out.println("Could not listen on port 4321");
             System.exit(-1);
         }
-        // Accepts client, catches if client does not connect.
-        try{
-          client = server.accept();
-          System.out.println("Client connected: "+ client.isConnected());
-        } catch (IOException e) {
-            System.out.println("Accept failed: 4321");
-            System.exit(-1);
-        }
-        //Fetches client input and output.
-        try{
-           clientInput = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-           String str = clientInput.readLine();
-           System.out.println("client: "+ str);
-
-           serverOutput = new PrintWriter(client.getOutputStream(), true);
-           // ObjectInputStream testObjOutput
-
-
-           // Take the output, prints string to the client from server.
-           serverOutput.println("Hello Client");
-           serverOutput.flush();
-
-        } catch (IOException e) {
-            System.out.println("Read failed");
-            System.exit(-1);
-        }
-        // Tries to read client input and write the input.
+        // Tries to read client input object and write the input back to client.
+                /*
         while(true){
             try{
-                System.out.println("client inputstream read");
-                //client.getInputStream().read();
                 System.out.println("client: "+ client);
 
-                line = clientInput.readLine();
+                Object o = clientToServerInput.readObject();
                 //Send data back to client
-                serverOutput.println(line);
-            } catch (IOException e) {
+                serverToClientOutput.println(o);
+                serverToClientOutput.flush();
+            } catch (IOException | ClassNotFoundException e) {
                 System.out.println("Read failed");
                 System.exit(-1);
             }
         }
-
+                */
     }
 }

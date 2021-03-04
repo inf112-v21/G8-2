@@ -44,11 +44,15 @@ public class RRApplication {
 
     public void setUpLibgdxApplication() //TODO: Separer ansvar og gjør det lett for RoboRallyApplication å styre Vinduet.
     {
+        System.out.println("1");
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        System.out.println("2");
         config.setTitle("Robo rally");
+        System.out.println("3");
         config.setWindowedMode(500, 500);
-
+        System.out.println("4");
         new Lwjgl3Application(new RRAppListener(this), config);
+        System.out.println("5");
     }
 
     public GameRunner getGameRunner() {

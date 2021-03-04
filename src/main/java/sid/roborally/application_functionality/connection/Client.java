@@ -1,22 +1,62 @@
 package sid.roborally.application_functionality.connection;
 
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import sid.roborally.application_functionality.GameRunner;
+import sid.roborally.application_functionality.RRApplication;
+import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.application_functionality.reference.TextureReference;
+
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
     private Socket serverSocket;
-    private PrintWriter clientOutput;
-    private BufferedReader serverInput;
+    private ObjectOutputStream clientToServerOutput;
+
+    private Map map;
+    private GameRunner gameRunner;
+    private ObjectInputStream serverToClientInput;
+
+    RRApplication rr_app;
 
     public Client() {
         listenSocket();
+        listenForMap();
+        setUpClientGame();
+    }
+
+    public void setUpClientGame(){
+        rr_app = new RRApplication();
+        rr_app.setUpLibgdxApplication();
+        gameRunner = rr_app.getGameRunner();
+
+        System.out.println("Game runner: " + gameRunner + ", Map: "+map);
+        System.out.println(gameRunner.getMap());
+        gameRunner.setUpClientGame(map);
+
+    }
+
+    public void listenForMap(){
+        try{
+            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
+            map = (Map) serverToClientInput.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public void listenForGameRunner(){
+        try{
+            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
+            System.out.println(serverToClientInput);
+            gameRunner = (GameRunner) serverToClientInput.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -30,16 +70,12 @@ public class Client {
         try{
             System.out.println("Connecting...");//feedback to user
             serverSocket = new Socket("localhost", 4321);
-            clientOutput = new PrintWriter(serverSocket.getOutputStream(),true);
+            clientToServerOutput = new ObjectOutputStream(serverSocket.getOutputStream());
 
             //input from client to server
-            clientOutput.println("hello");
-            clientOutput.flush();
+            //clientToServerOutput.writeObject(new String("Client "+ this + " has connected."));
+            //clientToServerOutput.flush();
 
-            serverInput = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
-
-            String str = serverInput.readLine();
-            System.out.println("received: " + str);
 
         } catch (UnknownHostException e) {
             System.out.println("Unknown host: kq6py");

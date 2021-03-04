@@ -3,12 +3,14 @@ package sid.roborally.application_functionality;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import sid.roborally.application_functionality.connection.Server;
 import sid.roborally.application_functionality.reference.*;
 import sid.roborally.game_mechanics.*;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Hole;
 import sid.roborally.game_mechanics.grid.Position;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
@@ -21,7 +23,7 @@ import java.util.HashSet;
  * <p>GameRunner will be instantiated in RoboRallyApplication and will itself contain instances of
  *    Game, TiledMap and TiledMapTileLayer.</p>
  */
-public class GameRunner {
+public class GameRunner implements Serializable {
 
     private TiledMap map;
     private TiledMapTileLayer
@@ -86,6 +88,8 @@ public class GameRunner {
                 }
                 game.getFlags().sort(new FlagIDComparator());
 
+                //TODO - add correct number of players to game based off of player_start_layer positions
+                // cannot add players the same way. need to first find out how many players there will be
             }
     }
 
@@ -94,10 +98,25 @@ public class GameRunner {
      */
     public void setUpDemoGame(Map map)
     {
+        new Server(map, this);
         setGameTexture(TextureReference.getMapPath(map));
+        //TODO get total num of players(clients + server) and add players to map in correct positions
+
+        Player demoPlayer = new Player(new Position(0,0), true);
+        demoPlayer.setLocal();
+
+
+        game.newGrid(5,5);
+        giveMapDataToGrid();
+        game.addPlayer(demoPlayer);
+    }
+    public void setUpClientGame(Map map){
+        setGameTexture(TextureReference.getMapPath(map));
+        //TODO get total num of players(clients + server) and add players to map in correct positions
 
         Player demoPlayer = new Player(new Position(1,1), true);
         demoPlayer.setLocal();
+
 
         game.newGrid(5,5);
         giveMapDataToGrid();

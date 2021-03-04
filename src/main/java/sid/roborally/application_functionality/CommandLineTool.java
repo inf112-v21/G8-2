@@ -121,8 +121,7 @@ public class CommandLineTool {
             case 0: return;
 
 
-            case 1: { //Create server
-                Server server = new Server();
+            case 1: {
                 commandLineMainMenu(); break; }
             case 2: {
                 //start client here.. type in port number somewhere? Another asking menu

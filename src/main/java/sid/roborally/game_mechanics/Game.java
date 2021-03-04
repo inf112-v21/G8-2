@@ -5,6 +5,7 @@ import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Grid;
 import sid.roborally.game_mechanics.grid.GridObject;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -19,7 +20,7 @@ import java.util.*;
  * <p>In-game it will communicate internally with Player-, Grid- and GridObject-instances.
  *    Externally it will communicate with GameRunner</p>
  */
-public class Game {
+public class Game implements Serializable {
 
     private HashMap<Flag, Player> flags_have_player; //TODO: Flags in game, player can only be added if he already have the earlier flags
     private ArrayList<Flag> flags; //TODO: Flags in the order to be moved to
