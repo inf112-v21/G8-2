@@ -8,8 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class CardTest {
     @Test
     public void checkCardPriority(){
-        Card priorityCard = new Card(100, "TESTCARD");
+        Card priorityCard = new Card(100, null);
         assertEquals(100,priorityCard.getPriority());
-
     }
 }

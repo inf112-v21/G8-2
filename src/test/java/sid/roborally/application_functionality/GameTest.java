@@ -6,6 +6,8 @@ import org.junit.Test;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.Game;
 import sid.roborally.game_mechanics.FlagIDComparator;
+import sid.roborally.game_mechanics.card.StepCard;
+import sid.roborally.game_mechanics.card.TurnCard;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
 
@@ -68,6 +70,26 @@ public class GameTest {
         game.movePlayerRobot(p1, Direction.EAST);
 
         //New position should be (1+1+1, 1+1) = (3,2)
+        assertEquals(new Position(3,2).toString(),
+                p1.getRobot().getPosition().toString());
+    }
+
+    @Test
+    public void canMovePlayerRobotWithCards() {
+        game.addPlayer(p1);
+        StepCard move2 = new StepCard(100, 2, "Two Forward");
+        StepCard moveBack = new StepCard(100, -1, "One Back");
+        TurnCard turnRight = new TurnCard(100, "right", "Turn Right");
+
+        //Sets the direction robot should be facing
+        p1.getRobot().setOrientation(Direction.NORTH);
+
+        //Moves the robot with given cards
+        game.movePlayerRobot(p1, p1.getRobot().getOrientation(), move2);
+        game.movePlayerRobot(p1, p1.getRobot().getOrientation(), moveBack);
+        game.rotatePlayerRobot(p1, p1.getRobot().getOrientation(), turnRight);
+        game.movePlayerRobot(p1, p1.getRobot().getOrientation(), move2);
+
         assertEquals(new Position(3,2).toString(),
                 p1.getRobot().getPosition().toString());
     }

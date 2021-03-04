@@ -4,6 +4,8 @@ import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardDealer;
+import sid.roborally.game_mechanics.card.StepCard;
+import sid.roborally.game_mechanics.card.TurnCard;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Grid;
 import sid.roborally.game_mechanics.grid.GridObject;
@@ -208,6 +210,44 @@ public class Game {
     {
         grid.moveRobot(p.getRobot(), dir);
         updatePlayerStatus(p); //TODO: In the future updateRobotStatus should only be called when it has finished its moves.
+    }
+
+    /**
+     * moves robot n steps depending on what movement card it has
+     * @param p player
+     * @param dir direction
+     * @param card a movement card
+     */
+    public void movePlayerRobot(Player p, Direction dir, StepCard card) {
+        if (card.getSteps() == -1)
+            grid.moveRobot(p.getRobot(), dir.rotate180());
+        else {
+            for (int i = 0; i < card.getSteps(); i++) {
+                grid.moveRobot(p.getRobot(), dir);
+            }
+        }
+        updatePlayerStatus(p);
+    }
+
+    /**
+     * rotates the robot according to the direction it has on the turn card
+     * @param p player
+     * @param dir direction
+     * @param card a rotation card
+     */
+    public void rotatePlayerRobot(Player p, Direction dir, TurnCard card) {
+        switch (card.getTurnDirection()) {
+            case "left":
+                p.getRobot().setOrientation(dir.rotateLeft());
+                break;
+            case "right":
+                p.getRobot().setOrientation(dir.rotateRight());
+                break;
+            case "around":
+                p.getRobot().setOrientation(dir.rotate180());
+                break;
+        }
+        updatePlayerStatus(p);
     }
 
     /**

@@ -10,20 +10,10 @@ import java.util.Stack;
 import static org.junit.Assert.*;
 
 public class DealerTest {
-    //TODO: Sannsynligvis ikke nødvendigStack<Card> testDeck = new Stack<Card>();
     CardDealer testDealer;
 
     @Before
     public void init(){
-
-        //TODO: CardDealer lager CardDeck internt
-        /*
-        //For-loop creating test cards for test deck
-        for(int i = 0; i<10; i++){
-            StepCard testCard = new StepCard(100 + (10*i), i, "TESTCARD");
-            testDeck.add(testCard);
-        }
-        */
 
         testDealer = new CardDealer();
     }
@@ -52,19 +42,4 @@ public class DealerTest {
         assertEquals(originalDeckSize, testDealer.getDeck().size());
     }
 
-    //TODO: Overflødig siden Dealer ikke mottar et deck som parameter
-    /*
-    @Test
-    public void deckHasCards(){
-        assertEquals(testDealer.getDeckStack().size(),testDeck.size());
-    }
-    */
-
-    /* //TODO: Det er nok å sjekke dette i card-deck. Har lagt til denne testen i CardDeck
-    @Test
-    public void cardsRemovedWhenDealt(){
-        Card removedCard = testDealer.deal();
-        assertFalse(testDealer.getDeckStack().contains(removedCard));
-    }
-    */
 }
