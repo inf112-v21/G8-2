@@ -3,15 +3,14 @@ package sid.roborally.application_functionality;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import sid.roborally.application_functionality.connection.Server;
 import sid.roborally.application_functionality.reference.*;
 import sid.roborally.game_mechanics.*;
-import sid.roborally.game_mechanics.grid.Flag;
-import sid.roborally.game_mechanics.grid.Hole;
-import sid.roborally.game_mechanics.grid.Position;
+import sid.roborally.game_mechanics.grid.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * <h3>GameRunner</h3>
@@ -23,14 +22,15 @@ import java.util.HashSet;
  * <p>GameRunner will be instantiated in RoboRallyApplication and will itself contain instances of
  *    Game, TiledMap and TiledMapTileLayer.</p>
  */
-public class GameRunner implements Serializable {
+public class GameRunner{
 
     private TiledMap map;
     private TiledMapTileLayer
             board_layer,
             player_layer,
             hole_layer,
-            flag_layer; //When these layers are edited the gui is edited.
+            flag_layer,
+            archiveMarker_layer; //When these layers are edited the gui is edited.
 
     private Game game;
     private boolean inputActive; //TODO: Can shut of input to game
@@ -54,6 +54,7 @@ public class GameRunner implements Serializable {
         player_layer = (TiledMapTileLayer) map.getLayers().get("Player");
         hole_layer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flag_layer = (TiledMapTileLayer) map.getLayers().get("Flag");
+        archiveMarker_layer = (TiledMapTileLayer) map.getLayers().get("PlayerStart");
 
         adjustSetup();
     }
@@ -83,22 +84,29 @@ public class GameRunner implements Serializable {
                     //adding flag to grid and to game
                     int index = flag_layer.getCell(x,y).getTile().getId();
                     Flag f = new Flag(x,y,TileIDReference.flagIndexToId(index));
-                    game.addGridObjectToGrid(f);
-                    game.addFlag(f);
+                    if(!game.getFlags().contains(f)){
+                        game.addGridObjectToGrid(f);
+                        game.addFlag(f);
+                    }
                 }
                 game.getFlags().sort(new FlagIDComparator());
-
+                /*
                 //TODO - add correct number of players to game based off of player_start_layer positions
                 // cannot add players the same way. need to first find out how many players there will be
+                if(archiveMarker_layer.getCell(x,y) != null){
+                    int index = archiveMarker_layer.getCell(x,y).getTile().getId();
+                    game.addGridObjectToGrid(new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index)));
+                }
+
+                 */
             }
     }
 
     /**
      * Sets up a demo-game
      */
-    public void setUpDemoGame(Map map)
+    public void setUpGame(Map map)//numplayers argument as well?
     {
-        new Server(map, this);
         setGameTexture(TextureReference.getMapPath(map));
         //TODO get total num of players(clients + server) and add players to map in correct positions
 
@@ -109,18 +117,26 @@ public class GameRunner implements Serializable {
         game.newGrid(5,5);
         giveMapDataToGrid();
         game.addPlayer(demoPlayer);
-    }
-    public void setUpClientGame(Map map){
+        /*
         setGameTexture(TextureReference.getMapPath(map));
-        //TODO get total num of players(clients + server) and add players to map in correct positions
-
-        Player demoPlayer = new Player(new Position(1,1), true);
-        demoPlayer.setLocal();
-
-
-        game.newGrid(5,5);
+        ArrayList<Player> tempPlayers = new ArrayList<>();
+        //get number of players
+        for (int i = 1; i<=numPlayers; i++){
+            Iterator<ArchiveMarker> it = game.getArchiveMarkers().iterator();
+            while(it.hasNext()){
+                ArchiveMarker am = it.next();
+                if(am.getID() == i) {
+                    Player p = new Player(new Position(am.getPosition().getX(),am.getPosition().getY()),false);
+                    p.setLocal();
+                    tempPlayers.add(p);
+                }
+            }
+        }
+        game.newGrid(board_layer.getWidth(), board_layer.getHeight());
         giveMapDataToGrid();
-        game.addPlayer(demoPlayer);
+        for(Player p : tempPlayers) game.addPlayer(p);
+
+         */
     }
 
     /**

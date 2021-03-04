@@ -1,6 +1,7 @@
 package sid.roborally.application_functionality.connection;
 
 import sid.roborally.application_functionality.GameRunner;
+import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
 
 import java.io.*;
@@ -16,19 +17,19 @@ public class Server {
     private ObjectOutputStream serverToClientOutput;
 
     private Map map;
-    private GameRunner gameRunner;
+    private RRApplication rr_app;
     private boolean waitingForPlayers = true;
     private HashSet<Socket> clients = new HashSet<>();
 
 
-    public Server(Map map, GameRunner gameRunner) {
+    public Server(Map map, RRApplication rr_app) {
         this.map = map;
-        this.gameRunner = gameRunner;
+        this.rr_app = rr_app;
 
         listenSocket();
         listenForClients();
         sendMapToClients();
-        //sendGameRunnerToClients();
+        sendNumPlayersToClients();
     }
 
     public void sendMapToClients(){
@@ -42,12 +43,11 @@ public class Server {
             e.printStackTrace();
         }
     }
-    public void sendGameRunnerToClients(){
-        System.out.println("Sending game runner to client: ");
+    private void sendNumPlayersToClients(){
         try{
             for(Socket c : clients){
                 serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
-                serverToClientOutput.writeObject(gameRunner);
+                serverToClientOutput.writeInt(clients.size()+1); //+1 because server counts as one player
                 serverToClientOutput.flush();
             }
         } catch (IOException e) {

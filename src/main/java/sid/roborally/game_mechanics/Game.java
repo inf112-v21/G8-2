@@ -1,6 +1,7 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
+import sid.roborally.game_mechanics.grid.ArchiveMarker;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Grid;
 import sid.roborally.game_mechanics.grid.GridObject;
@@ -20,11 +21,12 @@ import java.util.*;
  * <p>In-game it will communicate internally with Player-, Grid- and GridObject-instances.
  *    Externally it will communicate with GameRunner</p>
  */
-public class Game implements Serializable {
+public class Game {
 
     private HashMap<Flag, Player> flags_have_player; //TODO: Flags in game, player can only be added if he already have the earlier flags
-    private ArrayList<Flag> flags; //TODO: Flags in the order to be moved to
+    private ArrayList<Flag> flags;
     private HashSet<Player> players;
+    private HashSet<ArchiveMarker> archiveMarkers;
     private Grid grid; //TODO: Connect this
 
     /**
@@ -34,6 +36,7 @@ public class Game implements Serializable {
     {
         players = new HashSet<>();
         flags = new ArrayList<>();
+        archiveMarkers = new HashSet<>();
     }
 
     /*
@@ -141,4 +144,8 @@ public class Game implements Serializable {
     public ArrayList<Flag> getFlags() {
         return this.flags;
     }
+
+    public void addArchiveMarker(ArchiveMarker am) { archiveMarkers.add(am); }
+
+    public HashSet<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
 }

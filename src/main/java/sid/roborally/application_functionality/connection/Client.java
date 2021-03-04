@@ -2,6 +2,7 @@ package sid.roborally.application_functionality.connection;
 
 
 import sid.roborally.application_functionality.GameRunner;
+import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.application_functionality.reference.TextureReference;
@@ -17,27 +18,38 @@ public class Client {
     private Map map;
     private GameRunner gameRunner;
     private ObjectInputStream serverToClientInput;
-
-    RRApplication rr_app;
+    private RRApplication rr_app;
+    //private Player player;
+    private int num_players;
 
     public Client() {
         listenSocket();
         listenForMap();
+        listenForNumPlayers();
         setUpClientGame();
     }
 
-    public void setUpClientGame(){
+    private void listenForNumPlayers() {
+        try{
+            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
+            num_players = serverToClientInput.readInt();
+            System.out.println(num_players);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setUpClientGame(){
         rr_app = new RRApplication();
         rr_app.setUpLibgdxApplication();
         gameRunner = rr_app.getGameRunner();
 
         System.out.println("Game runner: " + gameRunner + ", Map: "+map);
         System.out.println(gameRunner.getMap());
-        gameRunner.setUpClientGame(map);
-
+        gameRunner.setUpGame(map);
     }
 
-    public void listenForMap(){
+    private void listenForMap(){
         try{
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
             map = (Map) serverToClientInput.readObject();
@@ -47,7 +59,7 @@ public class Client {
             e.printStackTrace();
         }
     }
-    public void listenForGameRunner(){
+    private void listenForGameRunner(){
         try{
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
             System.out.println(serverToClientInput);
@@ -58,23 +70,17 @@ public class Client {
             e.printStackTrace();
         }
     }
-
     /**
      * Connects client to server with port num.
      * Fetches client outputStream and server inputStream.
      * Reads server input and prints to console.
      * Catch: Throws exception if host is invalid or I/O operation is invalid.
      */
-    public void listenSocket(){
+    private void listenSocket(){
         //Create socket connection
         try{
             System.out.println("Connecting...");//feedback to user
             serverSocket = new Socket("localhost", 4321);
-            clientToServerOutput = new ObjectOutputStream(serverSocket.getOutputStream());
-
-            //input from client to server
-            //clientToServerOutput.writeObject(new String("Client "+ this + " has connected."));
-            //clientToServerOutput.flush();
 
 
         } catch (UnknownHostException e) {

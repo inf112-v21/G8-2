@@ -12,4 +12,17 @@ public class TileIDReference {
         }
     }
 
+    public static int archiveIndexToID(int archive_index) {
+        switch(archive_index){
+            case 128: return 1;
+            case 129: return 2;
+            case 130: return 3;
+            case 131: return 4;
+            case 136: return 5;
+            case 137: return 6;
+            case 138: return 7;
+            case 139: return 8;
+            default: throw new IllegalArgumentException("No ArchiveMarker ID associated with that index: "+ archive_index);
+        }
+    }
 }

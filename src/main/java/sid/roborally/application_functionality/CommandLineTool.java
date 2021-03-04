@@ -3,6 +3,7 @@ package sid.roborally.application_functionality;
 import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.application_functionality.connection.Client;
 import sid.roborally.application_functionality.connection.Server;
+import sid.roborally.application_functionality.reference.Map;
 import java.util.Scanner;
 
 public class CommandLineTool {
@@ -20,6 +21,17 @@ public class CommandLineTool {
 
     private static String MAIN_MENU_OPTIONS = "1. Start a new game (write \"1\")" + "\n0. Quit application";
     private static int MAIN_MENU_OPTIONS_NUM = 2;
+
+    private static String NUM_PLAYERS_CHOICE =
+                            "\n1. 2 Players\n" +
+                            "2. 3 players\n"+
+                            "3. 4 players\n"+
+                            "4. 5 players\n"+
+                            "5. 6 players\n"+
+                            "6. 7 players\n"+
+                            "7. 8 players\n"+
+                            "0. Quit application";
+    private static int NUM_PLAYERS_CHOICE_NUMCHOICES = 8;
 
     private static String NEW_GAME_MENU_WELCOME = "\nNew Game Menu. Select one of the following options:\n";
     private static String NEW_GAME_MENU_OPTIONS =   "1. Start a new demo-game (write \"1\")\n" +
@@ -100,11 +112,7 @@ public class CommandLineTool {
             case 0: return;
             case 1: //Set up and run demogame (demo_game_option)
                 {
-                    rr_app.setUpLibgdxApplication();
-                    rr_app.setUpDemo();
-                    gcl = new GameCommandLine(rr_app.getGameRunner());
-                    gcl.startGame();
-                    break;
+                    numberOfPlayersMenu();
                 }
             case 2:
                 commandLineMainMenu(); break; //MAIN MENU OPTION
@@ -125,7 +133,35 @@ public class CommandLineTool {
                 commandLineMainMenu(); break; }
             case 2: {
                 //start client here.. type in port number somewhere? Another asking menu
-                Client client = new Client();
+                new Client();
+                break;
+            }
+            default:
+                throw new IllegalStateException("Unexpected value: " + optionChosen);
+        }
+    }
+    private void numberOfPlayersMenu()
+    {
+        System.out.println(NUM_PLAYERS_CHOICE);
+        int optionChosen = getValidInput(SETUP_SERVER_OPTIONS_NUM);
+        switch (optionChosen)
+        {
+            case 0: return;
+
+            case 1: {
+                new Server(Map.DemoMap,rr_app);
+                rr_app.setUpLibgdxApplication();
+                rr_app.getGameRunner().setUpGame(Map.DemoMap);
+                gcl = new GameCommandLine(rr_app.getGameRunner());
+                gcl.startGame();
+                break;
+                 }
+            case 2: {
+                new Server(Map.DemoMap,rr_app);
+                rr_app.setUpLibgdxApplication();
+                rr_app.getGameRunner().setUpGame(Map.DemoMap);
+                gcl = new GameCommandLine(rr_app.getGameRunner());
+                gcl.startGame();
                 break;
             }
             default:

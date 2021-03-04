@@ -35,7 +35,7 @@ public class RRAppListener extends InputAdapter implements ApplicationListener {
     public void create()
     {
         /* This apparently need to be called from AppListener */
-        rr_app.setUpDemo();
+        rr_app.setUpDemoGame();
 
         /* Creates camera */
         cam = new OrthographicCamera();

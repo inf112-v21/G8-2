@@ -63,9 +63,9 @@ public class RRApplication {
      * Demo and Test-functionality:
      */
 
-    public void setUpDemo()
+    public void setUpDemoGame()
     {
-        grunner.setUpDemoGame(Map.DemoMap);
+        grunner.setUpGame(Map.DemoMap);
         //grunner.setUpDemoGame(Map.TwoPlayerDemo); //TODO: Only for now. Later we need a general solution.
         inputHolder = InputHolder.GameRunner;
     }
