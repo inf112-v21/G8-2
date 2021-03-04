@@ -1,6 +1,7 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
+import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardDealer;
 import sid.roborally.game_mechanics.grid.Flag;
@@ -79,10 +80,20 @@ public class Game {
     public void runRound()
     {
         //TODO: DEAL CARDS
+        dealToPlayers();
+        System.out.println(getLocal());
 
         //TODO: GET PLAYER CHOSEN CARDS
+        ArrayList<Card> chosen = GameCommandLine
+                .getLocalCardSequenceInput(givenProgramCards.get(getLocal()));
+        for(Card c : chosen) System.out.println(c.getName());
 
         //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
+        for(Player p : players) {
+            for(Card c : chosenProgramCards.get(p));
+                //TODO: CARDS NEED TURN_FUNCTIONALITY TO MAKE THEM EASIER TO USE
+                //TODO: FOR NOW THE ROBOT WILL BE MOVED IN A NON_CORRESPONDING WAY
+        }
 
         //TODO: MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
 
@@ -117,7 +128,7 @@ public class Game {
      */
     public void dealToPlayers() {
         for(Player p : players)
-            p.giveProgramCards(dealer.dealCards(DEAL_CARD_AMOUNT));
+            givenProgramCards.get(p).addAll(dealer.dealCards(DEAL_CARD_AMOUNT));
         dealer.resetDeck();
     }
 
@@ -152,6 +163,9 @@ public class Game {
     public void addPlayer(Player p)
     {
         players.add(p);
+        /* For now we also need to add the entries of players here too.*/
+        givenProgramCards.put(p,new ArrayList<>());
+        chosenProgramCards.put(p,new ArrayList<>());
         grid.addGridObject(p.getRobot());
     }
 

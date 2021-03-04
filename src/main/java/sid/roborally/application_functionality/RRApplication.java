@@ -73,6 +73,7 @@ public class RRApplication {
         grunner.addPlayer(demoPlayer);
 
         inputHolder = InputHolder.GameRunner;
+        grunner.runGame();
     }
 
     /*

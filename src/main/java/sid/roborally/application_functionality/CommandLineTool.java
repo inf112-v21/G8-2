@@ -95,8 +95,6 @@ public class CommandLineTool {
                 {
                     rr_app.setUpLibgdxApplication();
                     rr_app.setUpDemo();
-                    gcl = new GameCommandLine(rr_app.getGameRunner());
-                    gcl.startGame();
                     break;
                 }
             case 2:
