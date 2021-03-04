@@ -46,11 +46,15 @@ public class CardDeck {
      * @param deck CardDeck
      */
     private void addRotationCards(Stack<Card> deck) {
+        
         for (int i = 0; i < 18; i++) {
-            deck.push(new TurnCard(generatePriority(80, 420, 20), CardAction.TURN_RIGHT));
-            deck.push(new TurnCard(generatePriority(70, 410, 20), CardAction.TURN_LEFT));
+            deck.push(new TurnCard(generatePriority(80, 420, 20),
+                    CardAction.TURN_RIGHT));
+            deck.push(new TurnCard(generatePriority(70, 410, 20),
+                    CardAction.TURN_LEFT));
             if (i > 11)
-                deck.push(new TurnCard(generatePriority(10, 60), CardAction.TURN_AROUND));
+                deck.push(new TurnCard(generatePriority(10, 60),
+                        CardAction.TURN_AROUND));
         }
     }
 
@@ -59,16 +63,21 @@ public class CardDeck {
      * @param deck CardDeck
      */
     private void addMoveCards(Stack<Card> deck) {
+
         for (int i = 0; i < 18; i++) {
-            deck.push(new StepCard(generatePriority(490, 650, 10), 1, CardAction.FORWARD));
+            deck.push(new StepCard(generatePriority(490, 650, 10),
+                    1, CardAction.FORWARD));
 
             if (i > 5) {
-                deck.push(new StepCard(generatePriority(670, 780, 10), 2, CardAction.FORWARD));
+                deck.push(new StepCard(generatePriority(670, 780, 10),
+                        2, CardAction.FORWARD));
             }
 
             if (i > 11) {
-                deck.push(new StepCard(generatePriority(790, 840, 10), 3, CardAction.FORWARD));
-                deck.push(new StepCard(generatePriority(430, 480), 1, CardAction.BACKWARD));
+                deck.push(new StepCard(generatePriority(790, 840, 10),
+                        3, CardAction.FORWARD));
+                deck.push(new StepCard(generatePriority(430, 480),
+                        1, CardAction.BACKWARD));
             }
         }
     }
