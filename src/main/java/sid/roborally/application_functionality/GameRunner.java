@@ -176,7 +176,7 @@ public class GameRunner {
         somethingHappenedToGame();
         if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.movePlayerRobot(game.getLocal(), Direction.NORTH);
+        game.movePlayerRobot(game.getLocal(), Direction.NORTH,1);
     }
 
     /**
@@ -188,7 +188,7 @@ public class GameRunner {
         somethingHappenedToGame();
         if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.movePlayerRobot(game.getLocal(), Direction.SOUTH);
+        game.movePlayerRobot(game.getLocal(), Direction.SOUTH,1);
     }
 
     /**
@@ -200,7 +200,7 @@ public class GameRunner {
         somethingHappenedToGame();
         if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.movePlayerRobot(game.getLocal(), Direction.WEST);
+        game.movePlayerRobot(game.getLocal(), Direction.WEST,1);
     }
 
     /**
@@ -212,6 +212,6 @@ public class GameRunner {
         somethingHappenedToGame();
         if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.movePlayerRobot(game.getLocal(), Direction.EAST);
+        game.movePlayerRobot(game.getLocal(), Direction.EAST,1);
     }
 }

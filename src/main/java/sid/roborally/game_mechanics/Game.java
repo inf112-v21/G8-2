@@ -2,13 +2,11 @@ package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.comm_line.GameCommandLine;
-import sid.roborally.game_mechanics.card.Card;
-import sid.roborally.game_mechanics.card.CardDealer;
-import sid.roborally.game_mechanics.card.StepCard;
-import sid.roborally.game_mechanics.card.TurnCard;
+import sid.roborally.game_mechanics.card.*;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Grid;
 import sid.roborally.game_mechanics.grid.GridObject;
+import sid.roborally.game_mechanics.grid.Robot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -162,8 +160,7 @@ public class Game {
      * <p>Adds a player to the Game's Player-set.</p>
      * @param p Player-instance.
      */
-    public void addPlayer(Player p)
-    {
+    public void addPlayer(Player p) {
         players.add(p);
         /* For now we also need to add the entries of players here too.*/
         givenProgramCards.put(p,new ArrayList<>());
@@ -205,49 +202,64 @@ public class Game {
 
     /**
      * <p>Moves robot in direction in grid</p>
+     * <p>Has a delay.</p>
      */
-    public void movePlayerRobot(Player p, Direction dir)
-    {
-        grid.moveRobot(p.getRobot(), dir);
-        updatePlayerStatus(p); //TODO: In the future updateRobotStatus should only be called when it has finished its moves.
+    public void movePlayerRobot(Player p, Direction dir, int steps) {
+        for(int i = 0; i < steps; i++) {
+            grid.moveRobot(p.getRobot(), dir);
+            updatePlayerStatus(p);
+        }
     }
 
     /**
-     * moves robot n steps depending on what movement card it has
-     * @param p player
-     * @param dir direction
-     * @param card a movement card
+     * <p>Turns the player robot.</p>
+     * @param p Player
+     * @param action Turn-Action
      */
-    public void movePlayerRobot(Player p, Direction dir, StepCard card) {
-        if (card.getSteps() == -1)
-            grid.moveRobot(p.getRobot(), dir.rotate180());
-        else {
-            for (int i = 0; i < card.getSteps(); i++) {
-                grid.moveRobot(p.getRobot(), dir);
-            }
+    public void turnPlayerRobot(Player p, CardAction action) {
+        Robot robot = p.getRobot();
+        switch (action) {
+            case TURN_RIGHT: robot.setOrientation(robot
+                    .getOrientation().rotateRight()); break;
+            case TURN_LEFT: robot.setOrientation(robot
+                    .getOrientation().rotateLeft()); break;
+            case TURN_AROUND: robot.setOrientation(robot
+                    .getOrientation().rotate180()); break;
         }
         updatePlayerStatus(p);
     }
 
     /**
-     * rotates the robot according to the direction it has on the turn card
-     * @param p player
-     * @param dir direction
-     * @param card a rotation card
+     * <p>This method will take in a card and a Player and move the player-robot.<br>
+     *     It will also add a delay between movements.</p>
+     * @param p Player
+     * @param card Movement-card
      */
-    public void rotatePlayerRobot(Player p, Direction dir, TurnCard card) {
-        switch (card.getTurnDirection()) {
-            case "left":
-                p.getRobot().setOrientation(dir.rotateLeft());
-                break;
-            case "right":
-                p.getRobot().setOrientation(dir.rotateRight());
-                break;
-            case "around":
-                p.getRobot().setOrientation(dir.rotate180());
-                break;
+    public void useCardOnPlayerRobot(Player p, Card card) {
+
+        /* Checking for rotation */
+        if(card instanceof TurnCard) {
+            turnPlayerRobot(p, card.getAction());
+            return;
         }
-        updatePlayerStatus(p);
+
+        /* Card shouldn't be anything else than a step-card now. */
+        if(!(card instanceof StepCard)) return;
+
+        /* At this point we know that we have a step-card, so we can extract the steps */
+        int steps = ((StepCard) card).getSteps();
+
+        /* Acting on movement */
+        switch (card.getAction()) {
+            case FORWARD:
+                movePlayerRobot(p,
+                        p.getRobot().getOrientation(),
+                        steps); break;
+            case BACKWARD:
+                movePlayerRobot(p,
+                        p.getRobot().getOrientation().rotate180(),
+                        steps); break;
+        }
     }
 
     /**
@@ -255,8 +267,7 @@ public class Game {
      *    its information.</p>
      * @param p Player-instance
      */
-    private void updatePlayerStatus(Player p)
-    {
+    private void updatePlayerStatus(Player p) {
         /* Check for possible damage */
         if(grid.positionHasHole(p.getRobot().getPosition()))
         {
@@ -271,5 +282,4 @@ public class Game {
             p.playerWon();
         }
     }
-
 }

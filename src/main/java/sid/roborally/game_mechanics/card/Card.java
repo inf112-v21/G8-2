@@ -30,4 +30,6 @@ public class Card {
     public int getPriority(){
         return priority;
     }
+
+    public CardAction getAction() { return action; }
 }
