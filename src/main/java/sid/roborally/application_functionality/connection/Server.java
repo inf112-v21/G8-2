@@ -13,8 +13,7 @@ public class Server {
     private ServerSocket server;
     private Socket client;
     private ObjectInputStream clientToServerInput;
-    private PrintWriter serverToClientOutput;
-    ObjectOutputStream toClient;
+    private ObjectOutputStream serverToClientOutput;
 
     private Map map;
     private GameRunner gameRunner;
@@ -35,9 +34,9 @@ public class Server {
     public void sendMapToClients(){
         try{
             for(Socket c : clients){
-                toClient = new ObjectOutputStream(c.getOutputStream());
-                toClient.writeObject(map);
-                toClient.flush();
+                serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
+                serverToClientOutput.writeObject(map);
+                serverToClientOutput.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,9 +46,9 @@ public class Server {
         System.out.println("Sending game runner to client: ");
         try{
             for(Socket c : clients){
-                toClient = new ObjectOutputStream(c.getOutputStream());
-                toClient.writeObject(gameRunner);
-                toClient.flush();
+                serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
+                serverToClientOutput.writeObject(gameRunner);
+                serverToClientOutput.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,9 +58,9 @@ public class Server {
     public void sendListClientsToClients(){
         try{
             for(Socket c : clients){
-                toClient = new ObjectOutputStream(c.getOutputStream());
-                toClient.writeObject(map);
-                toClient.flush();
+                serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
+                serverToClientOutput.writeObject(map);
+                serverToClientOutput.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,21 +97,5 @@ public class Server {
             System.out.println("Could not listen on port 4321");
             System.exit(-1);
         }
-        // Tries to read client input object and write the input back to client.
-                /*
-        while(true){
-            try{
-                System.out.println("client: "+ client);
-
-                Object o = clientToServerInput.readObject();
-                //Send data back to client
-                serverToClientOutput.println(o);
-                serverToClientOutput.flush();
-            } catch (IOException | ClassNotFoundException e) {
-                System.out.println("Read failed");
-                System.exit(-1);
-            }
-        }
-                */
     }
 }
