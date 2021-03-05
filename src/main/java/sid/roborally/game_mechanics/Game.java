@@ -1,19 +1,14 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
-
-import sid.roborally.game_mechanics.grid.ArchiveMarker;
-
 import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.game_mechanics.card.*;
+import sid.roborally.game_mechanics.grid.*;
 
-import sid.roborally.game_mechanics.grid.Flag;
-import sid.roborally.game_mechanics.grid.Grid;
-import sid.roborally.game_mechanics.grid.GridObject;
-import sid.roborally.game_mechanics.grid.Robot;
-
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 
 /**

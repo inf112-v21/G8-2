@@ -4,14 +4,11 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
-import sid.roborally.application_functionality.reference.Map;
 
 /**
  * <h3>RoboRallyAppListener</h3>

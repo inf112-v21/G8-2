@@ -3,14 +3,15 @@ package sid.roborally.application_functionality;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import sid.roborally.application_functionality.reference.*;
-import sid.roborally.game_mechanics.*;
+import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.application_functionality.reference.TextureReference;
+import sid.roborally.application_functionality.reference.TileIDReference;
+import sid.roborally.game_mechanics.Direction;
+import sid.roborally.game_mechanics.FlagIDComparator;
+import sid.roborally.game_mechanics.Game;
 import sid.roborally.game_mechanics.grid.*;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * <h3>GameRunner</h3>

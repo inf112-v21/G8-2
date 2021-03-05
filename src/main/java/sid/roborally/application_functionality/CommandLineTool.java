@@ -2,6 +2,7 @@ package sid.roborally.application_functionality;
 
 import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.application_functionality.connection.Client;
+
 import java.util.Scanner;
 
 public class CommandLineTool {

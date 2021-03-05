@@ -1,8 +1,6 @@
 package sid.roborally.application_functionality;
 
-import sid.roborally.game_mechanics.grid.ArchiveMarker;
 import sid.roborally.game_mechanics.card.Card;
-import sid.roborally.game_mechanics.card.CardDeck;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;

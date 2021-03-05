@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import sid.roborally.application_functionality.Player;
-import sid.roborally.application_functionality.reference.*;
+import sid.roborally.application_functionality.reference.PlayerTexture;
+import sid.roborally.application_functionality.reference.TextureReference;
 
 /**
  * <h3>PlayerGraphic</h3>
