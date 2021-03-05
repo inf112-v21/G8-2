@@ -2,6 +2,7 @@ package sid.roborally.game_mechanics;
 
 import org.junit.Before;
 import org.junit.Test;
+import sid.roborally.game_mechanics.grid.ArchiveMarker;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 
@@ -66,4 +67,10 @@ public class RobotTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void ArchiveMarkerShouldGetArchiveMarkerWithID1Test() {
+        ArchiveMarker am = new ArchiveMarker(0,0,1);
+        r.setArchiveMarker(am);
+        assertEquals(am, r.getArchiveMarker());
+    }
 }

@@ -26,7 +26,7 @@ public class Game {
     private HashMap<Flag, Player> flags_have_player; //TODO: Flags in game, player can only be added if he already have the earlier flags
     private ArrayList<Flag> flags;
     private HashSet<Player> players;
-    private HashSet<ArchiveMarker> archiveMarkers;
+    private ArrayList<ArchiveMarker> archiveMarkers;
     private Grid grid; //TODO: Connect this
 
     /**
@@ -36,7 +36,7 @@ public class Game {
     {
         players = new HashSet<>();
         flags = new ArrayList<>();
-        archiveMarkers = new HashSet<>();
+        archiveMarkers = new ArrayList<>();
     }
 
     /*
@@ -147,5 +147,5 @@ public class Game {
 
     public void addArchiveMarker(ArchiveMarker am) { archiveMarkers.add(am); }
 
-    public HashSet<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
+    public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
 }

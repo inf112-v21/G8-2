@@ -1,5 +1,6 @@
 package sid.roborally.application_functionality;
 
+import sid.roborally.game_mechanics.grid.ArchiveMarker;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
@@ -19,6 +20,9 @@ import sid.roborally.gfx_and_ui.PlayerGraphic;
  * */
 public class Player {
 
+
+
+
     private enum OwnerLocation {Local, AI, External} //Local: is the user of this application, External: multiplayers
     private enum State {Active, Won, Dead}
 
@@ -27,6 +31,7 @@ public class Player {
     private PlayerGraphic p_graphic;
 
     private Robot robot; //The player-instance's robot
+
 
     /**
      * <p>Player constructor that specifies a chosen skin-texture index.</p>

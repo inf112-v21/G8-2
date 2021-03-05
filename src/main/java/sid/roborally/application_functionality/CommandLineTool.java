@@ -112,7 +112,7 @@ public class CommandLineTool {
             case 0: return;
             case 1: //Set up and run demogame (demo_game_option)
                 {
-                    numberOfPlayersMenu();
+                    numberOfPlayersMenu(Map.TwoPlayerDemo);
                 }
             case 2:
                 commandLineMainMenu(); break; //MAIN MENU OPTION
@@ -140,7 +140,7 @@ public class CommandLineTool {
                 throw new IllegalStateException("Unexpected value: " + optionChosen);
         }
     }
-    private void numberOfPlayersMenu()
+    private void numberOfPlayersMenu(Map map)
     {
         System.out.println(NUM_PLAYERS_CHOICE);
         int optionChosen = getValidInput(SETUP_SERVER_OPTIONS_NUM);
@@ -149,17 +149,17 @@ public class CommandLineTool {
             case 0: return;
 
             case 1: {
-                new Server(Map.DemoMap,rr_app);
+                new Server(map,rr_app);
                 rr_app.setUpLibgdxApplication();
-                rr_app.getGameRunner().setUpGame(Map.DemoMap);
+                rr_app.getGameRunner().setUpGame(map, 2);
                 gcl = new GameCommandLine(rr_app.getGameRunner());
                 gcl.startGame();
                 break;
                  }
             case 2: {
-                new Server(Map.DemoMap,rr_app);
+                new Server(map,rr_app);
                 rr_app.setUpLibgdxApplication();
-                rr_app.getGameRunner().setUpGame(Map.DemoMap);
+                rr_app.getGameRunner().setUpGame(map,3);
                 gcl = new GameCommandLine(rr_app.getGameRunner());
                 gcl.startGame();
                 break;

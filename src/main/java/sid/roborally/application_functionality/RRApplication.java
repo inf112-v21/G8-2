@@ -26,6 +26,8 @@ import java.util.HashSet;
  * */
 public class RRApplication {
 
+
+
     private enum InputHolder {Menu, GameRunner} //This is to know where to route input
     private InputHolder inputHolder;
 
@@ -63,9 +65,13 @@ public class RRApplication {
      * Demo and Test-functionality:
      */
 
+    public void setUpGame() {
+
+    }
+
     public void setUpDemoGame()
     {
-        grunner.setUpGame(Map.DemoMap);
+        grunner.setUpGame(Map.TwoPlayerDemo, 2);
         //grunner.setUpDemoGame(Map.TwoPlayerDemo); //TODO: Only for now. Later we need a general solution.
         inputHolder = InputHolder.GameRunner;
     }

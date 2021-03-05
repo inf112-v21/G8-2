@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
+import sid.roborally.application_functionality.reference.Map;
 
 /**
  * <h3>RoboRallyAppListener</h3>
@@ -35,7 +36,7 @@ public class RRAppListener extends InputAdapter implements ApplicationListener {
     public void create()
     {
         /* This apparently need to be called from AppListener */
-        rr_app.setUpDemoGame();
+        rr_app.setUpGame();
 
         /* Creates camera */
         cam = new OrthographicCamera();

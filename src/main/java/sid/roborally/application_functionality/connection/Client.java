@@ -2,10 +2,8 @@ package sid.roborally.application_functionality.connection;
 
 
 import sid.roborally.application_functionality.GameRunner;
-import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
-import sid.roborally.application_functionality.reference.TextureReference;
 
 import java.io.*;
 import java.net.Socket;
@@ -20,7 +18,7 @@ public class Client {
     private ObjectInputStream serverToClientInput;
     private RRApplication rr_app;
     //private Player player;
-    private int num_players;
+    private int numPlayers;
 
     public Client() {
         listenSocket();
@@ -32,8 +30,8 @@ public class Client {
     private void listenForNumPlayers() {
         try{
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
-            num_players = serverToClientInput.readInt();
-            System.out.println(num_players);
+            numPlayers = serverToClientInput.readInt();
+            System.out.println(numPlayers);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +44,7 @@ public class Client {
 
         System.out.println("Game runner: " + gameRunner + ", Map: "+map);
         System.out.println(gameRunner.getMap());
-        gameRunner.setUpGame(map);
+        gameRunner.setUpGame(map, numPlayers);
     }
 
     private void listenForMap(){

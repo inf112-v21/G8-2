@@ -90,53 +90,32 @@ public class GameRunner{
                     }
                 }
                 game.getFlags().sort(new FlagIDComparator());
-                /*
-                //TODO - add correct number of players to game based off of player_start_layer positions
-                // cannot add players the same way. need to first find out how many players there will be
+
                 if(archiveMarker_layer.getCell(x,y) != null){
                     int index = archiveMarker_layer.getCell(x,y).getTile().getId();
-                    game.addGridObjectToGrid(new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index)));
+                    ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
+                    game.addGridObjectToGrid(am);
+                    game.addArchiveMarker(am);
                 }
-
-                 */
+                game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
             }
     }
 
-    /**
-     * Sets up a demo-game
-     */
-    public void setUpGame(Map map)//numplayers argument as well?
+    public void setUpGame(Map map, int numPlayers)
     {
+
         setGameTexture(TextureReference.getMapPath(map));
-        //TODO get total num of players(clients + server) and add players to map in correct positions
-
-        Player demoPlayer = new Player(new Position(0,0), true);
-        demoPlayer.setLocal();
 
 
-        game.newGrid(5,5);
-        giveMapDataToGrid();
-        game.addPlayer(demoPlayer);
-        /*
-        setGameTexture(TextureReference.getMapPath(map));
-        ArrayList<Player> tempPlayers = new ArrayList<>();
-        //get number of players
-        for (int i = 1; i<=numPlayers; i++){
-            Iterator<ArchiveMarker> it = game.getArchiveMarkers().iterator();
-            while(it.hasNext()){
-                ArchiveMarker am = it.next();
-                if(am.getID() == i) {
-                    Player p = new Player(new Position(am.getPosition().getX(),am.getPosition().getY()),false);
-                    p.setLocal();
-                    tempPlayers.add(p);
-                }
-            }
-        }
         game.newGrid(board_layer.getWidth(), board_layer.getHeight());
         giveMapDataToGrid();
-        for(Player p : tempPlayers) game.addPlayer(p);
 
-         */
+        for (int i = 1; i<=numPlayers; i++){
+            for(ArchiveMarker am : game.getArchiveMarkers()){
+                Player p = new Player(new Position(am.getPosition().getX(),am.getPosition().getY()),false);
+                p.getRobot().setArchiveMarker(am);
+            }
+        }
     }
 
     /**
