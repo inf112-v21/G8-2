@@ -66,12 +66,8 @@ public class RRApplication {
 
     }
 
-    public void setUpDemoGame()
-    {
-        //TODO: grunner.setUpGame(Map.TwoPlayerDemo, 2);
-        //grunner.setUpDemoGame(Map.DemoMap);
-        //grunner.setUpDemoGame(Map.TwoPlayerDemo); //TODO: Only for now. Later we need a general solution.
-        grunner.setGameTexture(TextureReference.getMapPath(Map.TwoPlayerDemo));
+    public void setUpDemoGame() {
+        grunner.setGameTexture(TextureReference.getMapPath(Map.DemoMap));
 
         /* Add player */
         Player demoPlayer = new Player(new Position(1,1), true);

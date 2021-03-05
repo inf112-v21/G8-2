@@ -77,30 +77,31 @@ public class GameRunner{
     private void giveMapDataToGrid() {
         for(int x = 0; x < board_layer.getWidth(); x++)
             for(int y = 0; y < board_layer.getHeight(); y++) {
-                if(hole_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Hole(x,y));
+                if (hole_layer.getCell(x, y) != null) game.addGridObjectToGrid(new Hole(x, y));
 
                 /* Adding flags to Game flags arraylist, then sorting them for the correct order */
-                if(flag_layer.getCell(x,y) != null) {
+                if (flag_layer.getCell(x, y) != null) {
                     //adding flag to grid and to game
-                    int index = flag_layer.getCell(x,y).getTile().getId();
-                    Flag f = new Flag(x,y,TileIDReference.flagIndexToId(index));
-                    if(!game.getFlags().contains(f)){
+                    int index = flag_layer.getCell(x, y).getTile().getId();
+                    Flag f = new Flag(x, y, TileIDReference.flagIndexToId(index));
+                    if (!game.getFlags().contains(f)) {
                         game.addGridObjectToGrid(f);
                         game.addFlag(f);
                     }
                 }
                 game.getFlags().sort(new FlagIDComparator());
 
-           
-          if(archiveMarker_layer.getCell(x,y) != null){
-                    int index = archiveMarker_layer.getCell(x,y).getTile().getId();
-                    ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
-                    game.addGridObjectToGrid(am);
-                    game.addArchiveMarker(am);
+                if (archiveMarker_layer != null) {
+                        if (archiveMarker_layer.getCell(x, y) != null) {
+                            int index = archiveMarker_layer.getCell(x, y).getTile().getId();
+                            ArchiveMarker am = new ArchiveMarker(x, y, TileIDReference.archiveIndexToID(index));
+                            game.addGridObjectToGrid(am);
+                            game.addArchiveMarker(am);
+                        }
+                        game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
+                    }
                 }
-                game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
-    
-          }
+
     }
 
     public void setUpGame(Map map, int numPlayers) {
