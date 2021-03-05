@@ -19,6 +19,7 @@ import java.util.Iterator;
  * This class will also communicate information and requests internal to external and external to
  * internal; also executing requests toward the current Game-instance<br>
  * </p><br>
+ * <p>To create a game you: 1. Give it a texture. 2.Add players. 3. Start it. A game in 1.2.3</p>
  * <p>GameRunner will be instantiated in RoboRallyApplication and will itself contain instances of
  *    Game, TiledMap and TiledMapTileLayer.</p>
  */
@@ -56,6 +57,7 @@ public class GameRunner{
         flag_layer = (TiledMapTileLayer) map.getLayers().get("Flag");
         archiveMarker_layer = (TiledMapTileLayer) map.getLayers().get("PlayerStart");
 
+        /* Adjust setup in case a grid based on a previous map already existed */
         adjustSetup();
     }
 
@@ -64,8 +66,7 @@ public class GameRunner{
      * Grid and layout will be reset to current setting. Player-instances
      * not be removed from game.</p>
      */
-    private void adjustSetup()
-    {
+    private void adjustSetup() {
         game.newGrid(board_layer.getWidth(), board_layer.getHeight());
         giveMapDataToGrid();
     }
@@ -73,12 +74,11 @@ public class GameRunner{
     /**
      * <p>This method will go trough the map-elements and add them to the grid-instance in game</p>
      */
-    private void giveMapDataToGrid()
-    {
+    private void giveMapDataToGrid() {
         for(int x = 0; x < board_layer.getWidth(); x++)
-            for(int y = 0; y < board_layer.getHeight(); y++)
-            {
+            for(int y = 0; y < board_layer.getHeight(); y++) {
                 if(hole_layer.getCell(x,y) != null) game.addGridObjectToGrid(new Hole(x,y));
+
                 /* Adding flags to Game flags arraylist, then sorting them for the correct order */
                 if(flag_layer.getCell(x,y) != null) {
                     //adding flag to grid and to game
@@ -91,14 +91,16 @@ public class GameRunner{
                 }
                 game.getFlags().sort(new FlagIDComparator());
 
-                if(archiveMarker_layer.getCell(x,y) != null){
+           
+          if(archiveMarker_layer.getCell(x,y) != null){
                     int index = archiveMarker_layer.getCell(x,y).getTile().getId();
                     ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
                     game.addGridObjectToGrid(am);
                     game.addArchiveMarker(am);
                 }
                 game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
-            }
+    
+          }
     }
 
     public void setUpGame(Map map, int numPlayers)
@@ -116,22 +118,30 @@ public class GameRunner{
                 p.getRobot().setArchiveMarker(am);
             }
         }
+
+    /**
+     * <p>Sets up a demo-game.</p>
+     */
+    public void setUpDemoGame(Map map) {
+        setGameTexture(TextureReference.getMapPath(map));
+
+        Player demoPlayer = new Player(new Position(1,1), true);
+        demoPlayer.setLocal();
+        game.addPlayer(demoPlayer);
     }
 
     /**
-     * This method will run the game that has been created.
+     * This method will run the game that has been created, and loop until it's over
      */
-    public void runGame()
-    {
-        //TODO: Make mechanism for running game. Game should only be affected when a user does something (local, ai or external)
+    public void runGame() {
+        //game.run();
     }
 
     /**
      * <p>This method will be called when something happened and the application has to check
      *    if anything should be handled from the game and passed out</p>
      */
-    public void somethingHappenedToGame()
-    {
+    private void somethingHappenedToGame() {
         /* Checking for possible win or loss */
         if(game.getLocal().hasWon())
         {
@@ -165,6 +175,8 @@ public class GameRunner{
      * * * * * Player-related-methods
      */
 
+    public void addPlayer(Player p) { game.addPlayer(p); }
+
     /**
      * <p>Returns a set with the Player-instances associated with the current Game-instance.</p>
      * @return players - Set of Players
@@ -194,7 +206,7 @@ public class GameRunner{
         somethingHappenedToGame();
         if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.movePlayerRobot(game.getLocal(), Direction.NORTH);
+        game.movePlayerRobot(game.getLocal(), Direction.NORTH,1);
     }
 
     /**
@@ -206,7 +218,7 @@ public class GameRunner{
         somethingHappenedToGame();
         if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.movePlayerRobot(game.getLocal(), Direction.SOUTH);
+        game.movePlayerRobot(game.getLocal(), Direction.SOUTH,1);
     }
 
     /**
@@ -218,7 +230,7 @@ public class GameRunner{
         somethingHappenedToGame();
         if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.movePlayerRobot(game.getLocal(), Direction.WEST);
+        game.movePlayerRobot(game.getLocal(), Direction.WEST,1);
     }
 
     /**
@@ -230,6 +242,6 @@ public class GameRunner{
         somethingHappenedToGame();
         if(!inputActive) return;
         resetPlayerTexture(game.getLocal());
-        game.movePlayerRobot(game.getLocal(), Direction.EAST);
+        game.movePlayerRobot(game.getLocal(), Direction.EAST,1);
     }
 }

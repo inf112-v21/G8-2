@@ -6,6 +6,8 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.application_functionality.reference.TextureReference;
+import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.gfx_and_ui.RRAppListener;
 
 import java.util.HashSet;
@@ -46,15 +48,10 @@ public class RRApplication {
 
     public void setUpLibgdxApplication() //TODO: Separer ansvar og gjør det lett for RoboRallyApplication å styre Vinduet.
     {
-        System.out.println("1");
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        System.out.println("2");
         config.setTitle("Robo rally");
-        System.out.println("3");
         config.setWindowedMode(500, 500);
-        System.out.println("4");
         new Lwjgl3Application(new RRAppListener(this), config);
-        System.out.println("5");
     }
 
     public GameRunner getGameRunner() {
@@ -71,9 +68,18 @@ public class RRApplication {
 
     public void setUpDemoGame()
     {
-        grunner.setUpGame(Map.TwoPlayerDemo, 2);
+        //TODO: grunner.setUpGame(Map.TwoPlayerDemo, 2);
+        //grunner.setUpDemoGame(Map.DemoMap);
         //grunner.setUpDemoGame(Map.TwoPlayerDemo); //TODO: Only for now. Later we need a general solution.
+        grunner.setGameTexture(TextureReference.getMapPath(Map.TwoPlayerDemo));
+
+        /* Add player */
+        Player demoPlayer = new Player(new Position(1,1), true);
+        demoPlayer.setLocal();
+        grunner.addPlayer(demoPlayer);
+
         inputHolder = InputHolder.GameRunner;
+        grunner.runGame();
     }
 
     /*

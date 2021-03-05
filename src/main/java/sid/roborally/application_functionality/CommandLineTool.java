@@ -112,7 +112,10 @@ public class CommandLineTool {
             case 0: return;
             case 1: //Set up and run demogame (demo_game_option)
                 {
-                    numberOfPlayersMenu(Map.TwoPlayerDemo);
+                    //TODO: numberOfPlayersMenu(Map.TwoPlayerDemo);
+                    rr_app.setUpLibgdxApplication();
+                    rr_app.setUpDemo();
+                    break;
                 }
             case 2:
                 commandLineMainMenu(); break; //MAIN MENU OPTION

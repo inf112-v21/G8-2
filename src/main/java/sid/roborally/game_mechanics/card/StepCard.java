@@ -10,12 +10,12 @@ package sid.roborally.game_mechanics.card;
  */
 public class StepCard extends Card{
     //The steps the card would move a robot
-    private int steps;
+    private int steps; //How many times the card-action should be repeated.
 
     //Constructor giving the card priority and steps
-    public StepCard(int pri, int step) {
+    public StepCard(int pri, int step, CardAction action) {
         //Construct card with priority
-        super(pri);
+        super(pri, action);
         this.steps = step;
     }
 
@@ -23,4 +23,6 @@ public class StepCard extends Card{
     public int getSteps() {
         return steps;
     }
+
+    public String getCardDescription() { return steps + " " + getName(); }
 }

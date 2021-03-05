@@ -1,8 +1,7 @@
 package sid.roborally.game_mechanics.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Stack;
+import java.util.List;
 
 /**
  * This is the card dealer class
@@ -14,38 +13,40 @@ import java.util.Stack;
  */
 public class CardDealer {
     //Deck of cards in the game
-    private Stack<Card> deck;
-    private ArrayList<Card> usedCards = new ArrayList<Card>();
+    private CardDeck deck;
 
     //Constructor giving the dealer its deck
-    public CardDealer(Stack<Card> givenDeck) {
-        this.deck = givenDeck;
-        Collections.shuffle(deck);
-    }
+    public CardDealer() { deck = new CardDeck(); }
+
+    /**
+     * <p>Resets card-deck</p>
+     */
+    public void resetDeck() { deck = new CardDeck(); }
 
     //Gets the deck from the dealer
-    public Stack<Card> getDeck(){
+    public CardDeck getDeck(){
         return deck;
     }
 
-    //Gets the used cards from the dealer
-    public ArrayList<Card> getUsedCards(){
-        return usedCards;
+    /**
+     * <p>Deals a List with a given amount of cards</p>
+     * @param amount Amount of cards to be dealt
+     * @return List of cards
+     */
+    public List<Card> dealCards(int amount) {
+        List<Card> retList = new ArrayList<>();
+        for(int i = 0; i < amount; i++) retList.add(deck.getNextCard());
+        return retList;
     }
 
     //Gives a card and removes it from the deck
     public Card deal(){
-        return deck.pop();
+        return deck.getNextCard();
     }
 
     //Shuffles the dealer's cards
     public void shuffleDeck(){
-        Collections.shuffle(deck);
-    }
-
-    //Adds a card used by a player to the list
-    public void cardUsed(Card card){
-        usedCards.add(card);
+        deck.shuffle();
     }
 
 }

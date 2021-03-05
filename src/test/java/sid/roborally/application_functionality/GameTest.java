@@ -3,10 +3,14 @@ package sid.roborally.application_functionality;
 import junit.framework.AssertionFailedError;
 import org.junit.Before;
 import org.junit.Test;
+import org.lwjgl.system.CallbackI;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.Game;
 import sid.roborally.game_mechanics.FlagIDComparator;
 import sid.roborally.game_mechanics.grid.ArchiveMarker;
+import sid.roborally.game_mechanics.card.CardAction;
+import sid.roborally.game_mechanics.card.StepCard;
+import sid.roborally.game_mechanics.card.TurnCard;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
 
@@ -29,7 +33,7 @@ public class GameTest {
     public void addElements()
     {
         game = new Game();
-        game.newGrid(5,5);
+        game.newGrid(10,10);
 
         p1 = new Player(new Position(1,1), false);
         p2 = new Player(new Position(2,2), false);
@@ -64,14 +68,83 @@ public class GameTest {
         assertEquals(new Position(1,1).toString(),
                 p1.getRobot().getPosition().toString());
 
-        //Moving player's robot.
-        game.movePlayerRobot(p1, Direction.NORTH);
-        game.movePlayerRobot(p1, Direction.EAST);
-        game.movePlayerRobot(p1, Direction.EAST);
+        /* Moving player's robot. */
+        game.movePlayerRobot(p1, Direction.NORTH,1);
+        game.movePlayerRobot(p1, Direction.EAST,1);
+        game.movePlayerRobot(p1, Direction.EAST,1);
 
-        //New position should be (1+1+1, 1+1) = (3,2)
+        /* New position should be (1+1+1, 1+1) = (3,2) */
         assertEquals(new Position(3,2).toString(),
                 p1.getRobot().getPosition().toString());
+    }
+
+    @Test
+    public void canMovePlayerForwardAndBackWithCards() {
+        Player player = new Player(new Position(4,1),false);
+        game.addPlayer(player);
+        player.getRobot().setOrientation(Direction.NORTH);
+        int originalPosY = player.getRobot().getPosition().getY();
+        int lastPosY = originalPosY;
+
+        StepCard move2forwards = new StepCard(100, 2, CardAction.FORWARD);
+        StepCard moveBack = new StepCard(100, 1, CardAction.BACKWARD);
+
+        /* Moving back */
+        game.useCardOnPlayerRobot(player,moveBack);
+        assertNotEquals(lastPosY, player.getRobot().getPosition().getY());
+        assertEquals(lastPosY-1, player.getRobot().getPosition().getY());
+        lastPosY = player.getRobot().getPosition().getY();
+
+        /* Testing */
+        game.useCardOnPlayerRobot(player,move2forwards);
+        assertNotEquals(lastPosY, player.getRobot().getPosition().getY());
+        assertEquals(lastPosY + 2, player.getRobot().getPosition().getY());
+    }
+
+    /**
+     * <p>Tests to se if you can move playerRobots with cards.</p>
+     */
+    @Test
+    public void canMovePlayerRobotWithCards() {
+        Player player = new Player(new Position(4,1),false);
+        game.addPlayer(player);
+
+        StepCard move2 = new StepCard(100, 2, CardAction.FORWARD);
+        StepCard moveBack = new StepCard(100, 1, CardAction.BACKWARD);
+        TurnCard turnRight = new TurnCard(100, CardAction.TURN_RIGHT);
+
+        /* Sets the direction robot should be facing */
+        player.getRobot().setOrientation(Direction.NORTH);
+
+        /* Moves the robot with given cards */
+        game.useCardOnPlayerRobot(player,move2);
+        game.useCardOnPlayerRobot(player,moveBack);
+        game.useCardOnPlayerRobot(player,turnRight);
+        game.useCardOnPlayerRobot(player,move2);
+
+        assertEquals(new Position(6,2).toString(),
+                player.getRobot().getPosition().toString());
+    }
+
+    @Test
+    public void gameCanRotatePlayerRobot() {
+        TurnCard rotateRight, rotateLeft, rotate180;
+        rotateRight = new TurnCard(256, CardAction.TURN_RIGHT);
+        rotateLeft = new TurnCard(32, CardAction.TURN_LEFT);
+        rotate180 = new TurnCard(8, CardAction.TURN_AROUND);
+
+        Direction originalDirection = Direction.NORTH;
+        game.addPlayer(p1);
+        p1.getRobot().setOrientation(Direction.NORTH);
+
+        game.useCardOnPlayerRobot(p1,rotateRight);
+        assertEquals(p1.getRobot().getOrientation(), originalDirection.rotateRight());
+
+        game.useCardOnPlayerRobot(p1,rotate180);
+        assertEquals(p1.getRobot().getOrientation(), originalDirection.rotateRight().rotate180());
+
+        game.useCardOnPlayerRobot(p1,rotateLeft);
+        assertEquals(p1.getRobot().getOrientation(), originalDirection.rotate180());
     }
 
     /**

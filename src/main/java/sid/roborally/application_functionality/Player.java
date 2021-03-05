@@ -1,9 +1,14 @@
 package sid.roborally.application_functionality;
 
 import sid.roborally.game_mechanics.grid.ArchiveMarker;
+import sid.roborally.game_mechanics.card.Card;
+import sid.roborally.game_mechanics.card.CardDeck;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <h3>Player</h3>
@@ -29,7 +34,7 @@ public class Player {
     private State playerState;
     private OwnerLocation ownerLocation;
     private PlayerGraphic p_graphic;
-
+    private ArrayList<Card> programCards;
     private Robot robot; //The player-instance's robot
 
 
@@ -46,6 +51,16 @@ public class Player {
         p_graphic = new PlayerGraphic(this, textureIndex);
         robot = new Robot(pos.getX(), pos.getY());
     }
+
+    //TODO: Tror dette heller kan gjøres i Game, og bruke player sin ID til å finne ut hvem som skal velge hvilke kort
+   public void giveProgramCards (List<Card> cards){ //skal si at mine programmeringskort er disse 5 kortene.
+        this.programCards = (ArrayList<Card>) cards;
+   }
+
+   //TODO: Samme som li:50.
+   public ArrayList<Card> getProgramCards () {
+        return programCards;
+   }
 
     /**
      * <p>Player constructor that does not specify a chosen texture and will
