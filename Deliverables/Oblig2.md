@@ -1,53 +1,54 @@
 Oblig 2 SiD
 Deloppg 1: Prosjekt og prosjektstruktur
 * Roller
-Roller fungerer bra, noen roller viste seg å være mindre fast satt som f.eks møtestyrer, referat skriver. Rollene dekker et vidt spekter av arbeidsområder
-Spesifikasjons mester: Hovedansvarlig for å skrive bruker historier, kravspesifikasjoner og arbeidsoppgaver, sier i fra dersom spesifikasjoner mangles til implementasjoner. (Terje)
+Roller fungerer bra, noen roller viste seg Ã¥ vÃ¦re mindre fast satt som f.eks mÃ¸testyrer, referat skriver. Rollene dekker et vidt spekter av arbeidsomrÃ¥der
+Spesifikasjons mester: Hovedansvarlig for Ã¥ skrive bruker historier, kravspesifikasjoner og arbeidsoppgaver, sier i fra dersom spesifikasjoner mangles til implementasjoner. (Terje)
 Kartdesigner: Lager kartene som brukes i spillet og kart for testing av spill elementer (Emil)
-Møtereferat og møteledelse: Skriver møtereferat for å holde styr på hva som ble gjort på gruppetimer, styrer diskusjonen når noe må diskuteres i gruppen og passer på at vi går videre dersom en diskusjon tar for lang tid. (Ansvar byttes på)
-Prosess ansvarlig: En rolle som innebærer alle, sørger for at regler for gruppe adferd og kodeskikk blir fulgt.
-Ansvarlig for kodekvalitet: Innebærer alle foreløpig, men etter hvert som koden har vokst bør rollen være for 2-3 personer i gruppen som har en god og forståelig oversikt over hele systemet og kan hjelpe dersom noen sitter seg fast i en implementasjon. Passer på at kommentarer er beskrivende og gjør koden mer forståelig.
+MÃ¸tereferat og mÃ¸teledelse: Skriver mÃ¸tereferat for Ã¥ holde styr pÃ¥ hva som ble gjort pÃ¥ gruppetimer, styrer diskusjonen nÃ¥r noe mÃ¥ diskuteres i gruppen og passer pÃ¥ at vi gÃ¥r videre dersom en diskusjon tar for lang tid. (Ansvar byttes pÃ¥)
+Prosess ansvarlig: En rolle som innebÃ¦rer alle, sÃ¸rger for at regler for gruppe adferd og kodeskikk blir fulgt.
+Ansvarlig for kodekvalitet: InnebÃ¦rer alle forelÃ¸pig, men etter hvert som koden har vokst bÃ¸r rollen vÃ¦re for 2-3 personer i gruppen som har en god og forstÃ¥elig oversikt over hele systemet og kan hjelpe dersom noen sitter seg fast i en implementasjon. Passer pÃ¥ at kommentarer er beskrivende og gjÃ¸r koden mer forstÃ¥elig.
 Refactoring entusiast: Den som ser mest over kodekvalitet og refaktorerer koden ved behov. (Daniel)
-Spillekspert: Har god kontroll over regler i RoboRally og sørger for at implementasjonen følger disse reglene. (Markus og Andreas)
+Spillekspert: Har god kontroll over regler i RoboRally og sÃ¸rger for at implementasjonen fÃ¸lger disse reglene. (Markus og Andreas)
 
 * Erfaringer
-Scrum og kanban fungerer bra, prosjekt brettet er et veldig nyttig verktøy for å strukturere arbeidet våres og at alle kan velge de oppgavene de føler er innenfor deres kapasitet.
-Valg av prosjekt metodikk er bra, men det er av og til vanskelig å fordele oppgaver, store forskjeller i commits. Forskjellen er sannsynlig en kombinasjon av folk som tar oppgaver, men commiter kun en gang per oppgave mens andre commiter flere ganger per oppgave.
-Går fint å jobbe med andre, par-programmering var bra og hjalp oss å få kjapp feedback på koden vi skrev.
+Scrum og kanban fungerer bra, prosjekt brettet er et veldig nyttig verktÃ¸y for Ã¥ strukturere arbeidet vÃ¥res og at alle kan velge de oppgavene de fÃ¸ler er innenfor deres kapasitet.
+Valg av prosjekt metodikk er bra, men det er av og til vanskelig Ã¥ fordele oppgaver, store forskjeller i commits. Forskjellen er sannsynlig en kombinasjon av folk som tar oppgaver, men commiter kun en gang per oppgave mens andre commiter flere ganger per oppgave.
+GÃ¥r fint Ã¥ jobbe med andre, par-programmering var bra og hjalp oss Ã¥ fÃ¥ kjapp feedback pÃ¥ koden vi skrev.
 Test drevet utvikling er vanskelig for deler av oppgaven, men fungerer bra for logiske deler av oppgaven.
 * Gruppedynamikk & kommunikasjon
-Synes det er bra at vi kan lære til og fra hverandre, kommunikasjon kan være vanskelig når vi er mer enn 2 stk. Gruppen har respekt for hverandre og er veldig villig til å samarbeide. Til tider vanskelig å skjønne hva noen ber om med en spesifikk implementasjon, men blir oftest avklart med en bedre forståelse av koden. Folk er flink til å gi og ta tilbakemeldinger. 
+Synes det er bra at vi kan lÃ¦re til og fra hverandre, kommunikasjon kan vÃ¦re vanskelig nÃ¥r vi er mer enn 2 stk. Gruppen har respekt for hverandre og er veldig villig til Ã¥ samarbeide. Til tider vanskelig Ã¥ skjÃ¸nne hva noen ber om med en spesifikk implementasjon, men blir oftest avklart med en bedre forstÃ¥else av koden. Folk er flink til Ã¥ gi og ta tilbakemeldinger. 
 
 * Forbedringer til prosjekt struktur:
-Kommunikasjon og samarbeid er bra når oppgaver jobbes med, fordeling av oppgaver kunne vært bedre.
+Kommunikasjon og samarbeid er bra nÃ¥r oppgaver jobbes med, fordeling av oppgaver kunne vÃ¦rt bedre.
 
-Ting å forbedre på
-Flinkere til å la alle velge minst en oppgave de føler de kan gjøre
-Planlegge en eller flere sosiale aktiviteter i løpet av prosjektet
+Ting Ã¥ forbedre pÃ¥
+Flinkere til Ã¥ la alle velge minst en oppgave de fÃ¸ler de kan gjÃ¸re
+Planlegge en eller flere sosiale aktiviteter i lÃ¸pet av prosjektet
 Planlegge kodestruktur sammen
-Alle gir innspill i møtene
+Alle gir innspill i mÃ¸tene
 
 * Begrunnelser for forskjeller i commits
-Noen commiter for hver metode/test som lages, andre commiter kun når klassen/oppgaven er ferdig.
+Noen commiter for hver metode/test som lages, andre commiter kun nÃ¥r klassen/oppgaven er ferdig.
 Ikke alltid jevn fordeling av oppgaver, noen jobber kjappere/tidligere i uken enn andre
-Noen oppgaver er større og fører til flere commits.
-Når flere personer jobber på samme oppgave/klasse (f.eks server) kan codewithme føre til problemer siden den bruker maskin navn og ikke github navn og krever en commit for hver person som har gjort endringer.
+Noen oppgaver er stÃ¸rre og fÃ¸rer til flere commits.
+NÃ¥r flere personer jobber pÃ¥ samme oppgave/klasse (f.eks server) kan codewithme fÃ¸re til problemer siden den bruker maskin navn og ikke github navn og krever en commit for hver person som har gjort endringer.
 
 
-* Referat fra møter:
-Prosjektdokumenter/møtereferat
+* Referat fra mÃ¸ter:
+Prosjektdokumenter/mÃ¸tereferat
 
 
 * Forbedrings punkter
-1. Sørge for at alle får valgt oppgaver
-2. Commit oftere (kan commite lokalt og så pushe)
+1. SÃ¸rge for at alle fÃ¥r valgt oppgaver
+2. Commit oftere (kan commite lokalt og sÃ¥ pushe)
 
 * Brukerhistorier, akseptansekrav og arbeids oppgaver
 Deliverables/spesifikasjoner
 
 * Prioritering av oppgaver
-Prioritert basert på MvP, men server ble utsatt fordi vi ønsket et commandline tool for å gjøre det enklere for bruker å velge f.eks forskjellige kart/være host eller client for spillet. Det gjør det også enklere å lage en bedre meny GUI senere.
-Server er gjort senere fordi vi må ha mer spill logikk før server kan faktisk fungere slik at vi vet hva som kan/bør sendes til klient.
+Prioritert basert pÃ¥ MvP, men server ble utsatt fordi vi Ã¸nsket et commandline tool for Ã¥ gjÃ¸re det enklere for bruker Ã¥ velge f.eks forskjellige kart/vÃ¦re host eller client for spillet. Det gjÃ¸r det ogsÃ¥ enklere Ã¥ lage en bedre meny GUI senere.
+Server er gjort senere fordi vi mÃ¥ ha mer spill logikk fÃ¸r server kan faktisk fungere slik at vi vet hva som kan/bÃ¸r sendes til klient.
+Fikk til det meste i MVP bortsett fra Multiplayer og styring av kort.
 
 * BUGS
 
