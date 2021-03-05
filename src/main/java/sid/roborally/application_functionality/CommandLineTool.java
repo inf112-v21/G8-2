@@ -2,8 +2,6 @@ package sid.roborally.application_functionality;
 
 import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.application_functionality.connection.Client;
-import sid.roborally.application_functionality.connection.Server;
-import sid.roborally.application_functionality.reference.Map;
 import java.util.Scanner;
 
 public class CommandLineTool {
@@ -13,16 +11,16 @@ public class CommandLineTool {
 
     Scanner sc; //Input-scanner
 
-    private static String MAIN_MENU_WELCOME = "\nWelcome to RoboRally. Select one of the following options:\n";
-    private static String SETUP_SERVER_OPTIONS = "\n1. Create a new server. (write \"1\"))\n" +
+    private static final String MAIN_MENU_WELCOME = "\nWelcome to RoboRally. Select one of the following options:\n";
+    private static final String SETUP_SERVER_OPTIONS = "\n1. Create a new server. (write \"1\"))\n" +
                                                 "2. Join a current game. (write \"2\")\n" +
                                                 "0. Quit application";
-    private static int SETUP_SERVER_OPTIONS_NUM = 3;
+    private static final int SETUP_SERVER_OPTIONS_NUM = 3;
 
-    private static String MAIN_MENU_OPTIONS = "1. Start a new game (write \"1\")" + "\n0. Quit application";
-    private static int MAIN_MENU_OPTIONS_NUM = 2;
+    private static final String MAIN_MENU_OPTIONS = "1. Start a new game (write \"1\")" + "\n0. Quit application";
+    private static final int MAIN_MENU_OPTIONS_NUM = 2;
 
-    private static String NUM_PLAYERS_CHOICE =
+    private static final String NUM_PLAYERS_CHOICE =
                             "\n1. 2 Players\n" +
                             "2. 3 players\n"+
                             "3. 4 players\n"+
@@ -31,13 +29,13 @@ public class CommandLineTool {
                             "6. 7 players\n"+
                             "7. 8 players\n"+
                             "0. Quit application";
-    private static int NUM_PLAYERS_CHOICE_NUMCHOICES = 8;
+    private static final int NUM_PLAYERS_CHOICE_NUMCHOICES = 8;
 
-    private static String NEW_GAME_MENU_WELCOME = "\nNew Game Menu. Select one of the following options:\n";
-    private static String NEW_GAME_MENU_OPTIONS =   "1. Start a new demo-game (write \"1\")\n" +
+    private static final String NEW_GAME_MENU_WELCOME = "\nNew Game Menu. Select one of the following options:\n";
+    private static final String NEW_GAME_MENU_OPTIONS =   "1. Start a new demo-game (write \"1\")\n" +
                                                     "2. Go back to Main Menu\n" +
                                                     "0. Quit application";
-    private static int NEW_GAME_MENU_OPTIONS_NUM = 3;
+    private static final int NEW_GAME_MENU_OPTIONS_NUM = 3;
 
     public CommandLineTool() {}
 
