@@ -25,32 +25,32 @@ import java.util.HashSet;
  *    It will contain instances of several parts of the program as this class
  *    is central in tying together the program.</p>
  *
- * */
+ * @author Daniel Janols
+ */
 public class RRApplication {
 
+    private static final int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
 
-
-    private enum InputHolder {Menu, GameRunner} //This is to know where to route input
+    /* Where to route input */
+    private enum InputHolder {Menu, GameRunner}
     private InputHolder inputHolder;
 
+    /* Application-running */
     private GameRunner grunner; //Sets up and starts a game.
-    private CommandLineTool clt; //This is the game-controller when the game-menus
+    private CommandLineTool clt; //This is the game-controller in the game-menus
 
     /**
      * <p>RoboRallyApplication constructor.</p>
      */
-    public RRApplication()
-    {
+    public RRApplication() {
         inputHolder = InputHolder.Menu;
-
         grunner = new GameRunner();
     }
 
-    public void setUpLibgdxApplication() //TODO: Separer ansvar og gjør det lett for RoboRallyApplication å styre Vinduet.
-    {
+    public void setUpLibgdxApplication() {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle("Robo rally");
-        config.setWindowedMode(500, 500);
+        config.setTitle("Robo Rally");
+        config.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT);
         new Lwjgl3Application(new RRAppListener(this), config);
     }
 
@@ -62,17 +62,18 @@ public class RRApplication {
      * Demo and Test-functionality:
      */
 
-    public void setUpGame() {
-
-    }
-
+    /**
+     * <p>Sets up a demogame</p>
+     */
     public void setUpDemoGame() {
-        grunner.setGameTexture(TextureReference.getMapPath(Map.DemoMap));
 
         /* Add player */
-        Player demoPlayer = new Player(new Position(1,1), true);
+        Player demoPlayer = new Player(1, true);
         demoPlayer.setLocal();
         grunner.addPlayer(demoPlayer);
+
+        /* Set up game */
+        grunner.setUpGame(Map.TwoPlayerDemo);
 
         inputHolder = InputHolder.GameRunner;
         grunner.runGame();

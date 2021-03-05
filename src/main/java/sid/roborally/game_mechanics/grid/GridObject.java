@@ -3,9 +3,10 @@ package sid.roborally.game_mechanics.grid;
 import sid.roborally.game_mechanics.Direction;
 
 /**
- * This Entity class contains the position of an entity.
+ * <h3>GridObject</h3>
+ * <p>This class contains the position of an entity.
  * Starting Direction is facing North.
- * Can set and get Direction
+ * Can set and get Direction</p>
  *
  * @author Markus Edlin
  */

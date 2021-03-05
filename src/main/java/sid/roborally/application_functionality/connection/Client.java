@@ -11,6 +11,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * UNDER DEVELOPMENT. NOT ACTIVE CODE
+ */
 public class Client {
     private Socket serverSocket;
     private ObjectOutputStream clientToServerOutput;
@@ -46,7 +49,7 @@ public class Client {
 
         System.out.println("Game runner: " + gameRunner + ", Map: "+map);
         System.out.println(gameRunner.getMap());
-        gameRunner.setUpGame(map, numPlayers);
+        //gameRunner.setUpGame(map, numPlayers);
     }
 
     private void listenForMap(){

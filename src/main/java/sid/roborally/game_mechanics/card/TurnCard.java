@@ -1,10 +1,10 @@
 package sid.roborally.game_mechanics.card;
 
 /**
- * This is the turn/rotate card.
- * It inherits priority from the Card class
- * It returns a string with which way to turn.
- * This is acquired via the getTurnDirection() method
+ * <h3>TurnCard</h3>
+ * <p>TurnCard contains information about how player should turn.</p>
+ *
+ * @author Terje Trommestad
  */
 
 public class TurnCard extends Card{

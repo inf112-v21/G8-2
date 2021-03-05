@@ -4,9 +4,10 @@ import java.util.Collections;
 import java.util.Stack;
 
 /**
- * This is the card deck class
- * It sets up cards with their correct priority
- * and adds them to the deck
+ * <h3>CardDeck</h3>
+ * <p>Sets up a card-deck with correct-priority</p>
+ *
+ * @author Andreas Henriksen
  */
 public class CardDeck {
 

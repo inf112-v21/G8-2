@@ -22,21 +22,24 @@ import java.util.List;
  *
  * <p>In-game it will communicate internally with Player-, Grid- and GridObject-instances.
  *    Externally it will communicate with GameRunner</p>
+ *
+ * @author Daniel Janols
  */
 public class Game implements Runnable {
 
-
-    private HashMap<Flag, Player> flags_have_player;
+    /* Game-elements */
     private ArrayList<Flag> flags;
     private HashSet<Player> players;
     private Grid grid;
     private CardDealer dealer;
     private ArrayList<ArchiveMarker> archiveMarkers;
+
+    /* State variables */
     private boolean gameOver;
 
     /* Phase-variables */
-    private HashMap<Player, List<Card>> givenProgramCards; //Associating program-cards with given players.
-    private HashMap<Player, ArrayList<Card>> chosenProgramCards;
+    private HashMap<Player, ArrayList<Card>>
+            givenProgramCards, chosenProgramCards; //Cards given and selected by players.
 
     /* Constants */
     private static int DEAL_CARD_AMOUNT = 5;
@@ -58,9 +61,7 @@ public class Game implements Runnable {
 
     /* Run game-thread */
     @Override
-    public void run() {
-        runGame();
-    }
+    public void run() { runGame(); }
 
     /*
      * * * * * Editing game-elements.
@@ -72,20 +73,17 @@ public class Game implements Runnable {
      * @param height grid-height
      */
     public void newGrid(int width, int height)
-    {
-        grid = new Grid(width, height);
-    }
+    { grid = new Grid(width, height); }
 
     /**
      * <p>Adds a GridObject-instance to the Game's Grid.</p>
      * @param go GridObject
      */
-    public void addGridObjectToGrid(GridObject go) { grid.addGridObject(go);}
-
-
+    public void addGridObjectToGrid(GridObject go)
+    { grid.addGridObject(go);}
 
     /*
-     * Phase-methods
+     * * * * * Phase-methods
      */
 
     /**
@@ -103,8 +101,8 @@ public class Game implements Runnable {
      * <p>Checks if local host has won or lost, if any then game-over.</p>
      */
     private void checkIfLocalHasWonOrLost() {
-        if(getLocal().hasWon()) gameOver = true;
-        if(getLocal().isDead()) gameOver = true;
+        if(getLocal().hasWon() || getLocal().isDead())
+            gameOver = true;
     }
 
     /**
@@ -120,27 +118,27 @@ public class Game implements Runnable {
      */
     private void runRound()
     {
-        //DEAL CARDS
+        /* DEAL CARDS */
         dealToPlayers();
         System.out.println(getLocal());
 
-        //GET PLAYER CHOSEN CARDS
+        /* GET PLAYER CHOSEN CARDS */
         ArrayList<Card> chosen = GameCommandLine
                 .getLocalCardSequenceInput(givenProgramCards.get(getLocal()));
         for(Card c : chosen) System.out.println(c.getName());
 
-        //MOVE ROBOTS BASED ON CHOSEN CARDS
+        //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
         for(Player p : players) {
             for(Card c : chosenProgramCards.get(p));
                 //TODO: CARDS NEED TURN_FUNCTIONALITY TO MAKE THEM EASIER TO USE
                 //TODO: FOR NOW THE ROBOT WILL BE MOVED IN A NON_CORRESPONDING WAY
         }
 
-        //MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
+        //TODO: MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
 
-        //CALCULATE DAMAGE (LAZERS)
+        //TODO: CALCULATE DAMAGE (LAZERS)
 
-        //OTHER CHECKS
+        //TODO: OTHER CHECKS
 
         doResets();
     }
@@ -233,7 +231,6 @@ public class Game implements Runnable {
     public Player getLocal()
     {
         for(Player p : players) if(p.isLocal()) return p;
-        //Game should always have a local player.
         return null;
     }
 
@@ -318,17 +315,22 @@ public class Game implements Runnable {
             p.getRobot().setHasWon(true);
             p.playerWon();
         }
+
     }
 
     public void addFlag(Flag f) {
         flags.add(f);
+        grid.addGridObject(f);
     }
 
     public ArrayList<Flag> getFlags() {
         return this.flags;
     }
 
-    public void addArchiveMarker(ArchiveMarker am) { archiveMarkers.add(am); }
+    public void addArchiveMarker(ArchiveMarker am) {
+        addGridObjectToGrid(am);
+        archiveMarkers.add(am);
+    }
 
     public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
 }

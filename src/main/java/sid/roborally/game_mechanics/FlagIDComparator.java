@@ -4,6 +4,11 @@ import sid.roborally.game_mechanics.grid.Flag;
 
 import java.util.Comparator;
 
+/**
+ * <h3>FlagIDComparator</h3>
+ * <p>Comparator for flag ID's</p>
+ * @author Markus Edlin
+ */
 public class FlagIDComparator implements Comparator<Flag> {
 
     @Override

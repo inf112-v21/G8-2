@@ -5,11 +5,13 @@ package sid.roborally.application_functionality.reference;
  * <p>This class will provide reference methods to map and player-references
  *    for to their textures. Thus providing an easy way to get their texture-data
  *    without the rest of the program having to bother with strings.</p>
+ *
+ * @author Daniel Janols
  */
 public class TextureReference {
 
-    private static String MAP_FOLDER_PATH = "assets/maps/";
-    private static String PLAYER_FOLDER_PATH = "assets/player_tex/";
+    private static final String MAP_FOLDER_PATH = "assets/maps/";
+    private static final String PLAYER_FOLDER_PATH = "assets/player_tex/";
 
     /**
      * <p>Returns the path that corresponds to the map chosen.</p>

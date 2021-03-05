@@ -6,13 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * <h3>GameCommandLine</h3>
+ * <p>Command-line class for game.</p>
+ *
+ * @author Daniel Janols
+ */
 public class GameCommandLine {
 
     private static int CARD_AMOUNT = 5;
 
     /**
      * <p>Gets the max number of input and returns the first valid number given.</p>
-     * @param optionsNum
+     * @param optionsNum Amount of options.
      * @return int - ZERO if no valid input was given (shouldn't ever happen).
      */
     private static int getValidInput(int optionsNum) {
@@ -31,13 +37,13 @@ public class GameCommandLine {
     /**
      * <p>When called from game/gamerunner this method will spawn a promt in command-line
      *    asking the user to select their card-sequence.</p>
-     * @param givenCards
-     * @return
+     * @param givenCards Cards given to command-line
+     * @return Chosen cards
      */
     public static ArrayList<Card> getLocalCardSequenceInput(List<Card> givenCards) {
         System.out.println("Your cards are: ");
         for(int i = 0; i < givenCards.size(); i++)
-            System.out.println(Integer.toString(i+1) + ". " + givenCards.get(i).getName());
+            System.out.println((i+1) + ". " + givenCards.get(i).getName());
 
         /* Will use this list to get selected indices and check for duplicates */
         ArrayList<Integer> retCardsIndices = new ArrayList<>();
@@ -63,7 +69,7 @@ public class GameCommandLine {
 
     /**
      * <p>Prints a message saying that local player either won or lost.</p>
-     * @param localWon
+     * @param localWon Did the local player win.
      */
     public static void printLocalEnd(boolean localWon) {
         if(localWon)

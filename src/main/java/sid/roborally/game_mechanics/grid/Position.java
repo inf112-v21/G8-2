@@ -1,10 +1,11 @@
 package sid.roborally.game_mechanics.grid;
 
 /**
- * This Position class keeps track of an x and y value
+ * <h3>Position</h3>
+ * <p>This Position class keeps track of an x and y value
  * and can print out in the format (x,y) with a toString method.
  * Uses getters and setters to retrieve and set x & y value.
- * Using own equals method to compare positions of two entities.
+ * Using own equals method to compare positions of two entities.</p>
  *
  * @author Markus Edlin
  */

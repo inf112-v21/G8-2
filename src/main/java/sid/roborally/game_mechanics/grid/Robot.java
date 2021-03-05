@@ -2,6 +2,12 @@ package sid.roborally.game_mechanics.grid;
 
 import java.util.HashSet;
 
+/**
+ * <h3>Robot</h3>
+ * <p>Class for GridObject-Robot</p>
+ * <p>Robot is the board-avatar for a player.</p>
+ * @author Markus Edlin
+ */
 public class Robot extends GridObject {
 
     private boolean isDead;
@@ -9,7 +15,6 @@ public class Robot extends GridObject {
     HashSet<Flag> flags;
     private int healthPoints;
     private ArchiveMarker archiveMarker;
-
 
     public Robot(int x, int y) {
         super(x,y);

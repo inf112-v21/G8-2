@@ -16,7 +16,7 @@ import sid.roborally.application_functionality.reference.TextureReference;
  */
 public class PlayerGraphic {
 
-    //Player's state-cells (graphics for different states)
+    /* Player's state-cells (graphics for different states) */
     TiledMapTileLayer.Cell playerLive;
     TiledMapTileLayer.Cell playerDead;
     TiledMapTileLayer.Cell playerWin;

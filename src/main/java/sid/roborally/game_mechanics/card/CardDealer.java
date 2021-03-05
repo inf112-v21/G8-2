@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is the card dealer class
- * This class keeps track of the cards in a given round
- * Gives cards to players
- * And keeps track of how many cards are in the game
+ * <h3>CardDealer</h3>
+ * <p>Keeps track of game cards, and can be called upon to deal cards to players.</p>
  *
  * @author Emil Eldooen
  */
 public class CardDealer {
-    //Deck of cards in the game
+
     private CardDeck deck;
 
-    //Constructor giving the dealer its deck
     public CardDealer() { deck = new CardDeck(); }
 
     /**
@@ -23,7 +20,10 @@ public class CardDealer {
      */
     public void resetDeck() { deck = new CardDeck(); }
 
-    //Gets the deck from the dealer
+    /**
+     * <p>Get card-deck.</p>
+     * @return CardDeck instance
+     */
     public CardDeck getDeck(){
         return deck;
     }
@@ -39,12 +39,9 @@ public class CardDealer {
         return retList;
     }
 
-    //Gives a card and removes it from the deck
-    public Card deal(){
-        return deck.getNextCard();
-    }
-
-    //Shuffles the dealer's cards
+    /**
+     * <p>Shuffles card-deck</p>
+     */
     public void shuffleDeck(){
         deck.shuffle();
     }

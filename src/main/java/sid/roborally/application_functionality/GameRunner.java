@@ -20,12 +20,13 @@ import java.util.HashSet;
  * This class will also communicate information and requests internal to external and external to
  * internal; also executing requests toward the current Game-instance<br>
  * </p><br>
- * <p>To create a game you: 1. Give it a texture. 2.Add players. 3. Start it. A game in 1.2.3</p>
- * <p>GameRunner will be instantiated in RoboRallyApplication and will itself contain instances of
- *    Game, TiledMap and TiledMapTileLayer.</p>
+ * <p>To create a game you: 1. Give it a texture. 2. Adjust setup. 3.Add players. 4. Start it. A game in 1.2.3..4</p>
+ * <p>GameRunner will be instantiated in RRApplication.</p>
+ * @author Danile Janols
  */
 public class GameRunner{
 
+    /* Tile elements */
     private TiledMap map;
     private TiledMapTileLayer
             board_layer,
@@ -34,8 +35,11 @@ public class GameRunner{
             flag_layer,
             archiveMarker_layer; //When these layers are edited the gui is edited.
 
+    private HashSet<Player> players;
+
+    /* The game that is run */
     private Game game;
-    private boolean inputActive; //TODO: Can shut of input to game
+    private boolean inputActive;
 
     /**
      * <p>GameRunner constructor.</p>
@@ -43,6 +47,7 @@ public class GameRunner{
     public GameRunner() {
         game = new Game();
         inputActive = true;
+        players = new HashSet<>();
     }
 
     /**
@@ -62,9 +67,38 @@ public class GameRunner{
         adjustSetup();
     }
 
+    /*
+     * * * * * Game-setup methods
+     */
+
+    public void setUpGame(Map map) {
+        /* First tell game what texture it should use*/
+        setGameTexture(TextureReference.getMapPath(map));
+
+        /* Adjust setup based on map chosen */
+        adjustSetup();
+
+        /* Place the players onto the map */
+        placePlayers(players);
+    }
+
+    /**
+     * <p>Places players on their start-positions according to their startID</p>
+     */
+    private void placePlayers(HashSet<Player> players) {
+        for(Player p : players) {
+            ArchiveMarker am = game.getArchiveMarkers()
+                    .get(p.getStartID()-1); //PlayerID is 1,2,3, but first archive element is in the 0 index.
+            Position startPosition = am.getPosition(); //Starts at marker start-position
+            p.giveRobotStartPosition(startPosition);
+            p.getRobot().setArchiveMarker(am); //Giving robot the archive marker
+            game.addPlayer(p);
+        }
+    }
+
     /**
      * <p>Will be called when the Game-instance needs to set-up itself again.
-     * Grid and layout will be reset to current setting. Player-instances
+     * Grid and layout will be reset to current setting. Player-instances will
      * not be removed from game.</p>
      */
     private void adjustSetup() {
@@ -76,61 +110,59 @@ public class GameRunner{
      * <p>This method will go trough the map-elements and add them to the grid-instance in game</p>
      */
     private void giveMapDataToGrid() {
-        for(int x = 0; x < board_layer.getWidth(); x++)
-            for(int y = 0; y < board_layer.getHeight(); y++) {
-                if (hole_layer.getCell(x, y) != null) game.addGridObjectToGrid(new Hole(x, y));
-
-                /* Adding flags to Game flags arraylist, then sorting them for the correct order */
-                if (flag_layer.getCell(x, y) != null) {
-                    //adding flag to grid and to game
-                    int index = flag_layer.getCell(x, y).getTile().getId();
-                    Flag f = new Flag(x, y, TileIDReference.flagIndexToId(index));
-                    if (!game.getFlags().contains(f)) {
-                        game.addGridObjectToGrid(f);
-                        game.addFlag(f);
-                    }
-                }
-                game.getFlags().sort(new FlagIDComparator());
-
-                if (archiveMarker_layer != null) {
-                        if (archiveMarker_layer.getCell(x, y) != null) {
-                            int index = archiveMarker_layer.getCell(x, y).getTile().getId();
-                            ArchiveMarker am = new ArchiveMarker(x, y, TileIDReference.archiveIndexToID(index));
-                            game.addGridObjectToGrid(am);
-                            game.addArchiveMarker(am);
-                        }
-                        game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
-                    }
-                }
-
+        for (int x = 0; x < board_layer.getWidth(); x++) {
+            for (int y = 0; y < board_layer.getHeight(); y++) {
+                /* Adding possible game-elements to grid */
+                addPossibleHoleToGrid(x, y);
+                addPossibleFlagToGrid(x, y);
+                addPossibleArchiveToGrid(x,y);
+            }
+        }
+        /* When everything is added some elements must also be sorted */
+        game.getFlags().sort(new FlagIDComparator());
+        game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
     }
 
-    public void setUpGame(Map map, int numPlayers) {
+    /**
+     * <p>If position has a Hole, hole is added to grid.</p>
+     * @param x x-position
+     * @param y y-position
+     */
+    private void addPossibleHoleToGrid(int x, int y)
+    { if (hole_layer.getCell(x, y) != null) game.addGridObjectToGrid(new Hole(x, y)); }
 
-        setGameTexture(TextureReference.getMapPath(map));
-
-
-        game.newGrid(board_layer.getWidth(), board_layer.getHeight());
-        giveMapDataToGrid();
-
-        for (int i = 1; i <= numPlayers; i++) {
-            for (ArchiveMarker am : game.getArchiveMarkers()) {
-                Player p = new Player(new Position(am.getPosition().getX(), am.getPosition().getY()), false);
-                p.getRobot().setArchiveMarker(am);
-            }
+    /**
+     * <p>If position has a Flag, flag is added to grid.</p>
+     * @param x x-position
+     * @param y y-position
+     */
+    private void addPossibleFlagToGrid(int x, int y)
+    {
+        /* Adding flag to Game */
+        if (flag_layer.getCell(x, y) != null) {
+            int flagIndex = flag_layer.getCell(x, y).getTile().getId();
+            Flag f = new Flag(x, y, TileIDReference.flagIndexToId(flagIndex));
+            game.addFlag(f);
         }
     }
 
     /**
-     * <p>Sets up a demo-game.</p>
+     * <p>If position has an Archive, archive is added to grid.</p>
+     * @param x x-position
+     * @param y y-position
      */
-    public void setUpDemoGame(Map map) {
-        setGameTexture(TextureReference.getMapPath(map));
-
-        Player demoPlayer = new Player(new Position(1,1), true);
-        demoPlayer.setLocal();
-        game.addPlayer(demoPlayer);
+    private void addPossibleArchiveToGrid(int x, int y) {
+        /* Adding marker to game */
+        if (archiveMarker_layer.getCell(x, y) != null) {
+            int index = archiveMarker_layer.getCell(x,y).getTile().getId();
+            ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
+            game.addArchiveMarker(am);
+        }
     }
+
+    /*
+     * * * * * Game-running
+     */
 
     /**
      * This method will run the game that has been created, and loop until it's over
@@ -146,15 +178,9 @@ public class GameRunner{
     private void somethingHappenedToGame() {
         /* Checking for possible win or loss */
         if(game.getLocal().hasWon())
-        {
             inputActive = false;
-            //TODO: Print victory
-        }
         if(game.getLocal().isDead())
-        {
             inputActive = false;
-            //TODO: Print loss
-        }
     }
 
     /*
@@ -177,13 +203,13 @@ public class GameRunner{
      * * * * * Player-related-methods
      */
 
-    public void addPlayer(Player p) { game.addPlayer(p); }
+    public void addPlayer(Player p) { players.add(p); }
 
     /**
      * <p>Returns a set with the Player-instances associated with the current Game-instance.</p>
      * @return players - Set of Players
      */
-    public HashSet<Player> getPlayers() { return game.getPlayers(); }
+    public HashSet<Player> getPlayers() { return players; }
 
     /**
      * Resets the local position of the given Player-instance in the player-layer.

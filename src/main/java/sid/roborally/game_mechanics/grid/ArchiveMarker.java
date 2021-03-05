@@ -1,5 +1,9 @@
 package sid.roborally.game_mechanics.grid;
 
+/**
+ * <h3>ArchiveMarker</h3>
+ * <p>Archive-Marker class.</p>
+ */
 public class ArchiveMarker extends GridObject{
 
     private int id;

@@ -2,7 +2,6 @@ package sid.roborally.application_functionality;
 
 import org.junit.Before;
 import org.junit.Test;
-import sid.roborally.game_mechanics.grid.Position;
 
 import static org.junit.Assert.assertTrue;
 
@@ -13,9 +12,9 @@ public class PlayerTest {
     @Before
     public void setUp()
     {
-        p1 = new Player(new Position(1,1), false);
-        p2 = new Player(new Position(2,2), false);
-        p3 = new Player(new Position(3,3), false);
+        p1 = new Player(1, false);
+        p2 = new Player(2, false);
+        p3 = new Player(3, false);
 
         p1.setLocal();
         p2.setAI();

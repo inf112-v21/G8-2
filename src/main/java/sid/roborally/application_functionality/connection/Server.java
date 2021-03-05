@@ -10,6 +10,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 
+/**
+ * UNDER DEVELOPMENT. NOT ACTIVE CODE
+ */
 public class Server {
 
     private ServerSocket server;

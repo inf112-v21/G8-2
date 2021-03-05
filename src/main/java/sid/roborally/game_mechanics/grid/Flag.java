@@ -1,8 +1,9 @@
 package sid.roborally.game_mechanics.grid;
 
 /**
- * This flag class extends Entity, and has an id which is used to identify
- * and separate the different flags on the board.. for win condition/flag collecting
+ * <h3>Flag</h3>
+ * <p>Flag has an id which is used to identify
+ * and separate the different flags on the board.. for win condition/flag collecting</p>
  *
  * @author Markus Edlin
  */

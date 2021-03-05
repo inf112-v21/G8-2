@@ -5,6 +5,11 @@ import sid.roborally.game_mechanics.Direction;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * <h3>Grid</h3>
+ * <p>Keeps track of GridObjects in game.</p>
+ * @author Markus Edlin
+ */
 public class Grid {
     public ArrayList<ArrayList<HashSet<GridObject>>> grid;
 

@@ -1,5 +1,11 @@
 package sid.roborally.application_functionality.reference;
 
+/**
+ * <h3>TileIDReference</h3>
+ * <p>Reference-class for Tiles</p>
+ *
+ * @author Markus Edlin
+ */
 public class TileIDReference {
 
     public static int flagIndexToId(int flag_index){

@@ -1,36 +1,22 @@
 package sid.roborally.application_functionality;
 
-import sid.roborally.application_functionality.comm_line.GameCommandLine;
-import sid.roborally.application_functionality.connection.Client;
-
 import java.util.Scanner;
 
+/**
+ * <h3>CommandLineTool</h3>
+ * <p>CommandLineTool for Application Menus</p>
+ *
+ * @author Daniel Janols
+ */
 public class CommandLineTool {
 
     private RRApplication rr_app; //RoboRallyApplication
-    private GameCommandLine gcl;
-
-    Scanner sc; //Input-scanner
+    private Scanner sc; //Input-scanner
 
     private static final String MAIN_MENU_WELCOME = "\nWelcome to RoboRally. Select one of the following options:\n";
-    private static final String SETUP_SERVER_OPTIONS = "\n1. Create a new server. (write \"1\"))\n" +
-                                                "2. Join a current game. (write \"2\")\n" +
-                                                "0. Quit application";
-    private static final int SETUP_SERVER_OPTIONS_NUM = 3;
 
     private static final String MAIN_MENU_OPTIONS = "1. Start a new game (write \"1\")" + "\n0. Quit application";
     private static final int MAIN_MENU_OPTIONS_NUM = 2;
-
-    private static final String NUM_PLAYERS_CHOICE =
-                            "\n1. 2 Players\n" +
-                            "2. 3 players\n"+
-                            "3. 4 players\n"+
-                            "4. 5 players\n"+
-                            "5. 6 players\n"+
-                            "6. 7 players\n"+
-                            "7. 8 players\n"+
-                            "0. Quit application";
-    private static final int NUM_PLAYERS_CHOICE_NUMCHOICES = 8;
 
     private static final String NEW_GAME_MENU_WELCOME = "\nNew Game Menu. Select one of the following options:\n";
     private static final String NEW_GAME_MENU_OPTIONS =   "1. Start a new demo-game (write \"1\")\n" +
@@ -40,19 +26,17 @@ public class CommandLineTool {
 
     public CommandLineTool() {}
 
-    public void giveApp(RRApplication app)
-    {
+    public void giveApp(RRApplication app) {
         this.rr_app = app;
     }
 
-    public void run()
-    {
+    public void run() {
         sc = new Scanner(System.in);
         commandLineMainMenu();
     }
 
     /*
-     * Input-parser.
+     * * * * * Input-parser.
      */
 
     /**
@@ -75,7 +59,7 @@ public class CommandLineTool {
 
 
     /*
-     * Main Menu-methods
+     * * * * * Main Menu-methods
      */
 
     /**
@@ -111,7 +95,6 @@ public class CommandLineTool {
             case 0: return;
             case 1: //Set up and run demogame (demo_game_option)
                 {
-                    //TODO: numberOfPlayersMenu(Map.TwoPlayerDemo);
                     rr_app.setUpLibgdxApplication();
                     rr_app.setUpDemoGame();
                     break;
@@ -122,56 +105,4 @@ public class CommandLineTool {
                 throw new IllegalStateException("Unexpected value: " + optionChosen);
         }
     }
-    private void serverSetupMenu()
-    {
-        System.out.println(NEW_GAME_MENU_WELCOME + SETUP_SERVER_OPTIONS);
-        int optionChosen = getValidInput(SETUP_SERVER_OPTIONS_NUM);
-        switch (optionChosen)
-        {
-            case 0: return;
-
-
-            case 1: {
-                commandLineMainMenu(); break; }
-            case 2: {
-                //start client here.. type in port number somewhere? Another asking menu
-                new Client();
-                break;
-            }
-            default:
-                throw new IllegalStateException("Unexpected value: " + optionChosen);
-        }
-    }
-
-    /*
-    private void numberOfPlayersMenu(Map map)
-    {
-        System.out.println(NUM_PLAYERS_CHOICE);
-        int optionChosen = getValidInput(SETUP_SERVER_OPTIONS_NUM);
-        switch (optionChosen)
-        {
-            case 0: return;
-
-            case 1: {
-                new Server(map,rr_app);
-                rr_app.setUpLibgdxApplication();
-                rr_app.getGameRunner().setUpGame(map, 2);
-                break;
-                 }
-            case 2: {
-                new Server(map,rr_app);
-                rr_app.setUpLibgdxApplication();
-                rr_app.getGameRunner().setUpGame(map,3);
-                break;
-            }
-            default:
-                throw new IllegalStateException("Unexpected value: " + optionChosen);
-        }
-    }*/
-
-    /*
-     * Application calls (controlling Application, GameRunner, AppListener)
-     */
-
-
 }
