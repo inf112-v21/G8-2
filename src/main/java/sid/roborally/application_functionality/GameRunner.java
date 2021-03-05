@@ -103,8 +103,7 @@ public class GameRunner {
      * This method will run the game that has been created, and loop until it's over
      */
     public void runGame() {
-        //TODO: Make mechanism for running game. Game should only be affected when a user does something (local, ai or external)
-        game.runRound();
+        //game.run();
     }
 
     /**

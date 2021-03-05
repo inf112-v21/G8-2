@@ -87,8 +87,6 @@ public class GameTest {
         StepCard move2forwards = new StepCard(100, 2, CardAction.FORWARD);
         StepCard moveBack = new StepCard(100, 1, CardAction.BACKWARD);
 
-        System.out.println(player.getRobot().getPosition().toString());
-
         /* Moving back */
         game.useCardOnPlayerRobot(player,moveBack);
         assertNotEquals(lastPosY, player.getRobot().getPosition().getY());
@@ -97,7 +95,6 @@ public class GameTest {
 
         /* Testing */
         game.useCardOnPlayerRobot(player,move2forwards);
-        System.out.println(player.getRobot().getPosition().toString());
         assertNotEquals(lastPosY, player.getRobot().getPosition().getY());
         assertEquals(lastPosY + 2, player.getRobot().getPosition().getY());
     }

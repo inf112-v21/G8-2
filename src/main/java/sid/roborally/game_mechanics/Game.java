@@ -25,13 +25,14 @@ import java.util.List;
  * <p>In-game it will communicate internally with Player-, Grid- and GridObject-instances.
  *    Externally it will communicate with GameRunner</p>
  */
-public class Game {
+public class Game implements Runnable {
 
     private HashMap<Flag, Player> flags_have_player;
     private ArrayList<Flag> flags;
     private HashSet<Player> players;
     private Grid grid;
     private CardDealer dealer;
+    private boolean gameOver;
 
     /* Phase-variables */
     private HashMap<Player, List<Card>> givenProgramCards; //Associating program-cards with given players.
@@ -51,6 +52,13 @@ public class Game {
         flags = new ArrayList<>();
         givenProgramCards = new HashMap<>();
         chosenProgramCards = new HashMap<>();
+        gameOver = false;
+    }
+
+    /* Run game-thread */
+    @Override
+    public void run() {
+        runGame();
     }
 
     /*
@@ -73,33 +81,65 @@ public class Game {
      */
     public void addGridObjectToGrid(GridObject go) { grid.addGridObject(go);}
 
+
+
     /*
      * Phase-methods
      */
 
-    public void runRound()
+    /**
+     * <p>Runs game's gameloop.</p>
+     */
+    private void runGame() {
+        while(!gameOver) {
+            runRound();
+            checkIfLocalHasWonOrLost();
+        }
+        displayExitMessage();
+    }
+
+    /**
+     * <p>Checks if local host has won or lost, if any then game-over.</p>
+     */
+    private void checkIfLocalHasWonOrLost() {
+        if(getLocal().hasWon()) gameOver = true;
+        if(getLocal().isDead()) gameOver = true;
+    }
+
+    /**
+     * <p>Calls GameCommandLine and asks it to display an exit-message.</p>
+     */
+    private void displayExitMessage() {
+        if(getLocal().hasWon()) GameCommandLine.printLocalEnd(true);
+        else GameCommandLine.printLocalEnd(false);
+    }
+
+    /**
+     * <p>Runs a gameround.</p>
+     */
+    private void runRound()
     {
-        //TODO: DEAL CARDS
+        //DEAL CARDS
         dealToPlayers();
         System.out.println(getLocal());
 
-        //TODO: GET PLAYER CHOSEN CARDS
+        //GET PLAYER CHOSEN CARDS
         ArrayList<Card> chosen = GameCommandLine
                 .getLocalCardSequenceInput(givenProgramCards.get(getLocal()));
         for(Card c : chosen) System.out.println(c.getName());
 
-        //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
+        //MOVE ROBOTS BASED ON CHOSEN CARDS
         for(Player p : players) {
             for(Card c : chosenProgramCards.get(p));
                 //TODO: CARDS NEED TURN_FUNCTIONALITY TO MAKE THEM EASIER TO USE
                 //TODO: FOR NOW THE ROBOT WILL BE MOVED IN A NON_CORRESPONDING WAY
         }
 
-        //TODO: MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
+        //MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
 
-        //TODO: CALCULATE DAMAGE (LAZERS)
+        //CALCULATE DAMAGE (LAZERS)
 
-        //TODO: OTHER CHECKS
+        //OTHER CHECKS
 
         doResets();
     }
@@ -271,12 +311,12 @@ public class Game {
         /* Check for possible damage */
         if(grid.positionHasHole(p.getRobot().getPosition()))
         {
-            p.getRobot().setIsDead(true); //TODO: Foreløpig så har player bare én gang robot kan ødelegges.
+            p.getRobot().setIsDead(true);
             p.killPlayer();
         }
 
         /* Check if possible flag (for now this will check for "a" flag and give a win */
-        if(grid.positionHasFlag(p.getRobot().getPosition())) //TODO: Midlertidig
+        if(grid.positionHasFlag(p.getRobot().getPosition()))
         {
             p.getRobot().setHasWon(true);
             p.playerWon();

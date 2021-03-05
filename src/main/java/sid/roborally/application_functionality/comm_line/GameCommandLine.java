@@ -60,4 +60,19 @@ public class GameCommandLine {
 
         return selectedCards;
     }
+
+    /**
+     * <p>Prints a message saying that local player either won or lost.</p>
+     * @param localWon
+     */
+    public static void printLocalEnd(boolean localWon) {
+        if(localWon)
+            System.out.println("\n--------------------------\n" +
+                    "CONGRATULATIONS! YOU WON THE GAME!" +
+                    "\n--------------------------\n");
+        else
+            System.out.println("\n--------------------------\n" +
+                    "LOSER! YOU LOST THE GAME!" +
+                    "\n--------------------------\n");
+    }
 }
