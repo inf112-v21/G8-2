@@ -1,0 +1,6 @@
+THIS DOCUMENT TELLS YOU HOW TO TEST USER INTERFACES
+
+- Player can Lose and Win: Follow the instructions in README to get to game. If you navigate with the keys into the hole
+  or to the flag you should either lose or win.
+
+- Player can selcet cards and move robot: CURRENTLY NOT WORKING, so not testable.
