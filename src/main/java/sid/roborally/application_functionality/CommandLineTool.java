@@ -49,7 +49,7 @@ public class CommandLineTool {
     public void run()
     {
         sc = new Scanner(System.in);
-        serverSetupMenu();
+        commandLineMainMenu();
     }
 
     /*
@@ -58,7 +58,7 @@ public class CommandLineTool {
 
     /**
      * <p>Gets the max number of input and returns the first valid number given.</p>
-     * @param optionsNum
+     * @param optionsNum Options amount
      * @return int - ZERO if no valid input was given (shouldn't ever happen).
      */
     private int getValidInput(int optionsNum)
@@ -114,7 +114,7 @@ public class CommandLineTool {
                 {
                     //TODO: numberOfPlayersMenu(Map.TwoPlayerDemo);
                     rr_app.setUpLibgdxApplication();
-                    rr_app.setUpDemo();
+                    rr_app.setUpDemoGame();
                     break;
                 }
             case 2:
@@ -143,6 +143,8 @@ public class CommandLineTool {
                 throw new IllegalStateException("Unexpected value: " + optionChosen);
         }
     }
+
+    /*
     private void numberOfPlayersMenu(Map map)
     {
         System.out.println(NUM_PLAYERS_CHOICE);
@@ -155,22 +157,18 @@ public class CommandLineTool {
                 new Server(map,rr_app);
                 rr_app.setUpLibgdxApplication();
                 rr_app.getGameRunner().setUpGame(map, 2);
-                gcl = new GameCommandLine(rr_app.getGameRunner());
-                gcl.startGame();
                 break;
                  }
             case 2: {
                 new Server(map,rr_app);
                 rr_app.setUpLibgdxApplication();
                 rr_app.getGameRunner().setUpGame(map,3);
-                gcl = new GameCommandLine(rr_app.getGameRunner());
-                gcl.startGame();
                 break;
             }
             default:
                 throw new IllegalStateException("Unexpected value: " + optionChosen);
         }
-    }
+    }*/
 
     /*
      * Application calls (controlling Application, GameRunner, AppListener)

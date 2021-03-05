@@ -178,10 +178,6 @@ public class Game implements Runnable {
         dealer.resetDeck();
     }
 
-    public void addFlag(Flag f) { flags.add(f); }
-
-    public ArrayList<Flag> getFlags() { return flags; }
-
     /*
      * * * * * Player Methods:
      */

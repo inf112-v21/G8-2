@@ -103,8 +103,7 @@ public class GameRunner{
           }
     }
 
-    public void setUpGame(Map map, int numPlayers)
-    {
+    public void setUpGame(Map map, int numPlayers) {
 
         setGameTexture(TextureReference.getMapPath(map));
 
@@ -112,12 +111,13 @@ public class GameRunner{
         game.newGrid(board_layer.getWidth(), board_layer.getHeight());
         giveMapDataToGrid();
 
-        for (int i = 1; i<=numPlayers; i++){
-            for(ArchiveMarker am : game.getArchiveMarkers()){
-                Player p = new Player(new Position(am.getPosition().getX(),am.getPosition().getY()),false);
+        for (int i = 1; i <= numPlayers; i++) {
+            for (ArchiveMarker am : game.getArchiveMarkers()) {
+                Player p = new Player(new Position(am.getPosition().getX(), am.getPosition().getY()), false);
                 p.getRobot().setArchiveMarker(am);
             }
         }
+    }
 
     /**
      * <p>Sets up a demo-game.</p>
