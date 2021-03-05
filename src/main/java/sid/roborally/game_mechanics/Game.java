@@ -1,17 +1,20 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
+
+import sid.roborally.game_mechanics.grid.ArchiveMarker;
+
 import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.game_mechanics.card.*;
+
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Grid;
 import sid.roborally.game_mechanics.grid.GridObject;
 import sid.roborally.game_mechanics.grid.Robot;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.io.Serializable;
+import java.util.*;
+
 
 /**
  * <h3>Game</h3>
@@ -27,11 +30,13 @@ import java.util.List;
  */
 public class Game implements Runnable {
 
+
     private HashMap<Flag, Player> flags_have_player;
     private ArrayList<Flag> flags;
     private HashSet<Player> players;
     private Grid grid;
     private CardDealer dealer;
+    private ArrayList<ArchiveMarker> archiveMarkers;
     private boolean gameOver;
 
     /* Phase-variables */
@@ -41,7 +46,6 @@ public class Game implements Runnable {
     /* Constants */
     private static int DEAL_CARD_AMOUNT = 5;
 
-
     /**
      * <p>Game constructor.</p>
      */
@@ -50,6 +54,8 @@ public class Game implements Runnable {
         players = new HashSet<>();
         dealer = new CardDealer();
         flags = new ArrayList<>();
+
+        archiveMarkers = new ArrayList<>();
         givenProgramCards = new HashMap<>();
         chosenProgramCards = new HashMap<>();
         gameOver = false;
@@ -322,4 +328,16 @@ public class Game implements Runnable {
             p.playerWon();
         }
     }
+
+    public void addFlag(Flag f) {
+        flags.add(f);
+    }
+
+    public ArrayList<Flag> getFlags() {
+        return this.flags;
+    }
+
+    public void addArchiveMarker(ArchiveMarker am) { archiveMarkers.add(am); }
+
+    public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
 }

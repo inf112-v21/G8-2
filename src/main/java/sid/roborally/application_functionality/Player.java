@@ -1,5 +1,6 @@
 package sid.roborally.application_functionality;
 
+import sid.roborally.game_mechanics.grid.ArchiveMarker;
 import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardDeck;
 import sid.roborally.game_mechanics.grid.Position;
@@ -24,6 +25,9 @@ import java.util.List;
  * */
 public class Player {
 
+
+
+
     private enum OwnerLocation {Local, AI, External} //Local: is the user of this application, External: multiplayers
     private enum State {Active, Won, Dead}
 
@@ -32,6 +36,7 @@ public class Player {
     private PlayerGraphic p_graphic;
     private ArrayList<Card> programCards;
     private Robot robot; //The player-instance's robot
+
 
     /**
      * <p>Player constructor that specifies a chosen skin-texture index.</p>

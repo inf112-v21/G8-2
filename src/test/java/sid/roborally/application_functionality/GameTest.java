@@ -7,6 +7,7 @@ import org.lwjgl.system.CallbackI;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.Game;
 import sid.roborally.game_mechanics.FlagIDComparator;
+import sid.roborally.game_mechanics.grid.ArchiveMarker;
 import sid.roborally.game_mechanics.card.CardAction;
 import sid.roborally.game_mechanics.card.StepCard;
 import sid.roborally.game_mechanics.card.TurnCard;
@@ -14,6 +15,7 @@ import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -196,5 +198,12 @@ public class GameTest {
 
         game.getFlags().sort(new FlagIDComparator());
         assertEquals(expected, game.getFlags());
+    }
+
+    @Test
+    public void addArchiveMarkerAddsArchiveMarkerTest() {
+        ArchiveMarker am = new ArchiveMarker(0,1,1);
+        game.addArchiveMarker(am);
+        assertTrue(game.getArchiveMarkers().contains(am));
     }
 }

@@ -8,6 +8,7 @@ public class Robot extends GridObject {
     private boolean hasWon;
     HashSet<Flag> flags;
     private int healthPoints;
+    private ArchiveMarker archiveMarker;
 
 
     public Robot(int x, int y) {
@@ -31,6 +32,7 @@ public class Robot extends GridObject {
 
     public void setIsDead(boolean b) { this.isDead = b; }
     public boolean isDead() { return this.isDead; }
-
+    public void setArchiveMarker(ArchiveMarker am){ this.archiveMarker = am; }
+    public ArchiveMarker getArchiveMarker(){ return this.archiveMarker ;}
 
 }

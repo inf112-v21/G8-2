@@ -5,11 +5,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import sid.roborally.application_functionality.reference.*;
 import sid.roborally.game_mechanics.*;
-import sid.roborally.game_mechanics.grid.Flag;
-import sid.roborally.game_mechanics.grid.Hole;
-import sid.roborally.game_mechanics.grid.Position;
+import sid.roborally.game_mechanics.grid.*;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * <h3>GameRunner</h3>
@@ -22,14 +23,15 @@ import java.util.HashSet;
  * <p>GameRunner will be instantiated in RoboRallyApplication and will itself contain instances of
  *    Game, TiledMap and TiledMapTileLayer.</p>
  */
-public class GameRunner {
+public class GameRunner{
 
     private TiledMap map;
     private TiledMapTileLayer
             board_layer,
             player_layer,
             hole_layer,
-            flag_layer; //When these layers are edited the gui is edited.
+            flag_layer,
+            archiveMarker_layer; //When these layers are edited the gui is edited.
 
     private Game game;
     private boolean inputActive; //TODO: Can shut of input to game
@@ -53,6 +55,7 @@ public class GameRunner {
         player_layer = (TiledMapTileLayer) map.getLayers().get("Player");
         hole_layer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flag_layer = (TiledMapTileLayer) map.getLayers().get("Flag");
+        archiveMarker_layer = (TiledMapTileLayer) map.getLayers().get("PlayerStart");
 
         /* Adjust setup in case a grid based on a previous map already existed */
         adjustSetup();
@@ -81,12 +84,40 @@ public class GameRunner {
                     //adding flag to grid and to game
                     int index = flag_layer.getCell(x,y).getTile().getId();
                     Flag f = new Flag(x,y,TileIDReference.flagIndexToId(index));
-                    game.addGridObjectToGrid(f);
-                    game.addFlag(f);
+                    if(!game.getFlags().contains(f)){
+                        game.addGridObjectToGrid(f);
+                        game.addFlag(f);
+                    }
                 }
                 game.getFlags().sort(new FlagIDComparator());
-            }
+
+           
+          if(archiveMarker_layer.getCell(x,y) != null){
+                    int index = archiveMarker_layer.getCell(x,y).getTile().getId();
+                    ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
+                    game.addGridObjectToGrid(am);
+                    game.addArchiveMarker(am);
+                }
+                game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
+    
+          }
     }
+
+    public void setUpGame(Map map, int numPlayers)
+    {
+
+        setGameTexture(TextureReference.getMapPath(map));
+
+
+        game.newGrid(board_layer.getWidth(), board_layer.getHeight());
+        giveMapDataToGrid();
+
+        for (int i = 1; i<=numPlayers; i++){
+            for(ArchiveMarker am : game.getArchiveMarkers()){
+                Player p = new Player(new Position(am.getPosition().getX(),am.getPosition().getY()),false);
+                p.getRobot().setArchiveMarker(am);
+            }
+        }
 
     /**
      * <p>Sets up a demo-game.</p>

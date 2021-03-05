@@ -28,6 +28,8 @@ import java.util.HashSet;
  * */
 public class RRApplication {
 
+
+
     private enum InputHolder {Menu, GameRunner} //This is to know where to route input
     private InputHolder inputHolder;
 
@@ -49,7 +51,6 @@ public class RRApplication {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Robo rally");
         config.setWindowedMode(500, 500);
-
         new Lwjgl3Application(new RRAppListener(this), config);
     }
 
@@ -61,8 +62,13 @@ public class RRApplication {
      * Demo and Test-functionality:
      */
 
-    public void setUpDemo()
+    public void setUpGame() {
+
+    }
+
+    public void setUpDemoGame()
     {
+        //TODO: grunner.setUpGame(Map.TwoPlayerDemo, 2);
         //grunner.setUpDemoGame(Map.DemoMap);
         //grunner.setUpDemoGame(Map.TwoPlayerDemo); //TODO: Only for now. Later we need a general solution.
         grunner.setGameTexture(TextureReference.getMapPath(Map.TwoPlayerDemo));
