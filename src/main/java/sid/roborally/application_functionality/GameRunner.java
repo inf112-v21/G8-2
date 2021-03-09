@@ -9,6 +9,8 @@ import sid.roborally.application_functionality.reference.TileIDReference;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.FlagIDComparator;
 import sid.roborally.game_mechanics.Game;
+import sid.roborally.game_mechanics.card.CardAction;
+import sid.roborally.game_mechanics.card.TurnCard;
 import sid.roborally.game_mechanics.grid.*;
 
 import java.util.HashSet;
@@ -272,4 +274,22 @@ public class GameRunner{
         resetPlayerTexture(game.getLocal());
         game.movePlayerRobot(game.getLocal(), Direction.EAST,1);
     }
+
+    public void rotateLeftInput()
+    {
+        somethingHappenedToGame();
+        if(!inputActive) return;
+        resetPlayerTexture(game.getLocal());
+        game.turnPlayerRobot(game.getLocal(), CardAction.TURN_LEFT);
+        System.out.println("Now facing:" + game.getLocal().getRobot().getOrientation());
+    }
+    public void rotateRightInput()
+    {
+        somethingHappenedToGame();
+        if(!inputActive) return;
+        resetPlayerTexture(game.getLocal());
+        game.turnPlayerRobot(game.getLocal(), CardAction.TURN_RIGHT);
+        System.out.println("Now facing:" + game.getLocal().getRobot().getOrientation());
+    }
+
 }

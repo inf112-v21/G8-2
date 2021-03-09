@@ -17,6 +17,7 @@ abstract public class GridObject {
 
     public GridObject(int x, int y) {
         pos = new Position(x,y);
+        orientation = Direction.NORTH;
     }
 
     public Position getPosition() {
