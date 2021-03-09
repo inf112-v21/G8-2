@@ -1,7 +1,5 @@
 package sid.roborally.game_mechanics;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import sid.roborally.game_mechanics.grid.GridObject;
 import sid.roborally.game_mechanics.grid.Position;

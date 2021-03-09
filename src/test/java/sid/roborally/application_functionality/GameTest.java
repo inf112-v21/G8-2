@@ -1,9 +1,7 @@
 package sid.roborally.application_functionality;
 
-import junit.framework.AssertionFailedError;
 import org.junit.Before;
 import org.junit.Test;
-import org.lwjgl.system.CallbackI;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.Game;
 import sid.roborally.game_mechanics.FlagIDComparator;
@@ -15,7 +13,6 @@ import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -88,7 +85,7 @@ public class GameTest {
         game.addPlayer(player);
         player.getRobot().setOrientation(Direction.NORTH);
 
-        int lastPosY = player.getRobot().getPosition().getY();;
+        int lastPosY = player.getRobot().getPosition().getY();
 
         StepCard move2forwards = new StepCard(100, 2, CardAction.FORWARD);
         StepCard moveBack = new StepCard(100, 1, CardAction.BACKWARD);
