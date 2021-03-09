@@ -275,6 +275,10 @@ public class GameRunner{
         game.movePlayerRobot(game.getLocal(), Direction.EAST,1);
     }
 
+    /**
+     * <p>Tells the gamerunner that it has recieved a ROTATE LEFT-input
+     * <br>Q</p>
+     */
     public void rotateLeftInput()
     {
         somethingHappenedToGame();
@@ -283,6 +287,11 @@ public class GameRunner{
         game.turnPlayerRobot(game.getLocal(), CardAction.TURN_LEFT);
         System.out.println("Now facing:" + game.getLocal().getRobot().getOrientation());
     }
+
+    /**
+     * <p>Tells the gamerunner that it has recieved a ROTATE RIGHT-input
+     * <br>E</p>
+     */
     public void rotateRightInput()
     {
         somethingHappenedToGame();
@@ -290,6 +299,17 @@ public class GameRunner{
         resetPlayerTexture(game.getLocal());
         game.turnPlayerRobot(game.getLocal(), CardAction.TURN_RIGHT);
         System.out.println("Now facing:" + game.getLocal().getRobot().getOrientation());
+    }
+    /**
+     * <p>Tells the gamerunner that it has recieved a STEP 1 FORWARD-input
+     * <br>F</p>
+     */
+    public void stepOneForwardInput()
+    {
+        somethingHappenedToGame();
+        if(!inputActive) return;
+        resetPlayerTexture(game.getLocal());
+        game.movePlayerRobot(game.getLocal(),game.getLocal().getRobot().getOrientation(),1);
     }
 
 }

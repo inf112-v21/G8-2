@@ -148,6 +148,9 @@ public class RRApplication {
     public void rotateRightInput()
     { if(inputHolder == InputHolder.GameRunner) grunner.rotateRightInput(); }
 
+    public void stepOneForwardInput()
+    { if(inputHolder == InputHolder.GameRunner) grunner.stepOneForwardInput(); }
+
     /**
      * <p>Tells the application that it has recieved a ESCAPE-input
      * <br>ESCAPE/ESC</p>
