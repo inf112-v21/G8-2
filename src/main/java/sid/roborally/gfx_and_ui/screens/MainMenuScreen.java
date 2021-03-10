@@ -37,10 +37,33 @@ public class MainMenuScreen implements Screen {
 
         buttonSkin = new Skin(Gdx.files.internal("assets/menu_tex/glassy-ui.json"));
 
-        startGameButton = new TextButton("Start Game",buttonSkin,"small");
+        startGameButton = new TextButton("Singleplayer",buttonSkin,"small");
         startGameButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
         startGameButton.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         startGameButton.setTransform(true);
+
+        multiplayerButton = new TextButton("Multiplayer",buttonSkin,"small");
+        multiplayerButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
+        multiplayerButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-100);
+        multiplayerButton.setTransform(true);
+
+        demoGameButton = new TextButton("Demo Game",buttonSkin,"small");
+        demoGameButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
+        demoGameButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-100);
+        demoGameButton.setTransform(true);
+
+        optionsButton = new TextButton("Options",buttonSkin,"small");
+        optionsButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
+        optionsButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-200);
+        optionsButton.setTransform(true);
+
+        exitButton = new TextButton("Exit",buttonSkin,"small");
+        exitButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
+        exitButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-300);
+        exitButton.setTransform(true);
+
+
+
         startGameButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -53,7 +76,64 @@ public class MainMenuScreen implements Screen {
                 return true;
             }
         });
+        multiplayerButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Multiplayer pushed");
+                appListener.setScreen(new MainMenuScreen(appListener));
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Downtouch");
+                return true;
+            }
+        });
+        demoGameButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Demo Game pushed");
+                appListener.setScreen(new GameScreen(appListener));
+                //todo demo game
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Downtouch");
+                return true;
+            }
+        });
+
+        optionsButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Options pushed");
+                appListener.setScreen(new OptionsScreen(appListener));
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Downtouch");
+                return true;
+            }
+        });
+
+        exitButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Exit pushed");
+                Gdx.app.exit();
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Downtouch");
+                return true;
+            }
+        });
+
+        stage.addActor(multiplayerButton);
         stage.addActor(startGameButton);
+        stage.addActor(demoGameButton);
+        stage.addActor(optionsButton);
+        stage.addActor(exitButton);
+
     }
 
     private void startGame() {
