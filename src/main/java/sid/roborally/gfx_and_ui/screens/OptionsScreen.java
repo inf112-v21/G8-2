@@ -1,6 +1,4 @@
 package sid.roborally.gfx_and_ui.screens;
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
@@ -14,6 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
+/**
+ * <h3>OptionsScreen</h3>
+ * <p> The only option is going back! Amazing. </p>
+ *
+ * @author Terje Trommestad
+ */
 public class OptionsScreen implements Screen {
 
     final AppListener appListener;
