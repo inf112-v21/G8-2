@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,22 +13,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
+/**
+ * @author Daniel Janols
+ */
 public class MainMenuScreen implements Screen {
 
-    private final AppListener game;
-    private Texture playerImage;
-    private OrthographicCamera camera;
+    private final AppListener appListener;
+    private OrthographicCamera cam;
     private Stage stage;
     private Skin buttonSkin;
     private Button startGameButton;
 
     private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
 
-    public MainMenuScreen(final AppListener game) {
-        this.game = game;
+    public MainMenuScreen(final AppListener appListener) {
+        this.appListener = appListener;
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        cam = new OrthographicCamera();
+        cam.setToOrtho(false, 800, 480);
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -44,7 +45,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Start Game-button pushed");
-                game.setScreen(new GameScreen(game));
+                appListener.setScreen(new GameScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -69,11 +70,11 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(.8F, .5F, .1F,1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        cam.update();
+        appListener.batch.setProjectionMatrix(cam.combined);
 
-        game.batch.begin();
-        game.batch.end();
+        appListener.batch.begin();
+        appListener.batch.end();
 
         stage.act();
         stage.draw();

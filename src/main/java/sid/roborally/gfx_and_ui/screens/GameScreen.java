@@ -10,11 +10,14 @@ import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.gfx_and_ui.AppListener;
 
+/**
+ * @author Daniel Janols
+ */
 public class GameScreen extends InputAdapter implements ApplicationListener, Screen {
-    final AppListener game;
 
-    Texture playerImage;
-    OrthographicCamera camera;
+    final AppListener appListener;
+
+    private Texture playerImage;
 
     private RRApplication rr_app;
 
@@ -22,9 +25,9 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     private OrthogonalTiledMapRenderer rend;
     private OrthographicCamera cam;
 
-    public GameScreen(final AppListener game) {
-        this.game = game;
-        rr_app = game.getRRApp();
+    public GameScreen(final AppListener appListener) {
+        this.appListener = appListener;
+        rr_app = appListener.getRRApp();
 
         /* This apparently need to be called from AppListener */
         rr_app.setUpDemoGame();
