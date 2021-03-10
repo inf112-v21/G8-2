@@ -1,13 +1,16 @@
 package sid.roborally.gfx_and_ui;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.gfx_and_ui.screens.MainMenuScreen;
 
 public class AppListener extends Game {
 
+    private Skin skin;
     public SpriteBatch batch;
     public BitmapFont font;
     private RRApplication rr_app;
@@ -15,10 +18,13 @@ public class AppListener extends Game {
     public void create() {
         batch = new SpriteBatch();
         //Use LibGDX's default Arial font.
+        skin = new Skin(Gdx.files.internal("assets/application_skin/rusty-robot-ui.json"));
         font = new BitmapFont();
         rr_app = new RRApplication();
         this.setScreen(new MainMenuScreen(this));
     }
+
+    public Skin getSkin() { return skin; }
 
     public RRApplication getRRApp() { return rr_app; }
 

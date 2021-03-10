@@ -3,8 +3,8 @@
     font: {
       file: font-export.fnt
     }
-    font-big: {
-      file: font-big-export.fnt
+    title: {
+      file: font-title-export.fnt
     }
   }
   com.badlogic.gdx.graphics.Color: {
@@ -14,32 +14,14 @@
       b: 0
       a: 1
     }
-    cyan: {
-      r: 0
-      g: 1
-      b: 0.99166656
-      a: 1
-    }
-    dark-cyan: {
-      r: 0
-      g: 0.39373153
-      b: 0.4333333
-      a: 1
-    }
-    white: {
-      r: 1
-      g: 1
-      b: 1
-      a: 1
-    }
   }
   com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
-    pale-blue: {
+    tan: {
       name: white
       color: {
-        r: 0.48342222
-        g: 0.76367503
-        b: 0.99333334
+        r: 1
+        g: 0.909659
+        b: 0.7633333
         a: 1
       }
     }
@@ -52,75 +34,86 @@
         a: 1
       }
     }
+    clear: {
+      name: white
+      color: {
+        r: 1
+        g: 1
+        b: 1
+        a: 0
+      }
+    }
+    dialog-bg: {
+      name: white
+      color: {
+        r: 0.98333335
+        g: 0.8546715
+        b: 0.55722225
+        a: 0.52666664
+      }
+    }
   }
   com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
     default: {
       up: button
-      down: button-down
-    }
-    small: {
-      up: button-small
-      down: button-small-down
+      down: button-pressed
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
     default: {
-      checkboxOn: checkbox
-      checkboxOff: checkbox-off
+      checkboxOn: checkbox-pressed
+      checkboxOff: checkbox
       font: font
-      fontColor: white
+      fontColor: black
     }
     radio: {
-      checkboxOn: radio-button
-      checkboxOff: radio-button-off
+      checkboxOn: radio-pressed
+      checkboxOff: radio
       font: font
-      fontColor: white
+      fontColor: black
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
     default: {
       up: button
-      down: button-down
+      down: button-pressed
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
     default: {
-      font: font-big
+      font: font
+      fontColor: black
       up: button
-      down: button-down
+      down: button-pressed
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
     default: {
       font: font
+      fontColor: black
     }
-    big: {
-      font: font-big
+    title: {
+      font: title
     }
-    black: {
+    bg: {
       font: font
       fontColor: black
+      background: label-bg
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
     default: {
       font: font
-      fontColorSelected: white
-      fontColorUnselected: dark-cyan
-      selection: pale-blue
+      fontColorSelected: black
+      fontColorUnselected: black
+      selection: tan
       background: list
-    }
-    plain: {
-      font: font
-      fontColorSelected: white
-      fontColorUnselected: dark-cyan
-      selection: pale-blue
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
     default-horizontal: {
-      background: progress-bar
-      knobBefore: progress-bar-knob
+      background: progress-bar-horizontal
+      knobBefore: progress-bar-knob-horizontal
     }
     default-vertical: {
       background: progress-bar-vertical
@@ -129,85 +122,90 @@
   }
   com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
     default: {
-      hScroll: horizontal-scroll-bar
-      hScrollKnob: horizontal-scroll-knob
-      vScroll: vertical-scroll-bar
-      vScrollKnob: vertical-scroll-knob
+      hScroll: scrollbar-horizontal
+      hScrollKnob: scrollbar-knob-horizontal
+      vScroll: scrollbar-vertical
+      vScrollKnob: scrollbar-knob-vertical
     }
-    scroll: {
-      background: list
-      hScroll: horizontal-scroll-bar
-      hScrollKnob: horizontal-scroll-knob
-      vScroll: vertical-scroll-bar
-      vScrollKnob: vertical-scroll-knob
+    empty: {
+      background: clear
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
     default: {
       font: font
-      fontColor: dark-cyan
+      fontColor: black
       background: select-box
-      scrollStyle: scroll
-      listStyle: plain
+      scrollStyle: empty
+      listStyle: default
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
     default-horizontal: {
-      background: slider
-      knob: slider-knob
+      background: slider-horizontal
+      knob: slider-knob-horizontal
     }
     default-vertical: {
       background: slider-vertical
-      knob: slider-knob
+      knob: slider-knob-vertical
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
     default-horizontal: {
-      handle: horizontal-split-pane
+      handle: splitpane-horizontal
     }
     default-vertical: {
-      handle: vertical-split-pane
+      handle: splitpane-vertical
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
     default: {
-      font: font-big
-      up: button
-      down: button-down
-    }
-    small: {
       font: font
-      up: button-small
-      down: button-small-down
+      fontColor: black
+      up: button
+      down: button-pressed
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
     default: {
       font: font
       fontColor: black
-      background: textfield
+      background: text-field
       cursor: black
-      selection: pale-blue
+      selection: tan
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
     default: {
-      label: black
-      background: list
+      label: default
+      background: label-bg
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
     default: {
       plus: plus
       minus: minus
-      selection: pale-blue
+      selection: tan
     }
   }
   com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
     default: {
       background: window
       titleFont: font
-      titleFontColor: black
+    }
+    empty: {
+      background: clear
+      titleFont: font
+    }
+    dialog: {
+      background: window
+      titleFont: font
+      stageBackground: dialog-bg
+    }
+    empty-bg: {
+      background: clear
+      titleFont: font
+      stageBackground: dialog-bg
     }
   }
 }

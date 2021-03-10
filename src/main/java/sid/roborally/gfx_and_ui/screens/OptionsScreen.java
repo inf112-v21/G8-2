@@ -19,7 +19,7 @@ public class OptionsScreen implements Screen {
     final AppListener appListener;
     private OrthographicCamera cam;
     private Stage stage;
-    private Skin buttonSkin;
+    private Skin skin;
     private Button backButton;
 
     private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
@@ -34,9 +34,9 @@ public class OptionsScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        buttonSkin = new Skin(Gdx.files.internal("assets/menu_tex/glassy-ui.json"));
+        skin = appListener.getSkin();
 
-        backButton = new TextButton("Back", buttonSkin, "small");
+        backButton = new TextButton("Back", skin, "default");
         backButton.setSize(BUTT_WIDTH, BUTT_HEIGHT);
         backButton.setPosition(Gdx.graphics.getWidth() / 2 - 80, Gdx.graphics.getHeight() / 2);
         backButton.setTransform(true);

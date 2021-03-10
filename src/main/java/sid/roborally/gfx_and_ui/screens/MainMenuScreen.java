@@ -21,8 +21,8 @@ public class MainMenuScreen implements Screen {
     private final AppListener appListener;
     private OrthographicCamera cam;
     private Stage stage;
-    private Skin buttonSkin;
-    private Button startGameButton;
+    private Skin skin;
+    private Button startGameButton,multiplayerButton,demoGameButton,optionsButton,exitButton;
 
     private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
 
@@ -35,29 +35,29 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        buttonSkin = new Skin(Gdx.files.internal("assets/menu_tex/glassy-ui.json"));
+        skin = appListener.getSkin();
 
-        startGameButton = new TextButton("Singleplayer",buttonSkin,"small");
+        startGameButton = new TextButton("Singleplayer",skin,"default");
         startGameButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
         startGameButton.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         startGameButton.setTransform(true);
 
-        multiplayerButton = new TextButton("Multiplayer",buttonSkin,"small");
+        multiplayerButton = new TextButton("Multiplayer",skin,"default");
         multiplayerButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
         multiplayerButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-100);
         multiplayerButton.setTransform(true);
 
-        demoGameButton = new TextButton("Demo Game",buttonSkin,"small");
+        demoGameButton = new TextButton("Demo Game",skin,"default");
         demoGameButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
         demoGameButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-100);
         demoGameButton.setTransform(true);
 
-        optionsButton = new TextButton("Options",buttonSkin,"small");
+        optionsButton = new TextButton("Options",skin,"default");
         optionsButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
         optionsButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-200);
         optionsButton.setTransform(true);
 
-        exitButton = new TextButton("Exit",buttonSkin,"small");
+        exitButton = new TextButton("Exit",skin,"default");
         exitButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
         exitButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-300);
         exitButton.setTransform(true);
