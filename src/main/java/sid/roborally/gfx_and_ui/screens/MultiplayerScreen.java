@@ -38,28 +38,28 @@ public class MultiplayerScreen implements Screen{
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        buttonSkin = new Skin(Gdx.files.internal("assets/menu_tex/glassy-ui.json"));
+        buttonSkin = appListener.getSkin();
 
-        hostButton = new TextButton("Host game",buttonSkin,"small");
+        hostButton = new TextButton("Host game",buttonSkin,"default");
         hostButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
         hostButton.setPosition(Gdx.graphics.getWidth()/2f-80, Gdx.graphics.getHeight()/2f);
         hostButton.setTransform(true);
 
-        joinButton = new TextButton("Join game",buttonSkin,"small");
+        joinButton = new TextButton("Join game",buttonSkin,"default");
         joinButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
         joinButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-100f);
         joinButton.setTransform(true);
 
-        backButton = new TextButton("Go back",buttonSkin,"small");
+        backButton = new TextButton("Go back",buttonSkin,"default");
         backButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
-        backButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-100f);
+        backButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-200f);
         backButton.setTransform(true);
 
         hostButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Host button pushed");
-                appListener.setScreen(new GameScreen(appListener));
+                appListener.setScreen(new HostScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -71,7 +71,7 @@ public class MultiplayerScreen implements Screen{
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Join button pushed");
-                appListener.setScreen(new GameScreen(appListener));
+                appListener.setScreen(new MainMenuScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
