@@ -4,14 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
 /**
  * <h3>CardAction</h3>
- * <p>A screen where you have the option to host a game. Gandalf not implemented yet.</p>
+ * <p>A screen where you have the option to host a game</p>
  *
  * @author Andreas Henriksen
  */
@@ -20,17 +23,23 @@ public class HostScreen implements Screen {
     private final AppListener appListener;
     private OrthographicCamera cam;
     private Stage stage;
-    private Image gandalf;
+    private Table table;
 
     private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
 
     public HostScreen(final AppListener appListener) {
         this.appListener = appListener;
+        this.table = new Table();
+        stage = new Stage(new ScreenViewport());
+
+        table.setFillParent(true);
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/youshallnotpass.png"))));
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
 
-        stage = new Stage(new ScreenViewport());
+        stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
 
     }
