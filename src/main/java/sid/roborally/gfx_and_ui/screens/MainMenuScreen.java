@@ -39,27 +39,27 @@ public class MainMenuScreen implements Screen {
 
         startGameButton = new TextButton("Singleplayer",skin,"default");
         startGameButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
-        startGameButton.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+        startGameButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2);
         startGameButton.setTransform(true);
 
         multiplayerButton = new TextButton("Multiplayer",skin,"default");
         multiplayerButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
-        multiplayerButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-100);
+        multiplayerButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-75);
         multiplayerButton.setTransform(true);
 
         demoGameButton = new TextButton("Demo Game",skin,"default");
         demoGameButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
-        demoGameButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-100);
+        demoGameButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-75*2);
         demoGameButton.setTransform(true);
 
         optionsButton = new TextButton("Options",skin,"default");
         optionsButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
-        optionsButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-200);
+        optionsButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-75*3);
         optionsButton.setTransform(true);
 
         exitButton = new TextButton("Exit",skin,"default");
         exitButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
-        exitButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-300);
+        exitButton.setPosition(Gdx.graphics.getWidth()/2-80, Gdx.graphics.getHeight()/2-75*4);
         exitButton.setTransform(true);
 
 
@@ -80,7 +80,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Multiplayer pushed");
-                appListener.setScreen(new MainMenuScreen(appListener));
+                appListener.setScreen(new MultiplayerScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
