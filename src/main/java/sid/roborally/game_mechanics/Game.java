@@ -318,14 +318,11 @@ public class Game implements Runnable {
                 //iterating through flags list (in order by id)
                 for (Flag flag : flags) {
                     if(!r.getFlags().contains(flag)){
-                        System.out.println("Robot does not have this flag.");
                         if(flagAtPosition.equals(flag)){
                             r.addFlag(flag);
-                            System.out.println("Added flag.");
                             if(r.getFlags().containsAll(flags)){
                                 p.getRobot().setHasWon(true);
                                 p.playerWon();
-                                System.out.println("Player has won");
                             }
                         } else break;
                     }
