@@ -2,10 +2,7 @@ package sid.roborally.game_mechanics;
 
 import org.junit.Before;
 import org.junit.Test;
-import sid.roborally.game_mechanics.grid.Grid;
-import sid.roborally.game_mechanics.grid.GridObject;
-import sid.roborally.game_mechanics.grid.Position;
-import sid.roborally.game_mechanics.grid.Robot;
+import sid.roborally.game_mechanics.grid.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;

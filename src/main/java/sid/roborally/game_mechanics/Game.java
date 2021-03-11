@@ -52,7 +52,6 @@ public class Game implements Runnable {
         players = new HashSet<>();
         dealer = new CardDealer();
         flags = new ArrayList<>();
-
         archiveMarkers = new ArrayList<>();
         givenProgramCards = new HashMap<>();
         chosenProgramCards = new HashMap<>();
@@ -309,28 +308,43 @@ public class Game implements Runnable {
             p.killPlayer();
         }
 
-        /* Check if possible flag (for now this will check for "a" flag and give a win */
+        /* Check if robot has a flag. If the robot can add it(next in flag order), robot adds flag.
+        * After adding, checks if robot has won. */
         if(grid.positionHasFlag(p.getRobot().getPosition()))
         {
-            p.getRobot().setHasWon(true);
-            p.playerWon();
+            Robot r = p.getRobot();
+            Flag flagAtPosition = grid.getFlagAtPosition(r.getPosition());
+            if(flagAtPosition != null) {
+                //iterating through flags list (in order by id)
+                for (Flag flag : flags) {
+                    if(!r.getFlags().contains(flag)){
+                        System.out.println("Robot does not have this flag.");
+                        if(flagAtPosition.equals(flag)){
+                            r.addFlag(flag);
+                            System.out.println("Added flag.");
+                            if(r.getFlags().containsAll(flags)){
+                                p.getRobot().setHasWon(true);
+                                p.playerWon();
+                                System.out.println("Player has won");
+                            }
+                        } else break;
+                    }
+                }
+            }
         }
-
     }
 
-    public void addFlag(Flag f) {
-        flags.add(f);
-        grid.addGridObject(f);
+    public void addFlag(Flag f) { flags.add(f); }
+    public ArrayList<Flag> getFlags() { return this.flags; }
+    public boolean containsFlagWithID(int i){
+        for(Flag f : flags){ if (f.getId() == i) return true; }
+        return false;
     }
 
-    public ArrayList<Flag> getFlags() {
-        return this.flags;
-    }
-
-    public void addArchiveMarker(ArchiveMarker am) {
-        addGridObjectToGrid(am);
-        archiveMarkers.add(am);
-    }
-
+    public void addArchiveMarker(ArchiveMarker am) { archiveMarkers.add(am); }
     public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
+    public boolean containsArchiveMarkerWithID(int i){
+        for(ArchiveMarker am : archiveMarkers){ if(am.getID() == i) return true; }
+        return false;
+    }
 }

@@ -10,7 +10,6 @@ import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.FlagIDComparator;
 import sid.roborally.game_mechanics.Game;
 import sid.roborally.game_mechanics.card.CardAction;
-import sid.roborally.game_mechanics.card.TurnCard;
 import sid.roborally.game_mechanics.grid.*;
 
 import java.util.HashSet;
@@ -117,7 +116,7 @@ public class GameRunner{
                 /* Adding possible game-elements to grid */
                 addPossibleHoleToGrid(x, y);
                 addPossibleFlagToGrid(x, y);
-                addPossibleArchiveToGrid(x,y);
+                addPossibleArchiveToGrid(x, y);
             }
         }
         /* When everything is added some elements must also be sorted */
@@ -144,7 +143,9 @@ public class GameRunner{
         if (flag_layer.getCell(x, y) != null) {
             int flagIndex = flag_layer.getCell(x, y).getTile().getId();
             Flag f = new Flag(x, y, TileIDReference.flagIndexToId(flagIndex));
-            game.addFlag(f);
+            game.addGridObjectToGrid(f); // adding to grid because grid is reset
+            //checking if game flags list already has that marker before adding it
+            if(!game.containsFlagWithID(f.getId())) game.addFlag(f);
         }
     }
 
@@ -158,8 +159,10 @@ public class GameRunner{
         if (archiveMarker_layer.getCell(x, y) != null) {
             int index = archiveMarker_layer.getCell(x,y).getTile().getId();
             ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
-            game.addArchiveMarker(am);
-        }
+            game.addGridObjectToGrid(am); // adding to grid because grid is reset
+            //checking if game archive list already has that flag before adding it
+            if(!game.containsArchiveMarkerWithID(am.getID())) game.addArchiveMarker(am); }
+
     }
 
     /*

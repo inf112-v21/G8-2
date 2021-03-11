@@ -39,5 +39,7 @@ public class Robot extends GridObject {
     public boolean isDead() { return this.isDead; }
     public void setArchiveMarker(ArchiveMarker am){ this.archiveMarker = am; }
     public ArchiveMarker getArchiveMarker(){ return this.archiveMarker ;}
+    public HashSet<Flag> getFlags() { return flags; }
 
+    public void addFlag(Flag f) { flags.add(f); }
 }

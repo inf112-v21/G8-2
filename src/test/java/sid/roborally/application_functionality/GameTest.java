@@ -11,6 +11,7 @@ import sid.roborally.game_mechanics.card.StepCard;
 import sid.roborally.game_mechanics.card.TurnCard;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
+import sid.roborally.game_mechanics.grid.Robot;
 
 import java.util.ArrayList;
 
@@ -207,5 +208,15 @@ public class GameTest {
         ArchiveMarker am = new ArchiveMarker(0,1,1);
         game.addArchiveMarker(am);
         assertTrue(game.getArchiveMarkers().contains(am));
+    }
+    @Test
+    public void flagsListContainsFlagWithIDOneTest(){
+        game.addFlag(new Flag(1,1,1));
+        assertTrue(game.containsFlagWithID(1));
+    }
+    @Test
+    public void archiveListContainsArchiveWithIDOneTest() {
+        game.addArchiveMarker(new ArchiveMarker(1,2,1));
+        assertTrue(game.containsArchiveMarkerWithID(1));
     }
 }
