@@ -3,12 +3,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
@@ -25,6 +29,7 @@ public class OptionsScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private Button backButton;
+    private Table table;
 
     private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
 
@@ -32,10 +37,20 @@ public class OptionsScreen implements Screen {
     public OptionsScreen(final AppListener appListener) {
 
         this.appListener = appListener;
+        this.table = new Table();
+        stage = new Stage(new ScreenViewport());
+
+        /* Theoden-background */
+        table.setFillParent(true);
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/youhavenopower.jpg"))));
+
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
 
         stage = new Stage(new ScreenViewport());
+        stage.addActor(table);
+
         Gdx.input.setInputProcessor(stage);
 
         skin = appListener.getSkin();
