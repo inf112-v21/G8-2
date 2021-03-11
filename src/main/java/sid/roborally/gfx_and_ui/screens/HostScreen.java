@@ -24,11 +24,13 @@ public class HostScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Table table;
-
-    private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
+    private int buttWidth,buttHeight;
 
     public HostScreen(final AppListener appListener) {
         this.appListener = appListener;
+        buttWidth = appListener.getButtWidth();
+        buttHeight = appListener.getButtWidth();
+
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
 

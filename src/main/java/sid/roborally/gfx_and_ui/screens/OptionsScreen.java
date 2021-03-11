@@ -30,13 +30,14 @@ public class OptionsScreen implements Screen {
     private Skin skin;
     private Button backButton;
     private Table table;
-
-    private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
-
+    private int buttWidth,buttHeight;
 
     public OptionsScreen(final AppListener appListener) {
 
         this.appListener = appListener;
+
+        buttWidth = appListener.getButtWidth();
+        buttHeight = appListener.getButtWidth();
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
 
@@ -47,8 +48,10 @@ public class OptionsScreen implements Screen {
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
+        buttWidth = appListener.getButtWidth();
+        buttHeight = appListener.getButtHeight();
 
-        stage = new Stage(new ScreenViewport());
+                stage = new Stage(new ScreenViewport());
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
@@ -56,7 +59,7 @@ public class OptionsScreen implements Screen {
         skin = appListener.getSkin();
 
         backButton = new TextButton("Back", skin, "default");
-        backButton.setSize(BUTT_WIDTH, BUTT_HEIGHT);
+        backButton.setSize(buttWidth, buttHeight);
         backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
         backButton.setTransform(true);
 

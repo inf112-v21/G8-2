@@ -26,11 +26,12 @@ public class MultiplayerScreen implements Screen{
     private Stage stage;
     private Skin buttonSkin;
     private Button hostButton, joinButton, backButton;
-
-    private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
+    private int buttWidth,buttHeight;
 
     public MultiplayerScreen(final AppListener appListener) {
         this.appListener = appListener;
+        buttWidth = appListener.getButtWidth();
+        buttHeight = appListener.getButtWidth();
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -41,17 +42,17 @@ public class MultiplayerScreen implements Screen{
         buttonSkin = appListener.getSkin();
 
         hostButton = new TextButton("Host game",buttonSkin,"default");
-        hostButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
+        hostButton.setSize(buttWidth,buttHeight);
         hostButton.setPosition(Gdx.graphics.getWidth()/2f-80, Gdx.graphics.getHeight()/2f);
         hostButton.setTransform(true);
 
         joinButton = new TextButton("Join game",buttonSkin,"default");
-        joinButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
+        joinButton.setSize(buttWidth,buttHeight);
         joinButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-100f);
         joinButton.setTransform(true);
 
         backButton = new TextButton("Go back",buttonSkin,"default");
-        backButton.setSize(BUTT_WIDTH,BUTT_HEIGHT);
+        backButton.setSize(buttWidth,buttHeight);
         backButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-200f);
         backButton.setTransform(true);
 
@@ -71,7 +72,7 @@ public class MultiplayerScreen implements Screen{
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Join button pushed");
-                appListener.setScreen(new MainMenuScreen(appListener));
+                appListener.setScreen(new JoinScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

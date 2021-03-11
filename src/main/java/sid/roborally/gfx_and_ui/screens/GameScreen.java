@@ -24,10 +24,13 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     /* Renderer and camera */
     private OrthogonalTiledMapRenderer rend;
     private OrthographicCamera cam;
+    private int buttWidth,buttHeight;
 
     public GameScreen(final AppListener appListener) {
         this.appListener = appListener;
         rr_app = appListener.getRRApp();
+        buttWidth = appListener.getButtWidth();
+        buttHeight = appListener.getButtWidth();
 
         /* This apparently need to be called from AppListener */
         rr_app.setUpDemoGame();

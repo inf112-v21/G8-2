@@ -15,6 +15,9 @@ public class AppListener extends Game {
     public BitmapFont font;
     private RRApplication rr_app;
 
+
+    private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
+
     public void create() {
         batch = new SpriteBatch();
         //Use LibGDX's default Arial font.
@@ -35,5 +38,13 @@ public class AppListener extends Game {
     public void dispose() {
         batch.dispose();
         font.dispose();
+    }
+
+    public int getButtWidth() {
+        return BUTT_WIDTH;
+    }
+
+    public int getButtHeight() {
+        return BUTT_HEIGHT;
     }
 }
