@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
 /**
+ * <h3>MainMenuScreen</h3>
+ * <p>Main menu screen for the application-gui.</p>
  * @author Daniel Janols
  */
 public class MainMenuScreen implements Screen {
@@ -62,68 +64,54 @@ public class MainMenuScreen implements Screen {
         exitButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75*4f);
         exitButton.setTransform(true);
 
-
-
         startGameButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Start Game-button pushed");
                 appListener.setScreen(new GameScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
         multiplayerButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Multiplayer pushed");
                 appListener.setScreen(new MultiplayerScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
         demoGameButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Demo Game pushed");
                 appListener.setScreen(new GameScreen(appListener));
                 //todo demo game
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
-
         optionsButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Options pushed");
                 appListener.setScreen(new OptionsScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
-
         exitButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Exit pushed");
                 Gdx.app.exit();
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
@@ -133,16 +121,10 @@ public class MainMenuScreen implements Screen {
         stage.addActor(demoGameButton);
         stage.addActor(optionsButton);
         stage.addActor(exitButton);
-
-    }
-
-    private void startGame() {
-
     }
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -162,26 +144,21 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

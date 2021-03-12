@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
 /**
- * <h3>CardAction</h3>
+ * <h3>MultiplayerScreen</h3>
  * <p>A screen for the multiplayer options in the game.</p>
  *
  * @author Andreas Henriksen
@@ -100,7 +100,6 @@ public class MultiplayerScreen implements Screen{
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -116,31 +115,25 @@ public class MultiplayerScreen implements Screen{
 
         stage.act();
         stage.draw();
-
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

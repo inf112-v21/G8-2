@@ -63,14 +63,12 @@ public class OptionsScreen implements Screen {
         backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
         backButton.setTransform(true);
 
-
         backButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Start Game-button pushed");
                 appListener.setScreen(new MainMenuScreen(appListener));
             }
-
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Downtouch");
@@ -82,7 +80,6 @@ public class OptionsScreen implements Screen {
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -98,31 +95,25 @@ public class OptionsScreen implements Screen {
 
         stage.act();
         stage.draw();
-
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

@@ -3,7 +3,6 @@ package sid.roborally.gfx_and_ui.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import sid.roborally.application_functionality.Player;
@@ -11,26 +10,22 @@ import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.gfx_and_ui.AppListener;
 
 /**
+ * <h3>GameScreen</h3>
+ * <p>The screen that displays our in-game visuals.</p>
  * @author Daniel Janols
  */
 public class GameScreen extends InputAdapter implements ApplicationListener, Screen {
 
     final AppListener appListener;
-
-    private Texture playerImage;
-
     private RRApplication rr_app;
 
     /* Renderer and camera */
     private OrthogonalTiledMapRenderer rend;
     private OrthographicCamera cam;
-    private int buttWidth,buttHeight;
 
     public GameScreen(final AppListener appListener) {
         this.appListener = appListener;
         rr_app = appListener.getRRApp();
-        buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtWidth();
 
         /* This apparently need to be called from AppListener */
         rr_app.setUpDemoGame();
@@ -51,7 +46,6 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -108,7 +102,6 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     @Override
     public void dispose() {
-        playerImage.dispose();
     }
 
     @Override
@@ -125,5 +118,4 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
             rr_app.escapeInput();
         return false;
     }
-
 }

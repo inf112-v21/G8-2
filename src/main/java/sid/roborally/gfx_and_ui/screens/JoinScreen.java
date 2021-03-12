@@ -4,30 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
-import javax.script.ScriptEngine;
-
 /**
- * <h3>CardAction</h3>
+ * <h3>JoinScreen</h3>
  * <p>A screen where you can join a multiplayer game.</p>
  *
  * @author Andreas Henriksen
  */
-
-
-
 public class JoinScreen implements Screen {
     private final AppListener appListener;
     private OrthographicCamera cam;
@@ -42,14 +33,12 @@ public class JoinScreen implements Screen {
         buttWidth = appListener.getButtWidth();
         buttHeight = appListener.getButtWidth();
 
-
         stage = new Stage(new ScreenViewport());
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
         buttWidth = appListener.getButtWidth();
         buttHeight = appListener.getButtHeight();
-
 
         Gdx.input.setInputProcessor(stage);
 
@@ -60,27 +49,18 @@ public class JoinScreen implements Screen {
         backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
         backButton.setTransform(true);
 
-
         backButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Back button pushed");
                 appListener.setScreen(new MainMenuScreen(appListener));
             }
-
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
         stage.addActor(backButton);
     }
-
-
-
-
-
 
     @Override
     public void show() {
@@ -100,33 +80,25 @@ public class JoinScreen implements Screen {
 
         stage.act();
         stage.draw();
-
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
-
-
 }

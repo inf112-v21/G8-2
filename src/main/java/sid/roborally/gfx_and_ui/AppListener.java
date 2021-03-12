@@ -8,6 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.gfx_and_ui.screens.MainMenuScreen;
 
+/**
+ * <h3>AppListener</h3>
+ * <p>The applistener for the application-gui.</p>
+ * @author Daniel Janols
+ */
 public class AppListener extends Game {
 
     private Skin skin;
@@ -15,12 +20,10 @@ public class AppListener extends Game {
     public BitmapFont font;
     private RRApplication rr_app;
 
-
-    private static final int BUTT_WIDTH = 140, BUTT_HEIGHT = 70;
+    private static final int BUTT_WIDTH = 150, BUTT_HEIGHT = 100;
 
     public void create() {
         batch = new SpriteBatch();
-        //Use LibGDX's default Arial font.
         skin = new Skin(Gdx.files.internal("assets/application_skin/rusty-robot-ui.json"));
         font = new BitmapFont();
         rr_app = new RRApplication();
