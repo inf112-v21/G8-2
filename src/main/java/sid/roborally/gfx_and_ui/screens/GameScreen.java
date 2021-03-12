@@ -1,38 +1,32 @@
-package sid.roborally.gfx_and_ui;
+package sid.roborally.gfx_and_ui.screens;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
+import sid.roborally.gfx_and_ui.AppListener;
 
 /**
- * <h3>RoboRallyAppListener</h3>
- * <p>This class implements ApplicationListener (libgdx) and contains functionality
- *    to tell the Lwjgl3Application how and what to display, take in and so on.</p><br>
- * <p>The goal is for this class to impact the rest of the program as little as possible
- *     internally.</p>
+ * <h3>GameScreen</h3>
+ * <p>The screen that displays our in-game visuals.</p>
+ * @author Daniel Janols
  */
-public class RRAppListener extends InputAdapter implements ApplicationListener {
+public class GameScreen extends InputAdapter implements ApplicationListener, Screen {
 
-
-    private RRApplication rr_app; //Class that controls the application
+    final AppListener appListener;
+    private RRApplication rr_app;
 
     /* Renderer and camera */
     private OrthogonalTiledMapRenderer rend;
     private OrthographicCamera cam;
 
-    public RRAppListener(RRApplication app) {
-        this.rr_app = app;
-    }
+    public GameScreen(final AppListener appListener) {
+        this.appListener = appListener;
+        rr_app = appListener.getRRApp();
 
-    @Override
-    public void create()
-    {
         /* This apparently need to be called from AppListener */
         rr_app.setUpDemoGame();
 
@@ -51,14 +45,19 @@ public class RRAppListener extends InputAdapter implements ApplicationListener {
     }
 
     @Override
-    public void dispose()
-    { }
+    public void show() {
+    }
 
     @Override
-    public void render()
-    {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+    public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1,1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
+        if (Gdx.input.isTouched()) {
+            Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            System.out.println(touchPos.x + ":" + touchPos.y + ":" + touchPos.z);
+        }
 
         /* Sets cell-texture based on Player-texture-information */
         for(Player player : rr_app.getPlayers())
@@ -72,15 +71,37 @@ public class RRAppListener extends InputAdapter implements ApplicationListener {
     }
 
     @Override
+    public void create() {
+
+    }
+
+    @Override
     public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void render() {
+
     }
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
     }
 
     @Override

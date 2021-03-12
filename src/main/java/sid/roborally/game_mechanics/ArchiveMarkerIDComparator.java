@@ -1,4 +1,6 @@
-package sid.roborally.game_mechanics.grid;
+package sid.roborally.game_mechanics;
+
+import sid.roborally.game_mechanics.grid.ArchiveMarker;
 
 import java.util.Comparator;
 

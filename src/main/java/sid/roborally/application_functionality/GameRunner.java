@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.application_functionality.reference.TextureReference;
 import sid.roborally.application_functionality.reference.TileIDReference;
+import sid.roborally.game_mechanics.ArchiveMarkerIDComparator;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.FlagIDComparator;
 import sid.roborally.game_mechanics.Game;
