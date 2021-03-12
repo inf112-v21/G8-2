@@ -1,6 +1,5 @@
 package sid.roborally.game_mechanics;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;

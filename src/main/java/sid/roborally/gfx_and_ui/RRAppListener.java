@@ -95,6 +95,12 @@ public class RRAppListener extends InputAdapter implements ApplicationListener {
             rr_app.moveDownInput();
         if(Input.Keys.ESCAPE == keyCode)
             rr_app.escapeInput();
+        if(Input.Keys.Q == keyCode)
+            rr_app.rotateLeftInput();
+        if(Input.Keys.E == keyCode)
+            rr_app.rotateRightInput();
+        if(Input.Keys.F == keyCode)
+            rr_app.stepOneForwardInput();
         return false;
     }
 }

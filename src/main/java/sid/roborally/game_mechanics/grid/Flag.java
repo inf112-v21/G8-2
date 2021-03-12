@@ -1,5 +1,6 @@
 package sid.roborally.game_mechanics.grid;
 
+import java.util.Objects;
 /**
  * <h3>Flag</h3>
  * <p>Flag has an id which is used to identify
@@ -21,5 +22,12 @@ public class Flag extends GridObject {
 
     public void setId(int i) {
         this.id = i;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flag flag = (Flag) o;
+        return id == flag.id;
     }
 }
