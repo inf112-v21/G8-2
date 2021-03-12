@@ -5,11 +5,11 @@
 ### Contents Of This File
 
  * General Info
- * About the Application
- * How to Run the Application and Play the Game
- * Manual Tests
- * Troubleshooting
- * Maintainers and Roles
+ * [About the Application](#build-info)
+ * [How to Run the Application and Play the Game](#how-to-run-the-application-and-play-the-game)
+ * [Manual Tests](#manual-tests)
+ * [Troubleshooting](#troubleshooting)
+ * [Maintainers and Roles](#maintainers-and-roles)
 
 ### Build-Info
 
