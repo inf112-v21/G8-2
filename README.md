@@ -4,7 +4,7 @@
 
 ### Contents Of This File
 
- * General Info
+ * [General Info](#build-info)
  * [About the Application](#build-info)
  * [How to Run the Application and Play the Game](#how-to-run-the-application-and-play-the-game)
  * [Manual Tests](#manual-tests)
