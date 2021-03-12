@@ -31,7 +31,7 @@ public class MultiplayerScreen implements Screen{
     public MultiplayerScreen(final AppListener appListener) {
         this.appListener = appListener;
         buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtWidth();
+        buttHeight = appListener.getButtHeight();
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);

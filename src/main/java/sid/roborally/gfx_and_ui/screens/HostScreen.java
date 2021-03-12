@@ -6,8 +6,13 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
@@ -29,8 +34,7 @@ public class HostScreen implements Screen {
     public HostScreen(final AppListener appListener) {
         this.appListener = appListener;
         buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtWidth();
-
+        buttHeight = appListener.getButtHeight();
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
 
@@ -40,7 +44,6 @@ public class HostScreen implements Screen {
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
-
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
 
