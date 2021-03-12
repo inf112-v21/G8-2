@@ -6,8 +6,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import sid.roborally.application_functionality.reference.Map;
-import sid.roborally.application_functionality.reference.TextureReference;
-import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.gfx_and_ui.RRAppListener;
 
 import java.util.HashSet;
