@@ -6,8 +6,13 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
@@ -25,6 +30,8 @@ public class HostScreen implements Screen {
     private Stage stage;
     private Table table;
     private int buttWidth,buttHeight;
+    private Button backButton;
+    private Skin skin;
 
     public HostScreen(final AppListener appListener) {
         this.appListener = appListener;
@@ -36,11 +43,35 @@ public class HostScreen implements Screen {
         table.setFillParent(true);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture("assets/application_skin/youshallnotpass.png"))));
+        stage.addActor(table);
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
-        stage.addActor(table);
+
         Gdx.input.setInputProcessor(stage);
+
+        skin = appListener.getSkin();
+
+
+        backButton = new TextButton("Back", skin, "default");
+        backButton.setSize(buttWidth, buttHeight);
+        backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
+        backButton.setTransform(true);
+
+        backButton.addListener(new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Back-button pushed");
+                appListener.setScreen(new MultiplayerScreen(appListener));
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Downtouch");
+                return true;
+            }
+        });
+        stage.addActor(backButton);
 
     }
 
