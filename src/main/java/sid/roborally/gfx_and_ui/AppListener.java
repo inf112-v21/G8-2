@@ -26,7 +26,7 @@ public class AppListener extends Game {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("assets/application_skin/rusty-robot-ui.json"));
         font = new BitmapFont();
-        rr_app = new RRApplication();
+        rr_app = new RRApplication(); //Our program
         this.setScreen(new MainMenuScreen(this));
     }
 

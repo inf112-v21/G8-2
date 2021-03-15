@@ -44,7 +44,7 @@ public class Client {
 
     private void setUpClientGame(){
         rr_app = new RRApplication();
-        rr_app.setUpLibgdxApplication();
+        //TODO:rr_app.setUpLibgdxApplication();
         gameRunner = rr_app.getGameRunner();
 
         System.out.println("Game runner: " + gameRunner + ", Map: "+map);

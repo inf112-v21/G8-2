@@ -1,7 +1,6 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
-import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.game_mechanics.card.*;
 import sid.roborally.game_mechanics.grid.*;
 
@@ -93,7 +92,6 @@ public class Game implements Runnable {
             runRound();
             checkIfLocalHasWonOrLost();
         }
-        displayExitMessage();
     }
 
     /**
@@ -105,33 +103,16 @@ public class Game implements Runnable {
     }
 
     /**
-     * <p>Calls GameCommandLine and asks it to display an exit-message.</p>
-     */
-    private void displayExitMessage() {
-        if(getLocal().hasWon()) GameCommandLine.printLocalEnd(true);
-        else GameCommandLine.printLocalEnd(false);
-    }
-
-    /**
      * <p>Runs a gameround.</p>
      */
     private void runRound()
     {
         /* DEAL CARDS */
         dealToPlayers();
-        System.out.println(getLocal());
 
-        /* GET PLAYER CHOSEN CARDS */
-        ArrayList<Card> chosen = GameCommandLine
-                .getLocalCardSequenceInput(givenProgramCards.get(getLocal()));
-        for(Card c : chosen) System.out.println(c.getName());
+        //TODO: GET PLAYER CHOSEN CARDS
 
         //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
-        for(Player p : players) {
-            for(Card c : chosenProgramCards.get(p));
-                //TODO: CARDS NEED TURN_FUNCTIONALITY TO MAKE THEM EASIER TO USE
-                //TODO: FOR NOW THE ROBOT WILL BE MOVED IN A NON_CORRESPONDING WAY
-        }
 
         //TODO: MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
 
