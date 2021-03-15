@@ -137,16 +137,13 @@ public class GameRunner{
      * @param x x-position
      * @param y y-position
      */
-    private void addPossibleFlagToGrid(int x, int y)
-    {
+    private void addPossibleFlagToGrid(int x, int y) {
         /* Adding flag to Game */
-        if (flag_layer.getCell(x, y) != null) {
-            int flagIndex = flag_layer.getCell(x, y).getTile().getId();
-            Flag f = new Flag(x, y, TileIDReference.flagIndexToId(flagIndex));
-            game.addGridObjectToGrid(f); // adding to grid because grid is reset
-            //checking if game flags list already has that marker before adding it
-            if(!game.containsFlagWithID(f.getId())) game.addFlag(f);
-        }
+        if (flag_layer.getCell(x,y)==null) return;
+
+        int flagIndex = flag_layer.getCell(x, y).getTile().getId();
+        Flag f = new Flag(x, y, TileIDReference.flagIndexToId(flagIndex));
+        game.addFlag(f);
     }
 
     /**
@@ -155,14 +152,11 @@ public class GameRunner{
      * @param y y-position
      */
     private void addPossibleArchiveToGrid(int x, int y) {
+        if(archiveMarker_layer.getCell(x, y) == null) return;
         /* Adding marker to game */
-        if (archiveMarker_layer.getCell(x, y) != null) {
-            int index = archiveMarker_layer.getCell(x,y).getTile().getId();
-            ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
-            game.addGridObjectToGrid(am); // adding to grid because grid is reset
-            //checking if game archive list already has that flag before adding it
-            if(!game.containsArchiveMarkerWithID(am.getID())) game.addArchiveMarker(am); }
-
+        int index = archiveMarker_layer.getCell(x,y).getTile().getId();
+        ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
+        game.addArchiveMarker(am);
     }
 
     /*
@@ -173,7 +167,6 @@ public class GameRunner{
      * This method will run the game that has been created, and loop until it's over
      */
     public void runGame() {
-        //game.run();
     }
 
     /**
