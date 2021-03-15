@@ -4,7 +4,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import sid.roborally.application_functionality.reference.Map;
-import sid.roborally.application_functionality.reference.TextureReference;
 import sid.roborally.application_functionality.reference.TileIDReference;
 import sid.roborally.game_mechanics.ArchiveMarkerIDComparator;
 import sid.roborally.game_mechanics.Direction;
@@ -75,7 +74,7 @@ public class GameRunner{
 
     public void setUpGame(Map map) {
         /* First tell game what texture it should use*/
-        setGameTexture(TextureReference.getMapPath(map));
+        setGameTexture(map.getMapPath());
 
         /* Adjust setup based on map chosen */
         adjustSetup();
