@@ -25,7 +25,11 @@ public class Server {
     private boolean waitingForPlayers = true;
     private HashSet<Socket> clients = new HashSet<>();
 
-
+    /**
+     * Sets up the server
+     * @param map the map the game is played on
+     * @param rr_app the application used to play
+     */
     public Server(Map map, RRApplication rr_app) {
         this.map = map;
         this.rr_app = rr_app;
@@ -71,6 +75,9 @@ public class Server {
         }
     }
 
+    /**
+     * Find all clients trying to connect
+     */
     public void listenForClients(){
         while(waitingForPlayers){
             waitingForPlayers = false; //setting to false immediately to only run once for currently one client

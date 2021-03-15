@@ -24,7 +24,6 @@ public class Client {
     private RRApplication rr_app;
     //private Player player;
     private int numPlayers;
-
     public Client() {
         listenSocket();
         listenForMap();
@@ -52,6 +51,9 @@ public class Client {
         //gameRunner.setUpGame(map, numPlayers);
     }
 
+    /**
+     * Recieves map from server
+     */
     private void listenForMap(){
         try{
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
@@ -62,6 +64,8 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    /* Remove this?
     private void listenForGameRunner(){
         try{
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
@@ -72,7 +76,8 @@ public class Client {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
+
     /**
      * Connects client to server with port num.
      * Fetches client outputStream and server inputStream.
