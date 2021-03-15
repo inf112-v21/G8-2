@@ -12,6 +12,9 @@ import java.util.HashSet;
 
 /**
  * UNDER DEVELOPMENT. NOT ACTIVE CODE
+ *
+ * Allows a player to become a host and let others connect to them to play RoboRally
+ * @Author Markus Edlin & Emil Eldøen
  */
 public class Server {
 

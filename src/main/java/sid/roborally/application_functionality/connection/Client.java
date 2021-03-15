@@ -13,6 +13,9 @@ import java.net.UnknownHostException;
 
 /**
  * UNDER DEVELOPMENT. NOT ACTIVE CODE
+ *
+ * Client to allow players to connect to a server (hosted by a player) and play with each-other
+ * @Author Markus Edlin & Emil Eldøen
  */
 public class Client {
     private Socket serverSocket;
