@@ -2,6 +2,8 @@ package sid.roborally;
 
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import sid.roborally.application_functionality.connection.Server;
+import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.gfx_and_ui.AppListener;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
@@ -16,7 +18,7 @@ public class Main {
 
     public static void main(String[] args)
     {
-
+        Server server = new Server(Map.DemoMap);
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Robo-Rally");
         config.setWindowedMode(WIDTH,HEIGHT);

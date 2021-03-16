@@ -6,6 +6,8 @@ import sid.roborally.application_functionality.reference.Map;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
@@ -31,11 +33,9 @@ public class Server {
     /**
      * Sets up the server
      * @param map the map the game is played on
-     * @param rr_app the application used to play
      */
-    public Server(Map map, RRApplication rr_app) {
+    public Server(Map map) {
         this.map = map;
-        this.rr_app = rr_app;
 
         listenSocket();
         listenForClients();
@@ -107,6 +107,9 @@ public class Server {
         // Tries to create server
         try{
             server = new ServerSocket(4321);
+            InetAddress address = InetAddress.getLocalHost();
+            String hostIP = address.getLocalHost().toString();
+            System.out.println(address.getHostAddress());
         } catch (IOException e) {
             System.out.println("Could not listen on port 4321");
             System.exit(-1);
