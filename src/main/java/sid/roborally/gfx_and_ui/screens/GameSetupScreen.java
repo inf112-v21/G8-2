@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import sid.roborally.application_functionality.GameRunner;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
