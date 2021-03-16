@@ -54,6 +54,8 @@ public class RRApplication {
      */
     public void setUpDemoGame() {
 
+        //TODO velg alle settings før vi kommer hit og setter de
+
         /* Add player */
         Player demoPlayer = new Player(1, true);
         demoPlayer.setLocal();
