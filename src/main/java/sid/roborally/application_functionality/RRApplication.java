@@ -72,6 +72,10 @@ public class RRApplication {
      * Functionality:
      */
 
+    public void startGame() {
+        inputHolder = InputHolder.GameRunner;
+    }
+
     /**
      * <p>Quits/Shuts down the whole application.</p>
      */

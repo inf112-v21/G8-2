@@ -28,7 +28,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         rr_app = appListener.getRRApp();
 
         /* This apparently need to be called from AppListener */
-        rr_app.setUpDemoGame();
+        //rr_app.setUpDemoGame();
 
         /* Creates camera */
         cam = new OrthographicCamera();
