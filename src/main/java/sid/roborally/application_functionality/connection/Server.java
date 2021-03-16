@@ -2,6 +2,8 @@ package sid.roborally.application_functionality.connection;
 
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.game_mechanics.card.Card;
+import sid.roborally.game_mechanics.card.CardDeck;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,6 +13,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * UNDER DEVELOPMENT. NOT ACTIVE CODE
@@ -29,7 +32,7 @@ public class Server {
     private RRApplication rr_app;
     private boolean waitingForPlayers = true;
     private HashSet<Socket> clients = new HashSet<>();
-
+    private String IPAddress;
     /**
      * Sets up the server
      * @param map the map the game is played on
@@ -51,6 +54,20 @@ public class Server {
                 serverToClientOutput.flush();
             }
         } catch (IOException e) {
+            System.out.println("Map couldn't be sent to client!");
+            e.printStackTrace();
+        }
+    }
+
+    public void sendDeckToClients(CardDeck deck){
+        try {
+            for (Socket c : clients) {
+                serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
+                serverToClientOutput.writeObject(deck);
+                serverToClientOutput.flush();
+            }
+        } catch (IOException e){
+            System.out.println("Cards could not be sent to client!");
             e.printStackTrace();
         }
     }
@@ -107,12 +124,16 @@ public class Server {
         // Tries to create server
         try{
             server = new ServerSocket(4321);
-            InetAddress address = InetAddress.getLocalHost();
-            String hostIP = address.getLocalHost().toString();
-            System.out.println(address.getHostAddress());
+            //Fetches local IP adress
+            String IPAddress = InetAddress.getLocalHost().getHostAddress().toString();
+            System.out.println(IPAddress);
         } catch (IOException e) {
             System.out.println("Could not listen on port 4321");
             System.exit(-1);
         }
+    }
+
+    public String getAddress(){
+        return IPAddress;
     }
 }

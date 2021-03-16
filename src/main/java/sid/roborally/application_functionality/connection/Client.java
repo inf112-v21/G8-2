@@ -4,6 +4,7 @@ package sid.roborally.application_functionality.connection;
 import sid.roborally.application_functionality.GameRunner;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.game_mechanics.card.CardDeck;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,66 +21,22 @@ import java.net.UnknownHostException;
 public class Client {
     private Socket serverSocket;
     private ObjectOutputStream clientToServerOutput;
-
     private Map map;
     private GameRunner gameRunner;
     private ObjectInputStream serverToClientInput;
     private RRApplication rr_app;
-    //private Player player;
+    private String hostAddress;
     private int numPlayers;
-    public Client() {
+    private CardDeck deck;
+
+    public Client(String IPAddress) {
+        hostAddress = IPAddress;
         listenSocket();
         listenForMap();
+        //listenForCards(); Needed to find cards from server
         listenForNumPlayers();
         setUpClientGame();
     }
-
-    private void listenForNumPlayers() {
-        try{
-            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
-            numPlayers = serverToClientInput.readInt();
-            System.out.println(numPlayers);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setUpClientGame(){
-        rr_app = new RRApplication();
-        //TODO:rr_app.setUpLibgdxApplication();
-        gameRunner = rr_app.getGameRunner();
-
-        System.out.println("Game runner: " + gameRunner + ", Map: "+map);
-        System.out.println(gameRunner.getMap());
-        //gameRunner.setUpGame(map, numPlayers);
-    }
-
-    /**
-     * Recieves map from server
-     */
-    private void listenForMap(){
-        try{
-            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
-            map = (Map) serverToClientInput.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /* Remove this?
-    private void listenForGameRunner(){
-        try{
-            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
-            System.out.println(serverToClientInput);
-            gameRunner = (GameRunner) serverToClientInput.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     /**
      * Connects client to server with port num.
@@ -91,7 +48,8 @@ public class Client {
         //Create socket connection
         try{
             System.out.println("Connecting...");//feedback to user
-            serverSocket = new Socket("localhost", 4321);
+            serverSocket = new Socket(hostAddress, 4321);
+            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
 
 
         } catch (UnknownHostException e) {
@@ -102,4 +60,49 @@ public class Client {
             System.exit(1);
         }
     }
+
+    private void listenForNumPlayers() {
+        try{
+            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
+            numPlayers = serverToClientInput.readInt();
+            System.out.println(numPlayers);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Recieves map from server
+     */
+    private void listenForMap(){
+        try{
+            map = (Map) serverToClientInput.readObject();
+        } catch (IOException e) {
+            System.out.println("No map output from server!");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Map not found!");
+            e.printStackTrace();
+        }
+    }
+    private void listenForCards(){
+        try{
+            deck = (CardDeck) serverToClientInput.readObject();
+        } catch (IOException e) {
+            System.out.println("No card output from server!");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Deck not found!");
+            e.printStackTrace();
+        }
+    }
+
+    private void setUpClientGame(){
+        rr_app = new RRApplication();
+        //TODO:rr_app.setUpLibgdxApplication();
+        gameRunner = rr_app.getGameRunner();
+
+        System.out.println("Game runner: " + gameRunner + ", Map: "+map);
+        //gameRunner.setUpGame(map, numPlayers);
+    }
+
 }

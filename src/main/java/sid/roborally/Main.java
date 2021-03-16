@@ -2,11 +2,16 @@ package sid.roborally;
 
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import sid.roborally.application_functionality.connection.Client;
 import sid.roborally.application_functionality.connection.Server;
 import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.game_mechanics.card.Card;
+import sid.roborally.game_mechanics.card.CardDeck;
 import sid.roborally.gfx_and_ui.AppListener;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+
+import java.util.Scanner;
 
 /**
  * <h3>Main</h3>
@@ -18,7 +23,19 @@ public class Main {
 
     public static void main(String[] args)
     {
-        Server server = new Server(Map.DemoMap);
+        System.out.print("Are you a server or a client? C/S");
+        Scanner sc = new Scanner(System.in);
+        String inp = sc.nextLine();
+        sc.close();
+        if(inp.equals("s") || inp.equals("S")){
+            Server server = new Server(Map.DemoMap);
+            CardDeck cards = new CardDeck();
+            System.out.print(cards.getNextCard().toString());
+            //server.sendDeckToClients(cards); needed to send cards to client
+        }
+        if(inp.equals("c") || inp.equals("C")){
+            Client client = new Client("192.168.10.168");
+        }
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Robo-Rally");
         config.setWindowedMode(WIDTH,HEIGHT);

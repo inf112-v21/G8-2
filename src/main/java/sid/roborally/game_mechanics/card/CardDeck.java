@@ -1,5 +1,6 @@
 package sid.roborally.game_mechanics.card;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Stack;
 
@@ -9,7 +10,7 @@ import java.util.Stack;
  *
  * @author Andreas Henriksen
  */
-public class CardDeck {
+public class CardDeck implements Serializable {
 
     private Stack<Card> deck;
 
