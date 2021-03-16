@@ -42,7 +42,7 @@ public class HostScreen implements Screen {
 
         table.setFillParent(true);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/youshallnotpass.png"))));
+                new Texture("assets/application_skin/imnotbraveenough.png"))));
         stage.addActor(table);
 
         cam = new OrthographicCamera();

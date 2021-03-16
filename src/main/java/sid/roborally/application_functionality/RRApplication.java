@@ -1,12 +1,9 @@
 package sid.roborally.application_functionality;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import sid.roborally.application_functionality.reference.Map;
-import sid.roborally.gfx_and_ui.RRAppListener;
 
 import java.util.HashSet;
 
@@ -35,7 +32,6 @@ public class RRApplication {
 
     /* Application-running */
     private GameRunner grunner; //Sets up and starts a game.
-    private CommandLineTool clt; //This is the game-controller in the game-menus
 
     /**
      * <p>RoboRallyApplication constructor.</p>
@@ -43,13 +39,6 @@ public class RRApplication {
     public RRApplication() {
         inputHolder = InputHolder.Menu;
         grunner = new GameRunner();
-    }
-
-    public void setUpLibgdxApplication() {
-        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle("Robo Rally");
-        config.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT);
-        new Lwjgl3Application(new RRAppListener(this), config);
     }
 
     public GameRunner getGameRunner() {

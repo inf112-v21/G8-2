@@ -1,12 +1,8 @@
 package sid.roborally.application_functionality;
 
-import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <h3>Player</h3>
@@ -114,8 +110,6 @@ public class Player {
      * @return boolean Is player external
      */
     public boolean isExternal() { return ownerLocation == OwnerLocation.External; }
-
-
 
     /*
      * * * * * Getters and Setters

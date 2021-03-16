@@ -1,7 +1,6 @@
 package sid.roborally.game_mechanics;
 
 import sid.roborally.application_functionality.Player;
-import sid.roborally.application_functionality.comm_line.GameCommandLine;
 import sid.roborally.game_mechanics.card.*;
 import sid.roborally.game_mechanics.grid.*;
 
@@ -93,7 +92,6 @@ public class Game implements Runnable {
             runRound();
             checkIfLocalHasWonOrLost();
         }
-        displayExitMessage();
     }
 
     /**
@@ -105,33 +103,16 @@ public class Game implements Runnable {
     }
 
     /**
-     * <p>Calls GameCommandLine and asks it to display an exit-message.</p>
-     */
-    private void displayExitMessage() {
-        if(getLocal().hasWon()) GameCommandLine.printLocalEnd(true);
-        else GameCommandLine.printLocalEnd(false);
-    }
-
-    /**
      * <p>Runs a gameround.</p>
      */
     private void runRound()
     {
         /* DEAL CARDS */
         dealToPlayers();
-        System.out.println(getLocal());
 
-        /* GET PLAYER CHOSEN CARDS */
-        ArrayList<Card> chosen = GameCommandLine
-                .getLocalCardSequenceInput(givenProgramCards.get(getLocal()));
-        for(Card c : chosen) System.out.println(c.getName());
+        //TODO: GET PLAYER CHOSEN CARDS
 
         //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
-        for(Player p : players) {
-            for(Card c : chosenProgramCards.get(p));
-                //TODO: CARDS NEED TURN_FUNCTIONALITY TO MAKE THEM EASIER TO USE
-                //TODO: FOR NOW THE ROBOT WILL BE MOVED IN A NON_CORRESPONDING WAY
-        }
 
         //TODO: MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
 
@@ -301,45 +282,63 @@ public class Game implements Runnable {
      * @param p Player-instance
      */
     private void updatePlayerStatus(Player p) {
+
+        Robot playerRobot = p.getRobot();
+        Position playerPosition = playerRobot.getPosition();
+
         /* Check for possible damage */
-        if(grid.positionHasHole(p.getRobot().getPosition()))
-        {
-            p.getRobot().setIsDead(true);
+        if(grid.positionHasHole(playerPosition)) {
+            playerRobot.setIsDead(true);
             p.killPlayer();
         }
 
-        /* Check if robot has a flag. If the robot can add it(next in flag order), robot adds flag.
-        * After adding, checks if robot has won. */
-        if(grid.positionHasFlag(p.getRobot().getPosition()))
-        {
+        /* Check for possible addition of flag */
+        if(grid.positionHasFlag(p.getRobot().getPosition())) {
             Robot r = p.getRobot();
             Flag flagAtPosition = grid.getFlagAtPosition(r.getPosition());
-            if(flagAtPosition != null) {
-                //iterating through flags list (in order by id)
-                for (Flag flag : flags) {
-                    if(!r.getFlags().contains(flag)){
-                        if(flagAtPosition.equals(flag)){
+            if (flagAtPosition != null) {
+                for (Flag flag : flags)
+                    if (!r.getFlags().contains(flag))
+                        if (flagAtPosition.equals(flag))
                             r.addFlag(flag);
-                            if(r.getFlags().containsAll(flags)){
-                                p.getRobot().setHasWon(true);
-                                p.playerWon();
-                            }
-                        } else break;
-                    }
-                }
+                        else break;
             }
+        }
+
+        /* Check if all flags are found*/
+        if(p.getRobot().getFlags().containsAll(flags)){
+            p.getRobot().setHasWon(true);
+            p.playerWon();
         }
     }
 
-    public void addFlag(Flag f) { flags.add(f); }
-    public ArrayList<Flag> getFlags() { return this.flags; }
+    /**
+     * <p>Adds flag to game</p>
+     * @param f Flag
+     */
+    public void addFlag(Flag f) {
+        addGridObjectToGrid(f);
+        if(!containsFlagWithID(f.getId())) flags.add(f);
+    }
+
+    public ArrayList<Flag> getFlags() { return flags; }
+
     public boolean containsFlagWithID(int i){
         for(Flag f : flags){ if (f.getId() == i) return true; }
         return false;
     }
 
-    public void addArchiveMarker(ArchiveMarker am) { archiveMarkers.add(am); }
+    /**
+     * <p>Adds archive-marker to game</p>
+     * @param am Archive-marker
+     */
+    public void addArchiveMarker(ArchiveMarker am) {
+        addGridObjectToGrid(am);
+        if(!containsArchiveMarkerWithID(am.getID())) archiveMarkers.add(am);
+    }
+
     public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
+
     public boolean containsArchiveMarkerWithID(int i){
         for(ArchiveMarker am : archiveMarkers){ if(am.getID() == i) return true; }
         return false;
