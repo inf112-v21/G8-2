@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
  * UNDER DEVELOPMENT. NOT ACTIVE CODE
  *
  * Client to allow players to connect to a server (hosted by a player) and play with each-other
- * @Author Markus Edlin & Emil Eldøen
+ * @author Markus Edlin & Emil Eldøen
  */
 public class Client {
     private Socket serverSocket;
@@ -32,8 +32,8 @@ public class Client {
     public Client(String IPAddress) {
         hostAddress = IPAddress;
         listenSocket();
+        listenForCards(); //Needed to find cards from server
         listenForMap();
-        //listenForCards(); Needed to find cards from server
         listenForNumPlayers();
         setUpClientGame();
     }
@@ -63,7 +63,6 @@ public class Client {
 
     private void listenForNumPlayers() {
         try{
-            serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
             numPlayers = serverToClientInput.readInt();
             System.out.println(numPlayers);
         } catch (IOException e) {
@@ -87,6 +86,7 @@ public class Client {
     private void listenForCards(){
         try{
             deck = (CardDeck) serverToClientInput.readObject();
+            System.out.println("First card: " + deck.getNextCard().getName());
         } catch (IOException e) {
             System.out.println("No card output from server!");
             e.printStackTrace();

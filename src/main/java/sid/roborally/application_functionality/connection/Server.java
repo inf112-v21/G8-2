@@ -1,25 +1,22 @@
 package sid.roborally.application_functionality.connection;
 
-import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
-import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardDeck;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashSet;
-import java.util.List;
+import java.util.HashMap;
+
 
 /**
  * UNDER DEVELOPMENT. NOT ACTIVE CODE
  *
  * Allows a player to become a host and let others connect to them to play RoboRally
- * @Author Markus Edlin & Emil Eldøen
+ * @author Markus Edlin & Emil Eldøen
  */
 public class Server {
 
@@ -29,27 +26,31 @@ public class Server {
     private ObjectOutputStream serverToClientOutput;
 
     private Map map;
-    private RRApplication rr_app;
     private boolean waitingForPlayers = true;
-    private HashSet<Socket> clients = new HashSet<>();
+    private HashMap<Socket, ObjectOutputStream> clients = new HashMap<>();
     private String IPAddress;
+    private CardDeck deck;
+
     /**
      * Sets up the server
      * @param map the map the game is played on
      */
     public Server(Map map) {
         this.map = map;
+        deck = new CardDeck();
 
         listenSocket();
         listenForClients();
+        sendDeckToClients(deck);
+        System.out.println("First card: " + deck.getNextCard().getName());
         sendMapToClients();
         sendNumPlayersToClients();
     }
 
     public void sendMapToClients(){
         try{
-            for(Socket c : clients){
-                serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
+            for(Socket c : clients.keySet()){
+                serverToClientOutput = clients.get(c);
                 serverToClientOutput.writeObject(map);
                 serverToClientOutput.flush();
             }
@@ -61,8 +62,8 @@ public class Server {
 
     public void sendDeckToClients(CardDeck deck){
         try {
-            for (Socket c : clients) {
-                serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
+            for (Socket c : clients.keySet()) {
+                serverToClientOutput = clients.get(c);
                 serverToClientOutput.writeObject(deck);
                 serverToClientOutput.flush();
             }
@@ -73,8 +74,8 @@ public class Server {
     }
     private void sendNumPlayersToClients(){
         try{
-            for(Socket c : clients){
-                serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
+            for(Socket c : clients.keySet()){
+                serverToClientOutput = clients.get(c);
                 serverToClientOutput.writeInt(clients.size()+1); //+1 because server counts as one player
                 serverToClientOutput.flush();
             }
@@ -85,8 +86,8 @@ public class Server {
 
     public void sendListClientsToClients(){
         try{
-            for(Socket c : clients){
-                serverToClientOutput = new ObjectOutputStream(c.getOutputStream());
+            for(Socket c : clients.keySet()){
+                serverToClientOutput = clients.get(c);
                 serverToClientOutput.writeObject(map);
                 serverToClientOutput.flush();
             }
@@ -104,7 +105,7 @@ public class Server {
             try{
                 client = server.accept();
                 System.out.println("Client connected: "+ client.isConnected());
-                clients.add(client);
+                clients.put(client, new ObjectOutputStream(client.getOutputStream()));
             } catch (IOException e) {
                 System.out.println("Accept failed: 4321");
                 System.exit(-1);
@@ -125,7 +126,7 @@ public class Server {
         try{
             server = new ServerSocket(4321);
             //Fetches local IP adress
-            String IPAddress = InetAddress.getLocalHost().getHostAddress().toString();
+            IPAddress = InetAddress.getLocalHost().getHostAddress();
             System.out.println(IPAddress);
         } catch (IOException e) {
             System.out.println("Could not listen on port 4321");

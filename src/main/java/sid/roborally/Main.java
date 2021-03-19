@@ -34,7 +34,7 @@ public class Main {
             //server.sendDeckToClients(cards); needed to send cards to client
         }
         if(inp.equals("c") || inp.equals("C")){
-            Client client = new Client("192.168.10.168");
+            Client client = new Client("192.168.56.1");
         }
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Robo-Rally");
