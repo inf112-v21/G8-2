@@ -4,7 +4,12 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.gfx_and_ui.AppListener;
@@ -19,6 +24,11 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     final AppListener appListener;
     private RRApplication rr_app;
 
+    private Stage uiStage;
+    private Viewport uiView;
+
+    private InputMultiplexer inputMultiplexer;
+
     /* Renderer and camera */
     private OrthogonalTiledMapRenderer rend;
     private OrthographicCamera cam;
@@ -27,12 +37,18 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         this.appListener = appListener;
         rr_app = appListener.getRRApp();
 
+        uiView = new FitViewport(1600,1600);
+        uiStage = new Stage(uiView);
+
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(uiStage);
+
         /* This apparently need to be called from AppListener */
         rr_app.setUpDemoGame();
 
         /* Creates camera */
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, 1500, 1500);
+        cam.setToOrtho(false, 3200,3200);
         cam.update();
 
         /* Creates render */
@@ -77,7 +93,10 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     @Override
     public void resize(int width, int height) {
-
+        uiView.update(width,height);
+        uiStage.act();
+        uiStage.draw();
+        cam.update();
     }
 
     @Override
@@ -102,6 +121,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     @Override
     public void dispose() {
+        uiStage.dispose();
     }
 
     @Override
