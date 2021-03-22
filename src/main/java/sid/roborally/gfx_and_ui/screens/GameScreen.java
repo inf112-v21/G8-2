@@ -3,10 +3,14 @@ package sid.roborally.gfx_and_ui.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -27,11 +31,21 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     private Stage uiStage;
     private Viewport uiView;
 
+    private Image centerImage;
+
     private InputMultiplexer inputMultiplexer;
+
+    private Player localPlayer;
 
     /* Renderer and camera */
     private OrthogonalTiledMapRenderer rend;
     private OrthographicCamera cam;
+
+    /* Map-width/height and unit-size (pixels pr. position) */
+    private int mapWidth, mapHeight;
+    private static final float MAP_UNIT= 300f; //Time position times mapUnit to find cam-position.
+    private static final float CAM_OFFSET_X = 150, CAM_OFFSET_Y = 150;
+    private float camOffsetX, camOffsetY; //Camera-position is in center and of screen.
 
     public GameScreen(final AppListener appListener) {
         this.appListener = appListener;
@@ -45,19 +59,59 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
         /* This apparently need to be called from AppListener */
         rr_app.setUpDemoGame();
+        localPlayer = rr_app.getGameRunner().getLocal();
 
+        /* Get map-value info */
+        mapWidth = rr_app.getGameRunner().getBoardWidth();
+        mapHeight = rr_app.getGameRunner().getBoardHeight();
+
+        /* Sets up visuals for board */
+        setUpCamAndRenderer();
+
+        uiStage.act();
+        uiStage.draw();
+
+        Gdx.input.setInputProcessor(this);
+    }
+
+    /**
+     * <p>Sets up cam and renderer to clean up constructor</p>
+     */
+    private void setUpCamAndRenderer() {
         /* Creates camera */
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, 3200,3200);
+        cam.setToOrtho(false, 3000,3000);
         cam.update();
 
         /* Creates render */
         rend = new OrthogonalTiledMapRenderer(rr_app.getMap());
 
+        /* Center cam on player */
+        centerCamOnPlayer(localPlayer);
+
         /* Sets render's view to that of the camera */
         rend.setView(cam);
+    }
 
-        Gdx.input.setInputProcessor(this);
+    private void updateRendWithCam() {
+        rend.setView(cam);
+    }
+
+    private void centerCamOnMapCenter() {
+        float mapCenterX = MAP_UNIT * mapWidth/2;
+        float mapCenterY = MAP_UNIT * mapHeight/2;
+        cam.position.set(mapCenterX,mapCenterY,0);
+        cam.update();
+        rend.setView(cam);
+    }
+
+    private void centerCamOnPlayer(Player p) {
+        float playerX = p.getRobot().getPosition().getX() * MAP_UNIT;
+        float playerY = p.getRobot().getPosition().getY() * MAP_UNIT;
+
+        cam.position.set(playerX + CAM_OFFSET_X, playerY + CAM_OFFSET_Y,0);
+        cam.update();
+        updateRendWithCam();
     }
 
     @Override
@@ -66,14 +120,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1,1);
+        Gdx.gl.glClearColor(0, 0, 0,1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
-        if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            System.out.println(touchPos.x + ":" + touchPos.y + ":" + touchPos.z);
-        }
 
         /* Sets cell-texture based on Player-texture-information */
         for(Player player : rr_app.getPlayers())
@@ -84,11 +132,13 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
         /* Render the map */
         rend.render();
+
+        uiStage.act();
+        uiStage.draw();
     }
 
     @Override
     public void create() {
-
     }
 
     @Override
@@ -101,22 +151,18 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     @Override
     public void render() {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
@@ -126,14 +172,22 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     @Override
     public boolean keyUp(int keyCode){
-        if(Input.Keys.LEFT == keyCode || Input.Keys.A == keyCode)
+        if(Input.Keys.LEFT == keyCode || Input.Keys.A == keyCode) {
             rr_app.moveLeftInput();
-        if(Input.Keys.RIGHT == keyCode || Input.Keys.D == keyCode)
+            centerCamOnPlayer(localPlayer);
+        }
+        if(Input.Keys.RIGHT == keyCode || Input.Keys.D == keyCode) {
             rr_app.moveRightInput();
-        if(Input.Keys.UP == keyCode || Input.Keys.W == keyCode)
+            centerCamOnPlayer(localPlayer);
+        }
+        if(Input.Keys.UP == keyCode || Input.Keys.W == keyCode) {
             rr_app.moveUpInput();
-        if(Input.Keys.DOWN == keyCode || Input.Keys.S == keyCode)
+            centerCamOnPlayer(localPlayer);
+        }
+        if(Input.Keys.DOWN == keyCode || Input.Keys.S == keyCode){
             rr_app.moveDownInput();
+            centerCamOnPlayer(localPlayer);
+        }
         if(Input.Keys.ESCAPE == keyCode)
             rr_app.escapeInput();
         if(Input.Keys.Q == keyCode)
@@ -142,6 +196,20 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
             rr_app.rotateRightInput();
         if(Input.Keys.F == keyCode)
             rr_app.stepOneForwardInput();
+        if(Input.Keys.M == keyCode)
+            centerCamOnMapCenter();
+        if(Input.Keys.SPACE == keyCode)
+            centerCamOnPlayer(rr_app.getGameRunner().getLocal());
+        if(Input.Keys.Z == keyCode)
+            zoomCam(0.1f);
+        if(Input.Keys.X == keyCode)
+            zoomCam(-0.1f);
         return false;
+    }
+
+    private void zoomCam(float zoom) {
+        cam.zoom += zoom;
+        cam.update();
+        rend.setView(cam);
     }
 }
