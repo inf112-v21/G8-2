@@ -51,6 +51,10 @@ public class GameRunner{
         players = new HashSet<>();
     }
 
+    public Player getLocal() { return game.getLocal(); }
+    public int getBoardWidth() { return board_layer.getWidth(); }
+    public int getBoardHeight() { return board_layer.getHeight(); }
+
     /**
      * <p>Sets the currentGameTexture</p>
      *
