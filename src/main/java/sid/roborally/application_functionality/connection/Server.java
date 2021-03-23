@@ -22,20 +22,30 @@ import java.util.HashMap;
  * @author Markus Edlin & Emil Eldøen
  */
 public class Server {
-
+    /**
+     * The server and its write and read variables
+     * to send/accept input to/from server
+     */
     private ServerSocket server;
-    private Socket client;
     private ObjectInputStream clientToServerInput;
     private ObjectOutputStream serverToClientOutput;
 
+    /**
+     * Variables being sent to clients
+     * or updated via input from client
+     */
     private Map map;
     private boolean waitingForPlayers = true;
     private HashMap<Socket, ObjectInputStream> clientsIn = new HashMap<>();
     private HashMap<Socket, ObjectOutputStream> clientsOut = new HashMap<>();
     private HashMap<Socket, Player> clientpLayers = new HashMap<>();
     private HashMap<Socket, ArrayList<Card>>playerSelect = new HashMap<>(); // Change key back to Player after testing
-    private String IPAddress;
     private CardDeck deck;
+
+    /**
+     * The IP address to be printed on server setup page
+     */
+    private String IPAddress;
 
     /**
      * Sets up the server
@@ -76,12 +86,16 @@ public class Server {
 
     /**
      * Find all clients trying to connect
+     * and adds them to hashMap to keep control
+     * of all client's input and output
+     * as well as which player belongs to which client
      */
     public void listenForClients(){
+        boolean waitingForPlayers = true;
         while(waitingForPlayers){
             waitingForPlayers = false; //setting to false immediately to only run once for currently one client
             try{
-                client = server.accept();
+                Socket client = server.accept();
                 System.out.println("Client connected: "+ client.isConnected());
                 clientsOut.put(client, new ObjectOutputStream(client.getOutputStream()));
                 clientsIn.put(client, new ObjectInputStream(client.getInputStream()));
@@ -94,7 +108,9 @@ public class Server {
         }
     }
 
-
+    /**
+     * @param deck the deck of all the cards used in a game
+     */
     public void sendDeckToClients(CardDeck deck){
         try {
             for (Socket c : clientsOut.keySet()) {
@@ -133,18 +149,10 @@ public class Server {
         }
     }
 
-    public void sendListClientsToClients(){
-        try{
-            for(Socket c : clientsOut.keySet()){
-                serverToClientOutput = clientsOut.get(c);
-                serverToClientOutput.writeObject(map);
-                serverToClientOutput.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Accepts chosen cards from clients
+     * To be used in game for robots to move
+     */
     public void listenForCardSelection(){
         try{
             for(Socket c : clientsIn.keySet()){
