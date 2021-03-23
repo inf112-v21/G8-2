@@ -1,7 +1,9 @@
 package sid.roborally.gfx_and_ui.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
@@ -26,6 +29,8 @@ public class JoinScreen implements Screen {
     private Skin skin;
     private Button joinButton,backButton;
     private int buttWidth,buttHeight;
+    TextField joinIP;
+    TextField joinPort;
 
     public JoinScreen(final AppListener appListener) {
         this.appListener = appListener;
@@ -44,6 +49,19 @@ public class JoinScreen implements Screen {
 
         skin = appListener.getSkin();
 
+        joinIP = new TextField("", skin);
+        joinIP.setColor(Color.RED);
+        joinIP.setMessageText("Enter IP");
+        joinIP.setPosition(200,500);
+
+        joinPort = new TextField("", skin);
+        joinPort.setColor(Color.RED);
+        joinPort.setMessageText("Enter Port");
+        joinPort.setPosition(200,400);
+
+        stage.addActor(joinIP);
+        stage.addActor(joinPort);
+
         backButton = new TextButton("Back", skin, "default");
         backButton.setSize(buttWidth, buttHeight);
         backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
@@ -59,7 +77,26 @@ public class JoinScreen implements Screen {
                 return true;
             }
         });
+
+        joinButton = new TextButton("Join game",skin,"default");
+        joinButton.setSize(buttWidth,buttHeight);
+        joinButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-100f);
+        joinButton.setTransform(true);
+
+        joinButton.addListener(new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                //appListener.setScreen(new MainMenuScreen(appListener));
+                System.out.println("Attempting to join: "+ joinIP.getText() + " on port " + joinPort.getText());
+            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+
         stage.addActor(backButton);
+        stage.addActor(joinButton);
     }
 
     @Override
@@ -101,4 +138,5 @@ public class JoinScreen implements Screen {
     @Override
     public void dispose() {
     }
+
 }
