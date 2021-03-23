@@ -58,9 +58,9 @@ public class Server {
         listenSocket();
         listenForClients();
         sendDeckToClients(deck);
-        System.out.println("First card: " + deck.getNextCard().getName());
         sendMapToClients();
         sendNumPlayersToClients();
+        //listenForCardSelection();
     }
 
     /**
@@ -96,9 +96,8 @@ public class Server {
             try{
                 Socket client = server.accept();
                 System.out.println("Client connected: "+ client.isConnected());
-                System.out.println("Client " + client.toString());
                 clientsOut.put(client, new ObjectOutputStream(client.getOutputStream()));
-                //clientsIn.put(client, new ObjectInputStream(client.getInputStream()));
+                clientsIn.put(client, new ObjectInputStream(client.getInputStream()));
                 //clientPlayers.put(client, player (fra client eller lages på server))
                 //playerSelect(client sin player og en tom kortstokk)
             } catch (IOException e) {
@@ -113,8 +112,6 @@ public class Server {
                 serverToClientOutput = clientsOut.get(c);
                 serverToClientOutput.writeObject(thing);
                 serverToClientOutput.flush();
-
-                System.out.println("Object " + thing.getClass().getName() + " could not be sent");
             }
         } catch (IOException e) {
             System.out.println("Object " + thing.getClass().toString() + " could not be sent");
@@ -141,7 +138,8 @@ public class Server {
     }
 
     public void sendMapToClients(){
-        try{
+        sendToClient(map);
+        /*try{
             for(Socket c : clientsOut.keySet()){
                 serverToClientOutput = clientsOut.get(c);
                 serverToClientOutput.writeObject(map);
@@ -150,7 +148,7 @@ public class Server {
         } catch (IOException e) {
             System.out.println("Map couldn't be sent to client!");
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void sendNumPlayersToClients(){
@@ -173,7 +171,9 @@ public class Server {
         try{
             for(Socket c : clientsIn.keySet()){
                 clientToServerInput = clientsIn.get(c);
-                ArrayList<Card> cards = (ArrayList<Card>) clientToServerInput.readObject();
+
+                ArrayList<Card> cards = (ArrayList<Card>) clientToServerInput.readObject(); //Update later for player's card selection
+
                 playerSelect.put(c, cards);
             }
         } catch (IOException | ClassNotFoundException e) {

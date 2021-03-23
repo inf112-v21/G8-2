@@ -46,6 +46,7 @@ public class Client {
         getMap();
         getNumPlayers();
         setUpClientGame();
+        //sendCardSelectionToServer( cardsSelection );
     }
 
     /**
@@ -60,6 +61,7 @@ public class Client {
             System.out.println("Connecting...");//feedback to user
             serverSocket = new Socket(hostAddress, 4321);
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
+            clientToServerOutput = new ObjectOutputStream(serverSocket.getOutputStream());
         } catch (UnknownHostException e) {
             System.out.println("Unknown host: kq6py");
             System.exit(1);
@@ -75,7 +77,6 @@ public class Client {
     private void getDeck(){
         try{
             deck = (CardDeck) serverToClientInput.readObject();
-            System.out.println("First card: " + deck.getNextCard().getName());
         } catch (IOException e) {
             System.out.println("No card output from server!");
             e.printStackTrace();
@@ -103,7 +104,6 @@ public class Client {
     private void getNumPlayers() {
         try{
             numPlayers = serverToClientInput.readInt();
-            System.out.println(numPlayers);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,7 +117,7 @@ public class Client {
         //TODO:rr_app.setUpLibgdxApplication();
         gameRunner = rr_app.getGameRunner();
 
-        System.out.println("Game runner: " + gameRunner + ", Map: "+map);
+        System.out.println("Map: "+map);
         //gameRunner.setUpGame(map, numPlayers);
     }
 
