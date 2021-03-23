@@ -30,9 +30,10 @@ public class Server {
 
     private Map map;
     private boolean waitingForPlayers = true;
-    private HashMap<Socket, ObjectOutputStream> clients = new HashMap<>();
+    private HashMap<Socket, ObjectInputStream> clientsIn = new HashMap<>();
+    private HashMap<Socket, ObjectOutputStream> clientsOut = new HashMap<>();
     private HashMap<Socket, Player> clientpLayers = new HashMap<>();
-    private HashMap<Player, ArrayList<Card>>playerSelect = new HashMap<>();
+    private HashMap<Socket, ArrayList<Card>>playerSelect = new HashMap<>(); // Change key back to Player after testing
     private String IPAddress;
     private CardDeck deck;
 
@@ -82,7 +83,8 @@ public class Server {
             try{
                 client = server.accept();
                 System.out.println("Client connected: "+ client.isConnected());
-                clients.put(client, new ObjectOutputStream(client.getOutputStream()));
+                clientsOut.put(client, new ObjectOutputStream(client.getOutputStream()));
+                clientsIn.put(client, new ObjectInputStream(client.getInputStream()));
                 //clientPlayers.put(client, player (fra client eller lages på server))
                 //playerSelect(client sin player og en tom kortstokk)
             } catch (IOException e) {
@@ -95,8 +97,8 @@ public class Server {
 
     public void sendDeckToClients(CardDeck deck){
         try {
-            for (Socket c : clients.keySet()) {
-                serverToClientOutput = clients.get(c);
+            for (Socket c : clientsOut.keySet()) {
+                serverToClientOutput = clientsOut.get(c);
                 serverToClientOutput.writeObject(deck);
                 serverToClientOutput.flush();
             }
@@ -108,8 +110,8 @@ public class Server {
 
     public void sendMapToClients(){
         try{
-            for(Socket c : clients.keySet()){
-                serverToClientOutput = clients.get(c);
+            for(Socket c : clientsOut.keySet()){
+                serverToClientOutput = clientsOut.get(c);
                 serverToClientOutput.writeObject(map);
                 serverToClientOutput.flush();
             }
@@ -121,9 +123,9 @@ public class Server {
 
     private void sendNumPlayersToClients(){
         try{
-            for(Socket c : clients.keySet()){
-                serverToClientOutput = clients.get(c);
-                serverToClientOutput.writeInt(clients.size()+1); //+1 because server counts as one player
+            for(Socket c : clientsOut.keySet()){
+                serverToClientOutput = clientsOut.get(c);
+                serverToClientOutput.writeInt(clientsOut.size()+1); //+1 because server counts as one player
                 serverToClientOutput.flush();
             }
         } catch (IOException e) {
@@ -133,8 +135,8 @@ public class Server {
 
     public void sendListClientsToClients(){
         try{
-            for(Socket c : clients.keySet()){
-                serverToClientOutput = clients.get(c);
+            for(Socket c : clientsOut.keySet()){
+                serverToClientOutput = clientsOut.get(c);
                 serverToClientOutput.writeObject(map);
                 serverToClientOutput.flush();
             }
@@ -143,8 +145,17 @@ public class Server {
         }
     }
 
-
-
+    public void listenForCardSelection(){
+        try{
+            for(Socket c : clientsIn.keySet()){
+                clientToServerInput = clientsIn.get(c);
+                ArrayList<Card> cards = (ArrayList<Card>) clientToServerInput.readObject();
+                playerSelect.put(c, cards);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     public String getAddress(){
         return IPAddress;
     }

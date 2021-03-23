@@ -4,6 +4,7 @@ package sid.roborally.application_functionality.connection;
 import sid.roborally.application_functionality.GameRunner;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardDeck;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 /**
  * UNDER DEVELOPMENT. NOT ACTIVE CODE
@@ -50,8 +52,6 @@ public class Client {
             System.out.println("Connecting...");//feedback to user
             serverSocket = new Socket(hostAddress, 4321);
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
-
-
         } catch (UnknownHostException e) {
             System.out.println("Unknown host: kq6py");
             System.exit(1);
@@ -105,6 +105,15 @@ public class Client {
 
         System.out.println("Game runner: " + gameRunner + ", Map: "+map);
         //gameRunner.setUpGame(map, numPlayers);
+    }
+
+    private void sendCardSelectionToServer(ArrayList<Card> cards){
+        try{
+            clientToServerOutput.writeObject(cards);
+            clientToServerOutput.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
