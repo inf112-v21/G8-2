@@ -4,10 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.application_functionality.Player;
@@ -35,11 +38,18 @@ public class GameSetupScreen implements Screen {
     private Table menuTable;
     private RRApplication rr_app;
     private ArrayList<Player> players;
+    private Table table;
+    private Window window;
 
     public GameSetupScreen(AppListener appListener) {
         this.appListener = appListener;
         rr_app = appListener.getRRApp();
         this.players = new ArrayList<>();
+        this.table = new Table();
+        skin = appListener.getSkin();
+        this.window = new Window("Demo map", skin);
+        this.window.setPosition(10,700);
+        this.window.setSize(300,300);
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -70,6 +80,11 @@ public class GameSetupScreen implements Screen {
         menuTable = new Table();
         addButtons(menuTable);
 
+        window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/demomapimage.jpg"))));
+
+        //selectMapListener.
+
 
         startGameButton.addListener(new InputListener(){
             @Override
@@ -77,6 +92,9 @@ public class GameSetupScreen implements Screen {
                 addPlayers(players, playerBox.getSelected());
                 setUpGame(players);
                 appListener.setScreen(new GameScreen(appListener));
+                //todo: Kunne skifte map preview når man velger bane fra dropdown
+
+
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -94,8 +112,10 @@ public class GameSetupScreen implements Screen {
             }
         });
 
+        stage.addActor(table);
         stage.addActor(playerBox);
         stage.addActor(menuTable);
+        stage.addActor(window);
     }
 
     /**
