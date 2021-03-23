@@ -61,14 +61,19 @@ public class Client {
         }
     }
 
-    private void listenForNumPlayers() {
+    private void listenForCards(){
         try{
-            numPlayers = serverToClientInput.readInt();
-            System.out.println(numPlayers);
+            deck = (CardDeck) serverToClientInput.readObject();
+            System.out.println("First card: " + deck.getNextCard().getName());
         } catch (IOException e) {
+            System.out.println("No card output from server!");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Deck not found!");
             e.printStackTrace();
         }
     }
+
     /**
      * Recieves map from server
      */
@@ -83,15 +88,12 @@ public class Client {
             e.printStackTrace();
         }
     }
-    private void listenForCards(){
+
+    private void listenForNumPlayers() {
         try{
-            deck = (CardDeck) serverToClientInput.readObject();
-            System.out.println("First card: " + deck.getNextCard().getName());
+            numPlayers = serverToClientInput.readInt();
+            System.out.println(numPlayers);
         } catch (IOException e) {
-            System.out.println("No card output from server!");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println("Deck not found!");
             e.printStackTrace();
         }
     }
