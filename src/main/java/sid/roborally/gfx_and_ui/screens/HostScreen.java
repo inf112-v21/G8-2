@@ -30,7 +30,7 @@ public class HostScreen implements Screen {
     private Stage stage;
     private Table table;
     private int buttWidth,buttHeight;
-    private Button backButton;
+    private Button hostGameButton, backButton;
     private Skin skin;
 
     public HostScreen(final AppListener appListener) {
@@ -52,10 +52,15 @@ public class HostScreen implements Screen {
 
         skin = appListener.getSkin();
 
+        hostGameButton = new TextButton("Start game", skin, "default");
+        hostGameButton.setSize(buttWidth, buttHeight);
+        hostGameButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
+        hostGameButton.setTransform(true);
+
 
         backButton = new TextButton("Back", skin, "default");
         backButton.setSize(buttWidth, buttHeight);
-        backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
+        backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f-75);
         backButton.setTransform(true);
 
         backButton.addListener(new InputListener() {
@@ -71,6 +76,7 @@ public class HostScreen implements Screen {
                 return true;
             }
         });
+        stage.addActor(hostGameButton);
         stage.addActor(backButton);
 
     }

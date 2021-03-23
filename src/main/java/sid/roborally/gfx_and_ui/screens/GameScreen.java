@@ -59,7 +59,6 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         rr_app = appListener.getRRApp();
 
         /* Need to tell rr_app to set up game */
-        rr_app.setUpDemoGame();
         localPlayer = rr_app.getGameRunner().getLocal();
 
         /* Get map-value info */
