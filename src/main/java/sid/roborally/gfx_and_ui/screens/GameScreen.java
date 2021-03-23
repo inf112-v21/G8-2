@@ -166,6 +166,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         }
     }
 
+
     /**
      * <p>Sets up cam and renderer to clean up constructor</p>
      */

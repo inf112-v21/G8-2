@@ -24,7 +24,7 @@ public class MainMenuScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Skin skin;
-    private Button startGameButton,multiplayerButton,demoGameButton,optionsButton,exitButton;
+    private Button startGameButton,multiplayerButton,optionsButton,exitButton;
     private int buttWidth,buttHeight;
 
     public MainMenuScreen(final AppListener appListener) {
@@ -49,25 +49,20 @@ public class MainMenuScreen implements Screen {
         multiplayerButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75f);
         multiplayerButton.setTransform(true);
 
-        demoGameButton = new TextButton("Demo Game",skin,"default");
-        demoGameButton.setSize(buttWidth,buttHeight);
-        demoGameButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75*2f);
-        demoGameButton.setTransform(true);
-
         optionsButton = new TextButton("Options",skin,"default");
         optionsButton.setSize(buttWidth,buttHeight);
-        optionsButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75*3f);
+        optionsButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75*2f);
         optionsButton.setTransform(true);
 
         exitButton = new TextButton("Exit",skin,"default");
         exitButton.setSize(buttWidth,buttHeight);
-        exitButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75*4f);
+        exitButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75*3f);
         exitButton.setTransform(true);
 
         startGameButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new GameScreen(appListener));
+                appListener.setScreen(new GameSetupScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -78,17 +73,6 @@ public class MainMenuScreen implements Screen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 appListener.setScreen(new MultiplayerScreen(appListener));
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-        demoGameButton.addListener(new InputListener(){
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new GameScreen(appListener));
-                //todo demo game
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -118,7 +102,6 @@ public class MainMenuScreen implements Screen {
 
         stage.addActor(multiplayerButton);
         stage.addActor(startGameButton);
-        stage.addActor(demoGameButton);
         stage.addActor(optionsButton);
         stage.addActor(exitButton);
     }
