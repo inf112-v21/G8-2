@@ -80,11 +80,6 @@ public class GameSetupScreen implements Screen {
         menuTable = new Table();
         addButtons(menuTable);
 
-        window.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/demomapimage.jpg"))));
-
-        //selectMapListener.
-
 
         startGameButton.addListener(new InputListener(){
             @Override
@@ -92,7 +87,6 @@ public class GameSetupScreen implements Screen {
                 addPlayers(players, playerBox.getSelected());
                 setUpGame(players);
                 appListener.setScreen(new GameScreen(appListener));
-                //todo: Kunne skifte map preview når man velger bane fra dropdown
 
 
             }
@@ -175,18 +169,32 @@ public class GameSetupScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.8F, .5F, .1F,1);
+        Gdx.gl.glClearColor(.8F, .5F, .1F, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         cam.update();
         appListener.batch.setProjectionMatrix(cam.combined);
 
-        appListener.batch.begin();
-        appListener.batch.end();
+        if (mapBox.getSelected().equals(Map.DemoMap.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/application_skin/demomap.jpg"))));
+        }
+        if (mapBox.getSelected().equals(Map.TwoPlayerDemo.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/application_skin/2players2flags.jpg"))));
+        }
+        if (mapBox.getSelected().equals(Map.BigMap.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/application_skin/bigdemomap.jpg"))));
+        }
 
-        stage.act();
-        stage.draw();
-    }
+
+            appListener.batch.begin();
+            appListener.batch.end();
+
+            stage.act();
+            stage.draw();
+        }
 
     @Override
     public void resize(int width, int height) {
