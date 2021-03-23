@@ -26,7 +26,7 @@ public class Main {
         System.out.print("Are you a server or a client? C/S");
         Scanner sc = new Scanner(System.in);
         String inp = sc.nextLine();
-        sc.close();
+
         if(inp.equals("s") || inp.equals("S")){
             Server server = new Server(Map.DemoMap);
             CardDeck cards = new CardDeck();
@@ -34,8 +34,10 @@ public class Main {
             //server.sendDeckToClients(cards); needed to send cards to client
         }
         if(inp.equals("c") || inp.equals("C")){
-            Client client = new Client("192.168.56.1");
+            System.out.println("Write IP address to connect to: ");
+            Client client = new Client(sc.nextLine());
         }
+        sc.close();
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Robo-Rally");
         config.setWindowedMode(WIDTH,HEIGHT);
