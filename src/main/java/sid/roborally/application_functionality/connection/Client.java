@@ -21,32 +21,40 @@ import java.util.ArrayList;
  * @author Markus Edlin & Emil Eldøen
  */
 public class Client {
+    /**
+     * Variables used by the client to
+     * connect, accept and wirte input from/to server
+     */
     private Socket serverSocket;
     private ObjectOutputStream clientToServerOutput;
-    private Map map;
-    private GameRunner gameRunner;
     private ObjectInputStream serverToClientInput;
-    private RRApplication rr_app;
     private String hostAddress;
     private int numPlayers;
+
+    /**
+     * Variables used to create a local instance of the game
+     */
+    private Map map;
+    private GameRunner gameRunner;
+    private RRApplication rr_app;
     private CardDeck deck;
 
     public Client(String IPAddress) {
         hostAddress = IPAddress;
-        listenSocket();
-        listenForCards(); //Needed to find cards from server
-        listenForMap();
-        listenForNumPlayers();
+        connectToServer();
+        getDeck(); //Needed to find cards from server
+        getMap();
+        getNumPlayers();
         setUpClientGame();
     }
 
     /**
-     * Connects client to server with port num.
+     * Connects client to server with port number and IPAdress given by user.
      * Fetches client outputStream and server inputStream.
      * Reads server input and prints to console.
      * Catch: Throws exception if host is invalid or I/O operation is invalid.
      */
-    private void listenSocket(){
+    private void connectToServer(){
         //Create socket connection
         try{
             System.out.println("Connecting...");//feedback to user
@@ -61,7 +69,10 @@ public class Client {
         }
     }
 
-    private void listenForCards(){
+    /**
+     * Receives the deck of all cards used in the game
+     */
+    private void getDeck(){
         try{
             deck = (CardDeck) serverToClientInput.readObject();
             System.out.println("First card: " + deck.getNextCard().getName());
@@ -75,9 +86,9 @@ public class Client {
     }
 
     /**
-     * Recieves map from server
+     * Receives map from server
      */
-    private void listenForMap(){
+    private void getMap(){
         try{
             map = (Map) serverToClientInput.readObject();
         } catch (IOException e) {
@@ -89,7 +100,7 @@ public class Client {
         }
     }
 
-    private void listenForNumPlayers() {
+    private void getNumPlayers() {
         try{
             numPlayers = serverToClientInput.readInt();
             System.out.println(numPlayers);
@@ -98,6 +109,9 @@ public class Client {
         }
     }
 
+    /**
+     * Sets up a local version of roborally
+     */
     private void setUpClientGame(){
         rr_app = new RRApplication();
         //TODO:rr_app.setUpLibgdxApplication();

@@ -91,14 +91,14 @@ public class Server {
      * as well as which player belongs to which client
      */
     public void listenForClients(){
-        boolean waitingForPlayers = true;
         while(waitingForPlayers){
             waitingForPlayers = false; //setting to false immediately to only run once for currently one client
             try{
                 Socket client = server.accept();
                 System.out.println("Client connected: "+ client.isConnected());
+                System.out.println("Client " + client.toString());
                 clientsOut.put(client, new ObjectOutputStream(client.getOutputStream()));
-                clientsIn.put(client, new ObjectInputStream(client.getInputStream()));
+                //clientsIn.put(client, new ObjectInputStream(client.getInputStream()));
                 //clientPlayers.put(client, player (fra client eller lages på server))
                 //playerSelect(client sin player og en tom kortstokk)
             } catch (IOException e) {
@@ -107,12 +107,28 @@ public class Server {
             }
         }
     }
+    public void sendToClient(Object thing){
+        try{
+            for(Socket c : clientsOut.keySet()){
+                serverToClientOutput = clientsOut.get(c);
+                serverToClientOutput.writeObject(thing);
+                serverToClientOutput.flush();
+
+                System.out.println("Object " + thing.getClass().getName() + " could not be sent");
+            }
+        } catch (IOException e) {
+            System.out.println("Object " + thing.getClass().toString() + " could not be sent");
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      * @param deck the deck of all the cards used in a game
      */
     public void sendDeckToClients(CardDeck deck){
-        try {
+        sendToClient(deck);
+        /*try {
             for (Socket c : clientsOut.keySet()) {
                 serverToClientOutput = clientsOut.get(c);
                 serverToClientOutput.writeObject(deck);
@@ -121,7 +137,7 @@ public class Server {
         } catch (IOException e){
             System.out.println("Cards could not be sent to client!");
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void sendMapToClients(){
