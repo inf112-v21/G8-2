@@ -11,6 +11,7 @@ import sid.roborally.game_mechanics.FlagIDComparator;
 import sid.roborally.game_mechanics.Game;
 import sid.roborally.game_mechanics.card.CardAction;
 import sid.roborally.game_mechanics.grid.*;
+import sid.roborally.gfx_and_ui.screens.GameScreen;
 
 import java.util.HashSet;
 
@@ -40,6 +41,7 @@ public class GameRunner{
 
     /* The game that is run */
     private Game game;
+    private GameScreen gameScreen;
     private boolean inputActive;
 
     /**
@@ -50,6 +52,35 @@ public class GameRunner{
         inputActive = true;
         players = new HashSet<>();
     }
+
+    /*
+     * * * * * Game-running methods start
+     *
+     * These methods are used for running the game and communicating
+     * between GUI and Game
+     */
+
+    /**
+     * <p>This method sets up a round. It deals the cards two the players and
+     * then updates GUI with its given cards.</p>
+     */
+    public void setUpRound() {
+        game.dealToPlayers();
+        gameScreen.addNewCardsToCardWindow(game.getPlayerGivenCards(getLocal()));
+    }
+
+    /**
+     * <p>This method runs the cards chosen. If the game isn't over, it will call setUpRound again.</p>
+     */
+    public void runRound() {
+
+    }
+
+    /*
+     * * * * * Game-running methods end
+     */
+
+    public void giveGameScreen(GameScreen gs) { gameScreen = gs; }
 
     public Player getLocal() { return game.getLocal(); }
     public int getBoardWidth() { return board_layer.getWidth(); }

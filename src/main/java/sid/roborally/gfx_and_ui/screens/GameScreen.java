@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import sid.roborally.application_functionality.GameRunner;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.game_mechanics.card.Card;
@@ -28,6 +29,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     final AppListener appListener;
     private RRApplication rr_app;
+    private GameRunner grunner;
 
     private Stage uiStage;
     private Viewport uiView;
@@ -67,17 +69,19 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         setUpCamAndRenderer();
 
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+        grunner.setUpRound();
     }
 
     public void getInitialInfo() {
         rr_app = appListener.getRRApp();
-
-        /* Need to tell rr_app to set up game */
-        localPlayer = rr_app.getGameRunner().getLocal();
+        grunner = rr_app.getGameRunner();
+        grunner.giveGameScreen(this);
+        localPlayer = grunner.getLocal();
 
         /* Get map-value info */
-        mapWidth = rr_app.getGameRunner().getBoardWidth();
-        mapHeight = rr_app.getGameRunner().getBoardHeight();
+        mapWidth = grunner.getBoardWidth();
+        mapHeight = grunner.getBoardHeight();
 
         /* Viewport used by every component */
         uiView = new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -167,7 +171,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     public void addNewCardsToCardWindow(ArrayList<Card> cards) {
         cardWindow.clear();
         for(Card card : cards) {
-            cardWindow.add(card.getName() + ": " + card.getAction().getActionName() + " : " + card.getPriority());
+            cardWindow.add(card.getName() + "; Priority: " + card.getPriority());
+            cardWindow.row();
         }
     }
 
@@ -282,6 +287,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     @Override
     public void dispose() {
         uiStage.dispose();
+        rend.dispose();
     }
 
     @Override

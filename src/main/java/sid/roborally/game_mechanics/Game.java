@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author Daniel Janols
  */
-public class Game implements Runnable {
+public class Game {
 
     /* Game-elements */
     private ArrayList<Flag> flags;
@@ -57,10 +57,6 @@ public class Game implements Runnable {
         gameOver = false;
     }
 
-    /* Run game-thread */
-    @Override
-    public void run() { runGame(); }
-
     /*
      * * * * * Editing game-elements.
      */
@@ -80,27 +76,11 @@ public class Game implements Runnable {
     public void addGridObjectToGrid(GridObject go)
     { grid.addGridObject(go);}
 
+    public ArrayList<Card> getPlayerGivenCards(Player p) { return givenProgramCards.get(p); }
+
     /*
      * * * * * Phase-methods
      */
-
-    /**
-     * <p>Runs game's gameloop.</p>
-     */
-    private void runGame() {
-        while(!gameOver) {
-            runRound();
-            checkIfLocalHasWonOrLost();
-        }
-    }
-
-    /**
-     * <p>Checks if local host has won or lost, if any then game-over.</p>
-     */
-    private void checkIfLocalHasWonOrLost() {
-        if(getLocal().hasWon() || getLocal().isDead())
-            gameOver = true;
-    }
 
     /**
      * <p>Runs a gameround.</p>
@@ -156,22 +136,6 @@ public class Game implements Runnable {
      */
 
     /**
-     * <p>Returns the given program cards associated with the player.</p>
-     * @param p Player
-     * @return List of cards
-     */
-    public List<Card> getPlayerProgramCards(Player p)
-    { return givenProgramCards.get(p); }
-
-    /**
-     * <p>Tells game what sequence of cards should be associated with player.</p>
-     * @param p Player
-     * @param cardSequence Card sequence to be used.
-     */
-    public void setChosenProgramCards(Player p, ArrayList<Card> cardSequence)
-    { chosenProgramCards.get(p).addAll(cardSequence); }
-
-    /**
      * <p>Adds a player to the Game's Player-set.</p>
      * @param p Player-instance.
      */
@@ -197,13 +161,6 @@ public class Game implements Runnable {
      */
     public void remove(Player p)
     { players.remove(p); }
-
-    /**
-     * <p>Gets the Game's Player-set.</p>
-     * @return players - Player set.
-     */
-    public HashSet<Player> getPlayers()
-    { return players; }
 
     /**
      * <p>Gets the local player instance (not AI or External)</p>
