@@ -40,6 +40,8 @@ public class HostScreen implements Screen {
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
 
+        table.center();
+
         table.setFillParent(true);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture("assets/application_skin/imnotbraveenough.png"))));
@@ -71,8 +73,6 @@ public class HostScreen implements Screen {
                 return true;
             }
         });
-        stage.addActor(hostGameButton);
-        stage.addActor(backButton);
 
     }
 

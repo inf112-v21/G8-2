@@ -4,12 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
@@ -24,42 +28,34 @@ public class MainMenuScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Skin skin;
-    private Button startGameButton,multiplayerButton,optionsButton,exitButton;
+    private Button singleplayerButton,multiplayerButton,optionsButton,exitButton;
     private int buttWidth,buttHeight;
+    private Table table;
 
     public MainMenuScreen(final AppListener appListener) {
         this.appListener = appListener;
         buttWidth = appListener.getButtWidth();
         buttHeight = appListener.getButtHeight();
+        this.table = new Table();
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
 
         stage = new Stage(new ScreenViewport());
+
+        table.setFillParent(true);
+        stage.addActor(table);
+
         Gdx.input.setInputProcessor(stage);
 
         skin = appListener.getSkin();
 
-        startGameButton = new TextButton("Singleplayer",skin,"default");
-        startGameButton.setSize(buttWidth,buttHeight);
-        startGameButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f);
-        startGameButton.setTransform(true);
-
+        singleplayerButton = new TextButton("Singleplayer",skin,"default");
         multiplayerButton = new TextButton("Multiplayer",skin,"default");
-        multiplayerButton.setSize(buttWidth,buttHeight);
-        multiplayerButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75f);
-        multiplayerButton.setTransform(true);
-
         optionsButton = new TextButton("Options",skin,"default");
-        optionsButton.setSize(buttWidth,buttHeight);
-        optionsButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75*2f);
-        optionsButton.setTransform(true);
-
         exitButton = new TextButton("Exit",skin,"default");
-        exitButton.setSize(buttWidth,buttHeight);
-        exitButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-75*3f);
-        exitButton.setTransform(true);
 
-        startGameButton.addListener(new InputListener(){
+
+        singleplayerButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 appListener.setScreen(new GameSetupScreen(appListener));
@@ -99,11 +95,14 @@ public class MainMenuScreen implements Screen {
                 return true;
             }
         });
+        table.add(singleplayerButton);
+        table.row();
+        table.add(multiplayerButton);
+        table.row();
+        table.add(optionsButton);
+        table.row();
+        table.add(exitButton);
 
-        stage.addActor(multiplayerButton);
-        stage.addActor(startGameButton);
-        stage.addActor(optionsButton);
-        stage.addActor(exitButton);
     }
 
     @Override
