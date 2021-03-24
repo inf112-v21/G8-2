@@ -56,10 +56,23 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     public GameScreen(final AppListener appListener) {
         this.appListener = appListener;
+
+        /* Initial set-up*/
+        getInitialInfo();
+
+        /* Our game-control overlay */
+        setUpUIStage();
+
+        /* Sets up visuals for board */
+        setUpCamAndRenderer();
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    public void getInitialInfo() {
         rr_app = appListener.getRRApp();
 
         /* Need to tell rr_app to set up game */
-        rr_app.setUpDemoGame();
         localPlayer = rr_app.getGameRunner().getLocal();
 
         /* Get map-value info */
@@ -71,14 +84,6 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
         /* Head of input-handling */
         inputMultiplexer = new InputMultiplexer();
-
-        /* Our game-control overlay */
-        setUpUIStage();
-
-        /* Sets up visuals for board */
-        setUpCamAndRenderer();
-
-        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     private void setUpUIStage() {
