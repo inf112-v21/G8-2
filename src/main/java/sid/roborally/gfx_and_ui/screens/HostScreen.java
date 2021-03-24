@@ -53,26 +53,21 @@ public class HostScreen implements Screen {
         skin = appListener.getSkin();
 
         hostGameButton = new TextButton("Start game", skin, "default");
-        hostGameButton.setSize(buttWidth, buttHeight);
-        hostGameButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
-        hostGameButton.setTransform(true);
-
 
         backButton = new TextButton("Back", skin, "default");
-        backButton.setSize(buttWidth, buttHeight);
-        backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f-75);
-        backButton.setTransform(true);
+
+        table.add(hostGameButton);
+        table.row();
+        table.add(backButton);
 
         backButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Back-button pushed");
                 appListener.setScreen(new MultiplayerScreen(appListener));
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });

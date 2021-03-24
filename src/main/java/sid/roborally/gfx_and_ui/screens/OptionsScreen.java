@@ -99,12 +99,10 @@ public class OptionsScreen implements Screen {
         backButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Start Game-button pushed");
                 appListener.setScreen(new MainMenuScreen(appListener));
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });

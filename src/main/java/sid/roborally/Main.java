@@ -20,7 +20,7 @@ public class Main {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Robo-Rally");
         config.setWindowedMode(WIDTH, HEIGHT);
-        config.setMaximized(true);
+        //config.setMaximized(true);
         new Lwjgl3Application(new AppListener(), config);
     }
 }

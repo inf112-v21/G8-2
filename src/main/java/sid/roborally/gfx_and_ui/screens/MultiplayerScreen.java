@@ -33,6 +33,7 @@ public class MultiplayerScreen implements Screen{
         buttWidth = appListener.getButtWidth();
         buttHeight = appListener.getButtHeight();
 
+
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
 
@@ -59,36 +60,30 @@ public class MultiplayerScreen implements Screen{
         hostButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Host button pushed");
                 appListener.setScreen(new HostScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
         joinButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Join button pushed");
                 appListener.setScreen(new JoinScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
         backButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Back button pushed");
                 appListener.setScreen(new MainMenuScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });

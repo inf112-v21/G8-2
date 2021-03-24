@@ -47,8 +47,8 @@ public class GameSetupScreen implements Screen {
         this.players = new ArrayList<>();
         this.table = new Table();
         skin = appListener.getSkin();
-        this.window = new Window("Demo map", skin);
-        this.window.setPosition(10,700);
+        this.window = new Window("Map Preview", skin);
+        this.window.setPosition(window.getWidth(),window.getHeight());
         this.window.setSize(300,300);
 
         cam = new OrthographicCamera();
@@ -71,7 +71,7 @@ public class GameSetupScreen implements Screen {
         playerBox.setSize(125, 35);
         playerBox.setItems(1, 2, 3, 4, 5, 6, 7, 8);
 
-        startGameButton = new TextButton("Singleplayer",skin,"default");
+        startGameButton = new TextButton("Start",skin,"default");
         startGameButton.setTransform(true);
 
         backButton = new TextButton("Back",skin,"default");
