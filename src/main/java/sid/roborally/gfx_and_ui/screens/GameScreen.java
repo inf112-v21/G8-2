@@ -7,9 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import sid.roborally.application_functionality.GameRunner;
@@ -43,6 +47,21 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     private Table infoTable;
     private Window cardWindow;
 
+    /* Control-table*/
+    private SelectBox<String> reg1, reg2, reg3, reg4, reg5;
+    private String baseOptionReg1 = "Register One",
+            baseOptionReg2 = "Register Two",
+            baseOptionReg3 = "Register Three",
+            baseOptionReg4 = "Register Four",
+            baseOptionReg5 = "Register Five";
+    private int reg1index = -1, reg2index = -1, reg3index = -1, reg4index = -1,reg5index = -1; //Chosen card index (-1) non chosen.
+
+    private Button commitButton;
+
+    private ArrayList<Card> givenCards;
+    private ArrayList<Integer> chosenCardsIndices;
+    private ArrayList<Card> chosenCards;
+
     private InputMultiplexer inputMultiplexer;
 
     private Player localPlayer;
@@ -71,6 +90,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         grunner.setUpRound();
+        updateCardSelection();
     }
 
     public void getInitialInfo() {
@@ -90,17 +110,103 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         inputMultiplexer = new InputMultiplexer();
     }
 
+    /**
+     * <p>Updates selection-boxes and indexes.</p>
+     */
+    private void updateCardSelection() {
+        System.out.println("PING");
+        Array<String> givenCardStrings = new Array<>();
+        for(Card card : givenCards)
+            givenCardStrings.add(card.getName() + ": Pri " + card.getPriority());
+
+        Array<String> reg1array = new Array<>();
+        reg1array.add(baseOptionReg1);
+        reg1array.addAll(givenCardStrings);
+        reg1.setItems(reg1array);
+
+        Array<String> reg2array = new Array<>();
+        reg2array.add(baseOptionReg2);
+        reg2array.addAll(givenCardStrings);
+        reg2.setItems(reg2array);
+
+        Array<String> reg3array = new Array<>();
+        reg3array.add(baseOptionReg3);
+        reg3array.addAll(givenCardStrings);
+        reg3.setItems(reg3array);
+
+        Array<String> reg4array = new Array<>();
+        reg4array.add(baseOptionReg4);
+        reg4array.addAll(givenCardStrings);
+        reg4.setItems(reg4array);
+
+        Array<String> reg5array = new Array<>();
+        reg5array.add(baseOptionReg5);
+        reg5array.addAll(givenCardStrings);
+        reg5.setItems(reg5array);
+
+        /* Register 1 */
+        reg1index = reg1.getSelectedIndex()-1;
+
+        /* Register 2 */
+        reg2index = reg2.getSelectedIndex()-1;
+
+        /* Register 3 */
+        reg3index = reg3.getSelectedIndex()-1;
+
+        /* Register 4 */
+        reg4index = reg4.getSelectedIndex()-1;
+
+        /* Register 5 */
+        reg5index = reg5.getSelectedIndex()-1;
+
+        chosenCardsIndices = new ArrayList<>();
+        chosenCardsIndices.add(reg1index);
+        chosenCardsIndices.add(reg2index);
+        chosenCardsIndices.add(reg3index);
+        chosenCardsIndices.add(reg4index);
+        chosenCardsIndices.add(reg5index);
+    }
+
     private void setUpUIStage() {
         uiStage = new Stage(uiView);
 
         /* Sets up hud */
-        setUpControlTable();
         setUpInfoTable();
+        setUpControlTable();
 
         inputMultiplexer.addProcessor(uiStage);
 
         uiStage.act();
         uiStage.draw();
+    }
+
+    /**
+     * <p>Checks that every register has selected a card and that noe indices are duplicated.</p>
+     * @return Bool
+     */
+    private boolean cardSelectionValid() {
+        if(     reg1index == -1 ||
+                reg2index == -1 ||
+                reg3index == -1 ||
+                reg4index == -1 ||
+                reg5index == -1
+        ) return false;
+        for(int i = 0; i < 5; i++) {
+            int indexCard = chosenCardsIndices.get(i); //Should only occur once
+            int duplicateCounter = 0;
+            for(int index : chosenCardsIndices)
+                if(index == indexCard) duplicateCounter++;
+            if(duplicateCounter>1) return false;
+        }
+        return true;
+    }
+
+    public void guiSleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -115,38 +221,107 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         controlTable.left().top();
 
         /* Register-titles */
-        Label reg1Label = new Label("Register one", appListener.getSkin());
+        Label reg1Label = new Label(baseOptionReg1, appListener.getSkin());
         controlTable.add(reg1Label);
-        Label reg2Label = new Label("Register two", appListener.getSkin());
+        Label reg2Label = new Label(baseOptionReg2, appListener.getSkin());
         controlTable.add(reg2Label);
-        Label reg3Label = new Label("Register three", appListener.getSkin());
+        Label reg3Label = new Label(baseOptionReg3, appListener.getSkin());
         controlTable.add(reg3Label);
-        Label reg4Label = new Label("Register four", appListener.getSkin());
+        Label reg4Label = new Label(baseOptionReg4, appListener.getSkin());
         controlTable.add(reg4Label);
-        Label reg5Label = new Label("Register five", appListener.getSkin());
+        Label reg5Label = new Label(baseOptionReg5, appListener.getSkin());
         controlTable.add(reg5Label);
 
         controlTable.row();
 
         /* Register card-selection (Initially the lists are just the register-name) */
-        SelectBox<String> reg1 = new SelectBox<>(appListener.getSkin());
-        reg1.setItems("Register 1");
+        reg1 = new SelectBox<>(appListener.getSkin());
+        reg1.setItems(baseOptionReg1);
+        reg1.addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                updateCardSelection();
+                return true;
+            }
+        });
         controlTable.add(reg1);
-        SelectBox<String> reg2 = new SelectBox<>(appListener.getSkin());
-        reg2.setItems("Register 2");
+
+        reg2 = new SelectBox<>(appListener.getSkin());
+        reg2.setItems(baseOptionReg2);
+        reg2.addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                updateCardSelection();
+                return true;
+            }
+        });
         controlTable.add(reg2);
-        SelectBox<String> reg3 = new SelectBox<>(appListener.getSkin());
-        reg3.setItems("Register 3");
+
+        reg3 = new SelectBox<>(appListener.getSkin());
+        reg3.setItems(baseOptionReg3);
+        reg3.addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                updateCardSelection();
+                return true;
+            }
+        });
         controlTable.add(reg3);
-        SelectBox<String> reg4 = new SelectBox<>(appListener.getSkin());
-        reg4.setItems("Register 4");
+
+        reg4 = new SelectBox<>(appListener.getSkin());
+        reg4.setItems(baseOptionReg4);
+        reg4.addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                updateCardSelection();
+                return true;
+            }
+        });
         controlTable.add(reg4);
-        SelectBox<String> reg5 = new SelectBox<>(appListener.getSkin());
-        reg5.setItems("Register 5");
+
+        reg5 = new SelectBox<>(appListener.getSkin());
+        reg5.setItems(baseOptionReg5);
+        reg5.addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                updateCardSelection();
+                return true;
+            }
+        });
         controlTable.add(reg5);
+
+        /* Commit card-button */
+        commitButton = new TextButton("Commit Program",appListener.getSkin());
+        commitButton.setSize(appListener.getButtWidth(),appListener.getButtHeight());
+        commitButton.addListener(
+        new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                updateCardSelection();
+                if(cardSelectionValid()) {
+                    chosenCards = new ArrayList<>();
+                    chosenCards.add(givenCards.get(reg1index));
+                    chosenCards.add(givenCards.get(reg2index));
+                    chosenCards.add(givenCards.get(reg3index));
+                    chosenCards.add(givenCards.get(reg4index));
+                    chosenCards.add(givenCards.get(reg5index));
+                    giveGamerunnerChosenCards();
+                    grunner.runRound();
+                }
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        controlTable.add(commitButton);
 
         /* Finally */
         uiStage.addActor(controlTable);
+    }
+
+    private void giveGamerunnerChosenCards() {
+        grunner.giveGameCards(chosenCards);
     }
 
     /**
@@ -168,14 +343,26 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         uiStage.addActor(infoTable);
     }
 
-    public void addNewCardsToCardWindow(ArrayList<Card> cards) {
+    /**
+     * <p>Gives GameScreen its new set of cards.</p>
+     * @param cards Given cards
+     */
+    public void giveCards(ArrayList<Card> cards) { givenCards = cards; }
+
+    /**
+     * <p>Called when GUI has to be updated after changing values</p>
+     */
+    public void updateGUI() {
+        updateWindowCards();
+    }
+
+    public void updateWindowCards() {
         cardWindow.clear();
-        for(Card card : cards) {
+        for(Card card : givenCards) {
             cardWindow.add(card.getName() + "; Priority: " + card.getPriority());
             cardWindow.row();
         }
     }
-
 
     /**
      * <p>Sets up cam and renderer to clean up constructor</p>

@@ -1,5 +1,6 @@
 package sid.roborally.game_mechanics;
 
+import sid.roborally.application_functionality.GameRunner;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.game_mechanics.card.*;
 import sid.roborally.game_mechanics.grid.*;
@@ -32,6 +33,7 @@ public class Game {
     private Grid grid;
     private CardDealer dealer;
     private ArrayList<ArchiveMarker> archiveMarkers;
+    private GameRunner grunner;
 
     /* State variables */
     private boolean gameOver;
@@ -56,6 +58,8 @@ public class Game {
         chosenProgramCards = new HashMap<>();
         gameOver = false;
     }
+
+    public void giveGameRunner(GameRunner gr) { grunner = gr; }
 
     /*
      * * * * * Editing game-elements.
@@ -85,11 +89,14 @@ public class Game {
     /**
      * <p>Runs a gameround.</p>
      */
-    private void runRound()
-    {
-        /* DEAL CARDS */
-        dealToPlayers();
-
+    public void runRound() {
+        for(Player p : players) {
+            if(chosenProgramCards.get(p) != null)
+                for(Card card : chosenProgramCards.get(p)) {
+                    useCardOnPlayerRobot(p, card);
+                    grunner.getGameScreen().guiSleep(1000);
+                }
+        }
         //TODO: GET PLAYER CHOSEN CARDS
 
         //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
@@ -126,8 +133,10 @@ public class Game {
      * <p>Deal a given amount of cards to each player </p>
      */
     public void dealToPlayers() {
-        for(Player p : players)
+        dealer.shuffleDeck();
+        for(Player p : players) {
             givenProgramCards.get(p).addAll(dealer.dealCards(DEAL_CARD_AMOUNT));
+        }
         dealer.resetDeck();
     }
 
@@ -207,7 +216,6 @@ public class Game {
      * @param card Movement-card
      */
     public void useCardOnPlayerRobot(Player p, Card card) {
-
         /* Checking for rotation */
         if(card instanceof TurnCard) {
             turnPlayerRobot(p, card.getAction());
@@ -299,5 +307,10 @@ public class Game {
     public boolean containsArchiveMarkerWithID(int i){
         for(ArchiveMarker am : archiveMarkers){ if(am.getID() == i) return true; }
         return false;
+    }
+
+    public void setPlayerChosenCards(Player p, ArrayList<Card> chosenCards) {
+        chosenProgramCards.get(p).clear();
+        chosenProgramCards.get(p).addAll(chosenCards);
     }
 }
