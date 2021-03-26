@@ -33,7 +33,7 @@ Libraries:
 
 ### Roborally (The Game)
 
-<p>Roborally's story is: After work-hours robots will move around on a factory floor and try not to die.<p/>
+<p>Roborally's story is: After work-hours robots will move around on a factory floor and try not to die.</p>
 <p>Each player has a robot/avatar that they can move with program cards dealt each round (to program the robot).
   The goal is to touch all checkpoints (flags) in the right order to win, and avoiding others winning at the same time.
   In addition to the challenge of planning movement, you will have constraints put on you when your health goes down, and
@@ -48,8 +48,9 @@ Libraries:
 The goal of the game is to reach the flag in order to win, and avoid any hazards on the map to not die.</p>
 
 * Currently you'll have to run the game in the IDE. If you run the sid.roborally.Main class you should be able to start the game.
-* When in the application, navigate the menu's by entering 1 in each menu. Then you should get a screen pop-up.
-* As of now you will only be able to move the player with keyboard-input (WASD or arrows). Exit game with Esc.
+* When in the application, click singleplayer, choose map in the drop down menu or press start. Then you should be able to start playing.
+* As of now you will only be able to move the player with keyboard-input (WASD or arrows or F to move forward 1 in the direction you're facing starting north.
+  Q to turn counter-clockwise, E to turn clockwise. See facing direction in console). Exit game with Esc or close the window.
 * In the next update you'll get to play the game more like it should be played.
 
 ***
@@ -73,3 +74,4 @@ Current maintainers:
  * Emil: Chief Map-Maker.
  * Daniel: Refactoring-enthusiast.
  * Markus: Game-Expert/Product-owner.
+ * Everyone: Process Responsible, Code Quality checker, Meeting Documenter (Changes every week).
