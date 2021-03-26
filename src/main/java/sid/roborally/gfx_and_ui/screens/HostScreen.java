@@ -29,16 +29,15 @@ public class HostScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Table table;
-    private int buttWidth,buttHeight;
-    private Button backButton;
+    private Button hostGameButton, backButton;
     private Skin skin;
 
     public HostScreen(final AppListener appListener) {
         this.appListener = appListener;
-        buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtHeight();
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
+
+        table.center();
 
         table.setFillParent(true);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(
@@ -52,26 +51,25 @@ public class HostScreen implements Screen {
 
         skin = appListener.getSkin();
 
+        hostGameButton = new TextButton("Start game", skin, "default");
 
         backButton = new TextButton("Back", skin, "default");
-        backButton.setSize(buttWidth, buttHeight);
-        backButton.setPosition(Gdx.graphics.getWidth() / 2f - 80f, Gdx.graphics.getHeight() / 2f);
-        backButton.setTransform(true);
+
+        table.add(hostGameButton);
+        table.row();
+        table.add(backButton);
 
         backButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Back-button pushed");
                 appListener.setScreen(new MultiplayerScreen(appListener));
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
-        stage.addActor(backButton);
 
     }
 
@@ -96,6 +94,7 @@ public class HostScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

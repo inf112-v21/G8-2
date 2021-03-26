@@ -35,20 +35,18 @@ public class GameSetupScreen implements Screen {
     private Button startGameButton, backButton;
     private SelectBox<String> mapBox;
     private SelectBox<Integer> playerBox;
-    private Table menuTable;
+    private Table buttonTable;
     private RRApplication rr_app;
     private ArrayList<Player> players;
-    private Table table;
     private Window window;
 
     public GameSetupScreen(AppListener appListener) {
         this.appListener = appListener;
         rr_app = appListener.getRRApp();
         this.players = new ArrayList<>();
-        this.table = new Table();
         skin = appListener.getSkin();
-        this.window = new Window("Demo map", skin);
-        this.window.setPosition(10,700);
+        this.window = new Window("Map Preview", skin);
+        this.window.setPosition(window.getWidth()-100,window.getHeight());
         this.window.setSize(300,300);
 
         cam = new OrthographicCamera();
@@ -71,19 +69,14 @@ public class GameSetupScreen implements Screen {
         playerBox.setSize(125, 35);
         playerBox.setItems(1, 2, 3, 4, 5, 6, 7, 8);
 
-        startGameButton = new TextButton("Singleplayer",skin,"default");
+        startGameButton = new TextButton("Start",skin,"default");
         startGameButton.setTransform(true);
 
         backButton = new TextButton("Back",skin,"default");
         backButton.setTransform(true);
 
-        menuTable = new Table();
-        addButtons(menuTable);
-
-        window.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/demomapimage.jpg"))));
-
-        //selectMapListener.
+        buttonTable = new Table();
+        addButtons(buttonTable);
 
 
         startGameButton.addListener(new InputListener(){
@@ -92,7 +85,6 @@ public class GameSetupScreen implements Screen {
                 addPlayers(players, playerBox.getSelected());
                 setUpGame(players);
                 appListener.setScreen(new GameScreen(appListener));
-                //todo: Kunne skifte map preview når man velger bane fra dropdown
 
 
             }
@@ -112,9 +104,7 @@ public class GameSetupScreen implements Screen {
             }
         });
 
-        stage.addActor(table);
-        stage.addActor(playerBox);
-        stage.addActor(menuTable);
+        stage.addActor(buttonTable);
         stage.addActor(window);
     }
 
@@ -140,15 +130,15 @@ public class GameSetupScreen implements Screen {
 
     /**
      * Adds all needed buttons to the screen
-     * @param menuTable table to hold all buttons and drop down menus
+     * @param table table to hold all buttons and drop down menus
      */
-    private void addButtons(Table menuTable) {
-        menuTable.add(mapBox);
-        menuTable.row();
-        menuTable.add(startGameButton);
-        menuTable.row();
-        menuTable.add(backButton);
-        menuTable.setFillParent(true);
+    private void addButtons(Table table) {
+        table.add(mapBox, playerBox);
+        table.row();
+        table.add(startGameButton);
+        table.row();
+        table.add(backButton);
+        table.setFillParent(true);
     }
 
     /**
@@ -175,22 +165,36 @@ public class GameSetupScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.8F, .5F, .1F,1);
+        Gdx.gl.glClearColor(.8F, .5F, .1F, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         cam.update();
         appListener.batch.setProjectionMatrix(cam.combined);
 
-        appListener.batch.begin();
-        appListener.batch.end();
+        if (mapBox.getSelected().equals(Map.DemoMap.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/application_skin/demomap.jpg"))));
+        }
+        if (mapBox.getSelected().equals(Map.TwoPlayerDemo.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/application_skin/2players2flags.jpg"))));
+        }
+        if (mapBox.getSelected().equals(Map.BigMap.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/application_skin/bigdemomap.jpg"))));
+        }
 
-        stage.act();
-        stage.draw();
-    }
+
+            appListener.batch.begin();
+            appListener.batch.end();
+
+            stage.act();
+            stage.draw();
+        }
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
