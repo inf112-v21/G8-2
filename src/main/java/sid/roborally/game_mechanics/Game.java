@@ -27,16 +27,14 @@ import java.util.List;
  */
 public class Game {
 
+    private GameRunner grunner;
+
     /* Game-elements */
     private ArrayList<Flag> flags;
     private HashSet<Player> players;
     private Grid grid;
     private CardDealer dealer;
     private ArrayList<ArchiveMarker> archiveMarkers;
-    private GameRunner grunner;
-
-    /* State variables */
-    private boolean gameOver;
 
     /* Phase-variables */
     private HashMap<Player, ArrayList<Card>>
@@ -45,25 +43,27 @@ public class Game {
     /* Constants */
     private static int DEAL_CARD_AMOUNT = 5;
 
+    /*
+     * * * * * Initial methods
+     */
+
     /**
      * <p>Game constructor.</p>
      */
-    public Game()
-    {
+    public Game() {
         players = new HashSet<>();
         dealer = new CardDealer();
         flags = new ArrayList<>();
         archiveMarkers = new ArrayList<>();
         givenProgramCards = new HashMap<>();
         chosenProgramCards = new HashMap<>();
-        gameOver = false;
     }
 
-    public void giveGameRunner(GameRunner gr) { grunner = gr; }
-
-    /*
-     * * * * * Editing game-elements.
+    /**
+     * <p>Assigns GameRunner to game.</p>
+     * @param gr GameRunner-instance
      */
+    public void giveGameRunner(GameRunner gr) { grunner = gr; }
 
     /**
      * <p>Give Game a new empty-grid</p>
@@ -73,15 +73,6 @@ public class Game {
     public void newGrid(int width, int height)
     { grid = new Grid(width, height); }
 
-    /**
-     * <p>Adds a GridObject-instance to the Game's Grid.</p>
-     * @param go GridObject
-     */
-    public void addGridObjectToGrid(GridObject go)
-    { grid.addGridObject(go);}
-
-    public ArrayList<Card> getPlayerGivenCards(Player p) { return givenProgramCards.get(p); }
-
     /*
      * * * * * Phase-methods
      */
@@ -90,13 +81,11 @@ public class Game {
      * <p>Runs a gameround.</p>
      */
     public void runRound() {
-        for(Player p : players) {
+        for(Player p : players)
             if(chosenProgramCards.get(p) != null)
-                for(Card card : chosenProgramCards.get(p)) {
+                for(Card card : chosenProgramCards.get(p))
                     useCardOnPlayerRobot(p, card);
-                    grunner.getGameScreen().guiSleep(1000);
-                }
-        }
+
         //TODO: GET PLAYER CHOSEN CARDS
 
         //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
@@ -117,6 +106,10 @@ public class Game {
         resetCardAssociations();
     }
 
+    /*
+     * * * * * Card methods
+     */
+
     /**
      * <p>Resets card-associations.</p>
      */
@@ -126,8 +119,6 @@ public class Game {
             chosenProgramCards.get(p).clear();
         }
     }
-
-    /* Dealing methods */
 
     /**
      * <p>Deal a given amount of cards to each player </p>
@@ -174,8 +165,7 @@ public class Game {
     /**
      * <p>Gets the local player instance (not AI or External)</p>
      */
-    public Player getLocal()
-    {
+    public Player getLocal() {
         for(Player p : players) if(p.isLocal()) return p;
         return null;
     }
@@ -278,6 +268,17 @@ public class Game {
         }
     }
 
+    /*
+     * * * * * Adding Board-elements
+     */
+
+    /**
+     * <p>Adds a GridObject-instance to the Game's Grid.</p>
+     * @param go GridObject
+     */
+    public void addGridObjectToGrid(GridObject go)
+    { grid.addGridObject(go);}
+
     /**
      * <p>Adds flag to game</p>
      * @param f Flag
@@ -285,13 +286,6 @@ public class Game {
     public void addFlag(Flag f) {
         addGridObjectToGrid(f);
         if(!containsFlagWithID(f.getId())) flags.add(f);
-    }
-
-    public ArrayList<Flag> getFlags() { return flags; }
-
-    public boolean containsFlagWithID(int i){
-        for(Flag f : flags){ if (f.getId() == i) return true; }
-        return false;
     }
 
     /**
@@ -303,15 +297,60 @@ public class Game {
         if(!containsArchiveMarkerWithID(am.getID())) archiveMarkers.add(am);
     }
 
-    public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
+    /*
+     * * * * * Checks
+     */
 
-    public boolean containsArchiveMarkerWithID(int i){
-        for(ArchiveMarker am : archiveMarkers){ if(am.getID() == i) return true; }
+    /**
+     * <p>Checks if game contains Flag with ID.</p>
+     * @param id ID
+     * @return Boolean
+     */
+    public boolean containsFlagWithID(int id){
+        for(Flag f : flags){ if (f.getId() == id) return true; }
         return false;
     }
 
+    /**
+     * <p>Checks if game contains ArchiveMarker with ID.</p>
+     * @param id ID
+     * @return Boolean
+     */
+    public boolean containsArchiveMarkerWithID(int id){
+        for(ArchiveMarker am : archiveMarkers){ if(am.getID() == id) return true; }
+        return false;
+    }
+
+    /*
+     * * * * * Getters and Setters.
+     */
+
+    /**
+     * <p>Sets cards chosen by Player p.</p>
+     * @param p Player
+     * @param chosenCards Chosen cards
+     */
     public void setPlayerChosenCards(Player p, ArrayList<Card> chosenCards) {
         chosenProgramCards.get(p).clear();
         chosenProgramCards.get(p).addAll(chosenCards);
     }
+
+    /**
+     * <p>Gets the cards given to Player p</p>
+     * @param p Player
+     * @return Cards
+     */
+    public ArrayList<Card> getPlayerGivenCards(Player p) { return givenProgramCards.get(p); }
+
+    /**
+     * <p>Gets archiveMarkers in game</p>
+     * @return ArchiveMarkers
+     */
+    public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
+
+    /**
+     * <p>Gets Flags in game</p>
+     * @return Flags
+     */
+    public ArrayList<Flag> getFlags() { return flags; }
 }
