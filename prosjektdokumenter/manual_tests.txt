@@ -21,11 +21,15 @@ Clicking any button should result in feedback as a light to notify of a click.
 
 - Exit: Pressing this, the X or ESC on your keyboard -> Exits the game and stops running the application.
 
-- Card selection(CANNOT PLAY WITH CARDS):
-        On the right, there are the list of cards given to the player.
-        On the bottom, you can select the cards to play in order using the drop down menus.
-
 - Player can Lose and Win: Follow the instructions in README to get to game. If you navigate with the keys into the hole
   or to the flags. You should either lose if you fall into the hole or win if you reach all the flags in order.
 
-- Player can select cards and move robot: CURRENTLY NOT WORKING, so not testable.
+- In game zoom:
+    Zoom using the mouse wheel or track pad.
+    Zooming out -> zooms out away from robot to see more of board.
+    Zoom in -> zooms in closer to robot
+
+- Player can select cards and move robot:
+    - Card selection - Select a register drop down menu on the bottom of the screen, click which card you would like
+      in this register -> should see the name of the card and it's priority.
+    - Play selected cards - NOT WORKING, so not testable.
