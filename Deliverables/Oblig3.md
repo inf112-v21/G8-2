@@ -64,7 +64,7 @@ Synes gjennomgang av hvordan GUI og Server fungerte bra og hjalp begge lagene kj
 ### **Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang. Er dere kommet forbi MVP? Forklar hvordan dere prioriterer ny funksjonalitet.**
 
 - Valgt å prioritere flerspiller kravet fra MvP, noe som tar litt lengre tid enn forventet. Informasjon kan sendes mellom klient og server, men må fortsatt implementeres i spillet.
-- Spillet kan nesten spilles i runder, kort kan bli valgt og utføres i sekvens, men kan bare gjøres 1 gang foreløpig (ikke bug, har bare ikke kommet så langt enda).<br/><br/> 
+- Spillet kan nesten spilles i runder, kort kan bli valgt og utføres i sekvens, men kan bare gjøres 1 gang foreløpig (ikke bug, har bare ikke kommet så langt enda).
 
 ### **Husk å skrive hvilke bugs som finnes i de kravene dere har utført (dersom det finnes bugs).**
 
