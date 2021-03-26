@@ -20,6 +20,7 @@ import sid.roborally.application_functionality.GameRunner;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.game_mechanics.card.Card;
+import sid.roborally.game_mechanics.card.StepCard;
 import sid.roborally.gfx_and_ui.AppListener;
 
 import java.util.ArrayList;
@@ -117,7 +118,11 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         System.out.println("PING");
         Array<String> givenCardStrings = new Array<>();
         for(Card card : givenCards)
-            givenCardStrings.add(card.getName() + ": Pri " + card.getPriority());
+            if(card instanceof StepCard)
+                givenCardStrings.add(((StepCard) card).getSteps() + " " + card.getName() + ": Pri " + card.getPriority());
+            else
+                givenCardStrings.add(card.getName() + ": Pri " + card.getPriority());
+
 
         Array<String> reg1array = new Array<>();
         reg1array.add(baseOptionReg1);
@@ -359,7 +364,10 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     public void updateWindowCards() {
         cardWindow.clear();
         for(Card card : givenCards) {
-            cardWindow.add(card.getName() + "; Priority: " + card.getPriority());
+            String steps = card instanceof StepCard //Possible step-information.
+                    ? ((StepCard) card).getSteps() + " "
+                    : "";
+            cardWindow.add(steps + card.getName() + "; Priority: " + card.getPriority());
             cardWindow.row();
         }
     }

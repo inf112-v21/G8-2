@@ -186,6 +186,7 @@ public class Game {
      */
     public void movePlayerRobot(Player p, Direction dir, int steps) {
         for(int i = 0; i < steps; i++) {
+            if(grunner != null) grunner.resetPlayerTexture(p);
             grid.moveRobot(p.getRobot(), dir);
             updatePlayerStatus(p);
         }
