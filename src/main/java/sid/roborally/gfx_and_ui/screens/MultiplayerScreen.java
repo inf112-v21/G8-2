@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
@@ -26,12 +27,11 @@ public class MultiplayerScreen implements Screen{
     private Stage stage;
     private Skin buttonSkin;
     private Button hostButton, joinButton, backButton;
-    private int buttWidth,buttHeight;
+    private Table buttonTable;
 
     public MultiplayerScreen(final AppListener appListener) {
         this.appListener = appListener;
-        buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtHeight();
+        this.buttonTable  = new Table();
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -42,60 +42,49 @@ public class MultiplayerScreen implements Screen{
         buttonSkin = appListener.getSkin();
 
         hostButton = new TextButton("Host game",buttonSkin,"default");
-        hostButton.setSize(buttWidth,buttHeight);
-        hostButton.setPosition(Gdx.graphics.getWidth()/2f-80, Gdx.graphics.getHeight()/2f);
-        hostButton.setTransform(true);
-
         joinButton = new TextButton("Join game",buttonSkin,"default");
-        joinButton.setSize(buttWidth,buttHeight);
-        joinButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-100f);
-        joinButton.setTransform(true);
-
         backButton = new TextButton("Go back",buttonSkin,"default");
-        backButton.setSize(buttWidth,buttHeight);
-        backButton.setPosition(Gdx.graphics.getWidth()/2f-80f, Gdx.graphics.getHeight()/2f-200f);
-        backButton.setTransform(true);
+
+        buttonTable.add(hostButton);
+        buttonTable.row();
+        buttonTable.add(joinButton);
+        buttonTable.row();
+        buttonTable.add(backButton);
+        buttonTable.center();
+        buttonTable.setFillParent(true);
 
         hostButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Host button pushed");
                 appListener.setScreen(new HostScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
         joinButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Join button pushed");
                 appListener.setScreen(new JoinScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
         backButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Back button pushed");
                 appListener.setScreen(new MainMenuScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Downtouch");
                 return true;
             }
         });
 
-        stage.addActor(hostButton);
-        stage.addActor(joinButton);
-        stage.addActor(backButton);
+        stage.addActor(buttonTable);
     }
 
     @Override
@@ -119,6 +108,7 @@ public class MultiplayerScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

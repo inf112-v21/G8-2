@@ -13,6 +13,9 @@ import java.net.UnknownHostException;
 
 /**
  * UNDER DEVELOPMENT. NOT ACTIVE CODE
+ *
+ * Client to allow players to connect to a server (hosted by a player) and play with each-other
+ * @Author Markus Edlin & Emil Eldøen
  */
 public class Client {
     private Socket serverSocket;
@@ -24,7 +27,6 @@ public class Client {
     private RRApplication rr_app;
     //private Player player;
     private int numPlayers;
-
     public Client() {
         listenSocket();
         listenForMap();
@@ -44,7 +46,7 @@ public class Client {
 
     private void setUpClientGame(){
         rr_app = new RRApplication();
-        rr_app.setUpLibgdxApplication();
+        //TODO:rr_app.setUpLibgdxApplication();
         gameRunner = rr_app.getGameRunner();
 
         System.out.println("Game runner: " + gameRunner + ", Map: "+map);
@@ -52,6 +54,9 @@ public class Client {
         //gameRunner.setUpGame(map, numPlayers);
     }
 
+    /**
+     * Recieves map from server
+     */
     private void listenForMap(){
         try{
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
@@ -62,6 +67,8 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    /* Remove this?
     private void listenForGameRunner(){
         try{
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
@@ -72,7 +79,8 @@ public class Client {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
+
     /**
      * Connects client to server with port num.
      * Fetches client outputStream and server inputStream.

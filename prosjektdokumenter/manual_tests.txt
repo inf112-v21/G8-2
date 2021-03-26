@@ -1,6 +1,35 @@
 THIS DOCUMENT TELLS YOU HOW TO TEST USER INTERFACES
+Clicking any button should result in feedback as a light to notify of a click.
+- Main Menu:
+    Contains:
+    Singleplayer
+    Multiplayer
+    Options
+    Exit
+
+- Singleplayer:
+    Choosing a map - Click on the map name, clicking another map in the drop down menu -> a change of map preview
+    Choosing number of players (including AI..not implemented) - Click on the number  -> Changes num of total players
+    Start game - press start to begin playing.
+    Back - Clicking back -> returns you to the main menu
+
+- Multiplayer: Choose to either host a game, join a game or go back.
+    - Host a game: WIP
+    - Join a game: WIP - Type in an IP address and a port number. Join button displays which IP and port you're trying to join.
+
+- Options: Select fullscreen mode -> fullscreen, windowed mode -> windowed mode, or go back -> Main Menu.
+
+- Exit: Pressing this, the X or ESC on your keyboard -> Exits the game and stops running the application.
 
 - Player can Lose and Win: Follow the instructions in README to get to game. If you navigate with the keys into the hole
-  or to the flag you should either lose or win.
+  or to the flags. You should either lose if you fall into the hole or win if you reach all the flags in order.
 
-- Player can selcet cards and move robot: CURRENTLY NOT WORKING, so not testable.
+- In game zoom:
+    Zoom using the mouse wheel or track pad.
+    Zooming out -> zooms out away from robot to see more of board.
+    Zoom in -> zooms in closer to robot
+
+- Player can select cards and move robot:
+    - Card selection - Select a register drop down menu on the bottom of the screen, click which card you would like
+      in this register -> should see the name of the card and it's priority.
+    - Play selected cards - NOT WORKING, so not testable.

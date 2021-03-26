@@ -4,15 +4,17 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import sid.roborally.application_functionality.reference.Map;
-import sid.roborally.application_functionality.reference.TextureReference;
 import sid.roborally.application_functionality.reference.TileIDReference;
 import sid.roborally.game_mechanics.ArchiveMarkerIDComparator;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.FlagIDComparator;
 import sid.roborally.game_mechanics.Game;
+import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardAction;
 import sid.roborally.game_mechanics.grid.*;
+import sid.roborally.gfx_and_ui.screens.GameScreen;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -41,6 +43,7 @@ public class GameRunner{
 
     /* The game that is run */
     private Game game;
+    private GameScreen gameScreen;
     private boolean inputActive;
 
     /**
@@ -48,9 +51,44 @@ public class GameRunner{
      */
     public GameRunner() {
         game = new Game();
+        game.giveGameRunner(this);
         inputActive = true;
         players = new HashSet<>();
     }
+
+    /*
+     * * * * * Game-running methods start
+     *
+     * These methods are used for running the game and communicating
+     * between GUI and Game
+     */
+
+    /**
+     * <p>This method sets up a round. It deals the cards two the players and
+     * then updates GUI with its given cards.</p>
+     */
+    public void setUpRound() {
+        game.dealToPlayers();
+        gameScreen.giveCards(game.getPlayerGivenCards(getLocal()));
+        gameScreen.updateGUI();
+    }
+
+    /**
+     * <p>This method runs the cards chosen. If the game isn't over, it will call setUpRound again.</p>
+     */
+    public void runRound() {
+        game.runRound();
+    }
+
+    /*
+     * * * * * Game-running methods end
+     */
+
+    public void giveGameScreen(GameScreen gs) { gameScreen = gs; }
+
+    public Player getLocal() { return game.getLocal(); }
+    public int getBoardWidth() { return board_layer.getWidth(); }
+    public int getBoardHeight() { return board_layer.getHeight(); }
 
     /**
      * <p>Sets the currentGameTexture</p>
@@ -75,7 +113,7 @@ public class GameRunner{
 
     public void setUpGame(Map map) {
         /* First tell game what texture it should use*/
-        setGameTexture(TextureReference.getMapPath(map));
+        setGameTexture(map.getMapPath());
 
         /* Adjust setup based on map chosen */
         adjustSetup();
@@ -138,16 +176,13 @@ public class GameRunner{
      * @param x x-position
      * @param y y-position
      */
-    private void addPossibleFlagToGrid(int x, int y)
-    {
+    private void addPossibleFlagToGrid(int x, int y) {
         /* Adding flag to Game */
-        if (flag_layer.getCell(x, y) != null) {
-            int flagIndex = flag_layer.getCell(x, y).getTile().getId();
-            Flag f = new Flag(x, y, TileIDReference.flagIndexToId(flagIndex));
-            game.addGridObjectToGrid(f); // adding to grid because grid is reset
-            //checking if game flags list already has that marker before adding it
-            if(!game.containsFlagWithID(f.getId())) game.addFlag(f);
-        }
+        if (flag_layer.getCell(x,y)==null) return;
+
+        int flagIndex = flag_layer.getCell(x, y).getTile().getId();
+        Flag f = new Flag(x, y, TileIDReference.flagIndexToId(flagIndex));
+        game.addFlag(f);
     }
 
     /**
@@ -156,14 +191,11 @@ public class GameRunner{
      * @param y y-position
      */
     private void addPossibleArchiveToGrid(int x, int y) {
+        if(archiveMarker_layer.getCell(x, y) == null) return;
         /* Adding marker to game */
-        if (archiveMarker_layer.getCell(x, y) != null) {
-            int index = archiveMarker_layer.getCell(x,y).getTile().getId();
-            ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
-            game.addGridObjectToGrid(am); // adding to grid because grid is reset
-            //checking if game archive list already has that flag before adding it
-            if(!game.containsArchiveMarkerWithID(am.getID())) game.addArchiveMarker(am); }
-
+        int index = archiveMarker_layer.getCell(x,y).getTile().getId();
+        ArchiveMarker am = new ArchiveMarker(x,y, TileIDReference.archiveIndexToID(index));
+        game.addArchiveMarker(am);
     }
 
     /*
@@ -174,7 +206,6 @@ public class GameRunner{
      * This method will run the game that has been created, and loop until it's over
      */
     public void runGame() {
-        //game.run();
     }
 
     /**
@@ -221,7 +252,7 @@ public class GameRunner{
      * Resets the local position of the given Player-instance in the player-layer.
      * @param p Player
      */
-    private void resetPlayerTexture(Player p)
+    public void resetPlayerTexture(Player p)
     {
         Position localPlayerPos = p.getRobot().getPosition();
         player_layer.setCell(localPlayerPos.getX(), localPlayerPos.getY(), null);
@@ -316,4 +347,11 @@ public class GameRunner{
         game.movePlayerRobot(game.getLocal(),game.getLocal().getRobot().getOrientation(),1);
     }
 
+    public void giveGameCards(ArrayList<Card> chosenCards) {
+        game.setPlayerChosenCards(getLocal(),chosenCards);
+    }
+
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
 }
