@@ -72,7 +72,7 @@ Når kart skal velges, kan en velge flere spillere enn det kartet tillater. Dett
 
 ### **Brukerhistorier og kravspesifikasjoner**
 
-Finnes i Deliverables/Spesifikasjoner.md
+Finnes i Deliverables/Spesifikasjoner_SiD_RoboRally.pdf
 
 # **Del 3: Produktleveranse og kodekvalitet**
 
