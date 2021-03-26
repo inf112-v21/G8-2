@@ -1,5 +1,6 @@
 package sid.roborally.game_mechanics;
 
+import sid.roborally.application_functionality.GameRunner;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.game_mechanics.card.*;
 import sid.roborally.game_mechanics.grid.*;
@@ -24,7 +25,9 @@ import java.util.List;
  *
  * @author Daniel Janols
  */
-public class Game implements Runnable {
+public class Game {
+
+    private GameRunner grunner;
 
     /* Game-elements */
     private ArrayList<Flag> flags;
@@ -33,9 +36,6 @@ public class Game implements Runnable {
     private CardDealer dealer;
     private ArrayList<ArchiveMarker> archiveMarkers;
 
-    /* State variables */
-    private boolean gameOver;
-
     /* Phase-variables */
     private HashMap<Player, ArrayList<Card>>
             givenProgramCards, chosenProgramCards; //Cards given and selected by players.
@@ -43,27 +43,27 @@ public class Game implements Runnable {
     /* Constants */
     private static int DEAL_CARD_AMOUNT = 5;
 
+    /*
+     * * * * * Initial methods
+     */
+
     /**
      * <p>Game constructor.</p>
      */
-    public Game()
-    {
+    public Game() {
         players = new HashSet<>();
         dealer = new CardDealer();
         flags = new ArrayList<>();
         archiveMarkers = new ArrayList<>();
         givenProgramCards = new HashMap<>();
         chosenProgramCards = new HashMap<>();
-        gameOver = false;
     }
 
-    /* Run game-thread */
-    @Override
-    public void run() { runGame(); }
-
-    /*
-     * * * * * Editing game-elements.
+    /**
+     * <p>Assigns GameRunner to game.</p>
+     * @param gr GameRunner-instance
      */
+    public void giveGameRunner(GameRunner gr) { grunner = gr; }
 
     /**
      * <p>Give Game a new empty-grid</p>
@@ -73,42 +73,18 @@ public class Game implements Runnable {
     public void newGrid(int width, int height)
     { grid = new Grid(width, height); }
 
-    /**
-     * <p>Adds a GridObject-instance to the Game's Grid.</p>
-     * @param go GridObject
-     */
-    public void addGridObjectToGrid(GridObject go)
-    { grid.addGridObject(go);}
-
     /*
      * * * * * Phase-methods
      */
 
     /**
-     * <p>Runs game's gameloop.</p>
-     */
-    private void runGame() {
-        while(!gameOver) {
-            runRound();
-            checkIfLocalHasWonOrLost();
-        }
-    }
-
-    /**
-     * <p>Checks if local host has won or lost, if any then game-over.</p>
-     */
-    private void checkIfLocalHasWonOrLost() {
-        if(getLocal().hasWon() || getLocal().isDead())
-            gameOver = true;
-    }
-
-    /**
      * <p>Runs a gameround.</p>
      */
-    private void runRound()
-    {
-        /* DEAL CARDS */
-        dealToPlayers();
+    public void runRound() {
+        for(Player p : players)
+            if(chosenProgramCards.get(p) != null)
+                for(Card card : chosenProgramCards.get(p))
+                    useCardOnPlayerRobot(p, card);
 
         //TODO: GET PLAYER CHOSEN CARDS
 
@@ -130,6 +106,10 @@ public class Game implements Runnable {
         resetCardAssociations();
     }
 
+    /*
+     * * * * * Card methods
+     */
+
     /**
      * <p>Resets card-associations.</p>
      */
@@ -140,36 +120,20 @@ public class Game implements Runnable {
         }
     }
 
-    /* Dealing methods */
-
     /**
      * <p>Deal a given amount of cards to each player </p>
      */
     public void dealToPlayers() {
-        for(Player p : players)
+        dealer.shuffleDeck();
+        for(Player p : players) {
             givenProgramCards.get(p).addAll(dealer.dealCards(DEAL_CARD_AMOUNT));
+        }
         dealer.resetDeck();
     }
 
     /*
      * * * * * Player Methods:
      */
-
-    /**
-     * <p>Returns the given program cards associated with the player.</p>
-     * @param p Player
-     * @return List of cards
-     */
-    public List<Card> getPlayerProgramCards(Player p)
-    { return givenProgramCards.get(p); }
-
-    /**
-     * <p>Tells game what sequence of cards should be associated with player.</p>
-     * @param p Player
-     * @param cardSequence Card sequence to be used.
-     */
-    public void setChosenProgramCards(Player p, ArrayList<Card> cardSequence)
-    { chosenProgramCards.get(p).addAll(cardSequence); }
 
     /**
      * <p>Adds a player to the Game's Player-set.</p>
@@ -199,17 +163,9 @@ public class Game implements Runnable {
     { players.remove(p); }
 
     /**
-     * <p>Gets the Game's Player-set.</p>
-     * @return players - Player set.
-     */
-    public HashSet<Player> getPlayers()
-    { return players; }
-
-    /**
      * <p>Gets the local player instance (not AI or External)</p>
      */
-    public Player getLocal()
-    {
+    public Player getLocal() {
         for(Player p : players) if(p.isLocal()) return p;
         return null;
     }
@@ -220,6 +176,7 @@ public class Game implements Runnable {
      */
     public void movePlayerRobot(Player p, Direction dir, int steps) {
         for(int i = 0; i < steps; i++) {
+            if(grunner != null) grunner.resetPlayerTexture(p);
             grid.moveRobot(p.getRobot(), dir);
             updatePlayerStatus(p);
         }
@@ -250,7 +207,6 @@ public class Game implements Runnable {
      * @param card Movement-card
      */
     public void useCardOnPlayerRobot(Player p, Card card) {
-
         /* Checking for rotation */
         if(card instanceof TurnCard) {
             turnPlayerRobot(p, card.getAction());
@@ -312,6 +268,17 @@ public class Game implements Runnable {
         }
     }
 
+    /*
+     * * * * * Adding Board-elements
+     */
+
+    /**
+     * <p>Adds a GridObject-instance to the Game's Grid.</p>
+     * @param go GridObject
+     */
+    public void addGridObjectToGrid(GridObject go)
+    { grid.addGridObject(go);}
+
     /**
      * <p>Adds flag to game</p>
      * @param f Flag
@@ -319,13 +286,6 @@ public class Game implements Runnable {
     public void addFlag(Flag f) {
         addGridObjectToGrid(f);
         if(!containsFlagWithID(f.getId())) flags.add(f);
-    }
-
-    public ArrayList<Flag> getFlags() { return flags; }
-
-    public boolean containsFlagWithID(int i){
-        for(Flag f : flags){ if (f.getId() == i) return true; }
-        return false;
     }
 
     /**
@@ -337,10 +297,60 @@ public class Game implements Runnable {
         if(!containsArchiveMarkerWithID(am.getID())) archiveMarkers.add(am);
     }
 
-    public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
+    /*
+     * * * * * Checks
+     */
 
-    public boolean containsArchiveMarkerWithID(int i){
-        for(ArchiveMarker am : archiveMarkers){ if(am.getID() == i) return true; }
+    /**
+     * <p>Checks if game contains Flag with ID.</p>
+     * @param id ID
+     * @return Boolean
+     */
+    public boolean containsFlagWithID(int id){
+        for(Flag f : flags){ if (f.getId() == id) return true; }
         return false;
     }
+
+    /**
+     * <p>Checks if game contains ArchiveMarker with ID.</p>
+     * @param id ID
+     * @return Boolean
+     */
+    public boolean containsArchiveMarkerWithID(int id){
+        for(ArchiveMarker am : archiveMarkers){ if(am.getID() == id) return true; }
+        return false;
+    }
+
+    /*
+     * * * * * Getters and Setters.
+     */
+
+    /**
+     * <p>Sets cards chosen by Player p.</p>
+     * @param p Player
+     * @param chosenCards Chosen cards
+     */
+    public void setPlayerChosenCards(Player p, ArrayList<Card> chosenCards) {
+        chosenProgramCards.get(p).clear();
+        chosenProgramCards.get(p).addAll(chosenCards);
+    }
+
+    /**
+     * <p>Gets the cards given to Player p</p>
+     * @param p Player
+     * @return Cards
+     */
+    public ArrayList<Card> getPlayerGivenCards(Player p) { return givenProgramCards.get(p); }
+
+    /**
+     * <p>Gets archiveMarkers in game</p>
+     * @return ArchiveMarkers
+     */
+    public ArrayList<ArchiveMarker> getArchiveMarkers() { return archiveMarkers; }
+
+    /**
+     * <p>Gets Flags in game</p>
+     * @return Flags
+     */
+    public ArrayList<Flag> getFlags() { return flags; }
 }
