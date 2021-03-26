@@ -29,13 +29,10 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private Button singleplayerButton,multiplayerButton,optionsButton,exitButton;
-    private int buttWidth,buttHeight;
     private Table table;
 
     public MainMenuScreen(final AppListener appListener) {
         this.appListener = appListener;
-        buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtHeight();
         this.table = new Table();
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -126,6 +123,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

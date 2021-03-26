@@ -30,14 +30,10 @@ public class OptionsScreen implements Screen {
     private Skin skin;
     private Button fullscreenButton, windowedButton, backButton;
     private Table table;
-    private int buttWidth,buttHeight;
 
     public OptionsScreen(final AppListener appListener) {
 
         this.appListener = appListener;
-
-        buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtWidth();
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
 
@@ -50,8 +46,6 @@ public class OptionsScreen implements Screen {
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
-        buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtHeight();
 
                 stage = new Stage(new ScreenViewport());
 

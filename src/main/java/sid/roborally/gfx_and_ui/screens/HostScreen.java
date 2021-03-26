@@ -29,14 +29,11 @@ public class HostScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Table table;
-    private int buttWidth,buttHeight;
     private Button hostGameButton, backButton;
     private Skin skin;
 
     public HostScreen(final AppListener appListener) {
         this.appListener = appListener;
-        buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtHeight();
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
 
@@ -97,6 +94,7 @@ public class HostScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

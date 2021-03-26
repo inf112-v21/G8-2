@@ -25,15 +25,12 @@ public class JoinScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private Button joinButton,backButton;
-    private int buttWidth,buttHeight;
     private Table table;
     TextField joinIP;
     TextField joinPort;
 
     public JoinScreen(final AppListener appListener) {
         this.appListener = appListener;
-        buttWidth = appListener.getButtWidth();
-        buttHeight = appListener.getButtWidth();
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
 
@@ -72,7 +69,7 @@ public class JoinScreen implements Screen {
         backButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new MainMenuScreen(appListener));
+                appListener.setScreen(new MultiplayerScreen(appListener));
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -117,6 +114,7 @@ public class JoinScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

@@ -35,20 +35,18 @@ public class GameSetupScreen implements Screen {
     private Button startGameButton, backButton;
     private SelectBox<String> mapBox;
     private SelectBox<Integer> playerBox;
-    private Table menuTable;
+    private Table buttonTable;
     private RRApplication rr_app;
     private ArrayList<Player> players;
-    private Table table;
     private Window window;
 
     public GameSetupScreen(AppListener appListener) {
         this.appListener = appListener;
         rr_app = appListener.getRRApp();
         this.players = new ArrayList<>();
-        this.table = new Table();
         skin = appListener.getSkin();
         this.window = new Window("Map Preview", skin);
-        this.window.setPosition(window.getWidth(),window.getHeight());
+        this.window.setPosition(window.getWidth()-100,window.getHeight());
         this.window.setSize(300,300);
 
         cam = new OrthographicCamera();
@@ -77,8 +75,8 @@ public class GameSetupScreen implements Screen {
         backButton = new TextButton("Back",skin,"default");
         backButton.setTransform(true);
 
-        menuTable = new Table();
-        addButtons(menuTable);
+        buttonTable = new Table();
+        addButtons(buttonTable);
 
 
         startGameButton.addListener(new InputListener(){
@@ -106,9 +104,7 @@ public class GameSetupScreen implements Screen {
             }
         });
 
-        stage.addActor(table);
-        stage.addActor(playerBox);
-        stage.addActor(menuTable);
+        stage.addActor(buttonTable);
         stage.addActor(window);
     }
 
@@ -134,15 +130,15 @@ public class GameSetupScreen implements Screen {
 
     /**
      * Adds all needed buttons to the screen
-     * @param menuTable table to hold all buttons and drop down menus
+     * @param table table to hold all buttons and drop down menus
      */
-    private void addButtons(Table menuTable) {
-        menuTable.add(mapBox);
-        menuTable.row();
-        menuTable.add(startGameButton);
-        menuTable.row();
-        menuTable.add(backButton);
-        menuTable.setFillParent(true);
+    private void addButtons(Table table) {
+        table.add(mapBox, playerBox);
+        table.row();
+        table.add(startGameButton);
+        table.row();
+        table.add(backButton);
+        table.setFillParent(true);
     }
 
     /**
@@ -198,7 +194,7 @@ public class GameSetupScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
