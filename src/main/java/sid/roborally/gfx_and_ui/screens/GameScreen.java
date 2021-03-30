@@ -461,7 +461,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
             rr_app.getPlayerLayer().setCell(
                     player.getRobot().getPosition().getX(), //Player x-position
                     player.getRobot().getPosition().getY(), //Player y-position
-                    player.getPlayerGraphic().getPlayerTexture()); //Player-state texture
+                    player.getPlayerGraphic().getPlayerTexture()
+                            .setRotation(grunner.getRobotRotation(player))); //Player-state texture
 
         /* Render the map */
         rend.render();

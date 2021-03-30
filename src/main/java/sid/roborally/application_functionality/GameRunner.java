@@ -101,6 +101,22 @@ public class GameRunner{
         adjustSetup();
     }
 
+    /**
+     * <p>Returns the orientation (1 pr 90 degrees, north-west-south-east [counter-clockwise])</p>
+     * @param p Player
+     * @return Orientation
+     */
+    public int getRobotRotation(Player p) {
+        Direction dir = p.getRobot().getOrientation();
+        switch (dir) {
+            case NORTH: return 0;
+            case EAST: return 3;
+            case SOUTH: return 2;
+            case WEST: return 1;
+        }
+        return 0;
+    }
+
 
     //=========Game-setup methods=======================================================
 
@@ -152,8 +168,8 @@ public class GameRunner{
             }
         }
         /* When everything is added some elements must also be sorted */
-        game.getFlags().sort(new IDComparator());
-        game.getArchiveMarkers().sort(new IDComparator());
+        game.getFlags().sort(new IDComparator<>());
+        game.getArchiveMarkers().sort(new IDComparator<>());
     }
 
     /**
