@@ -168,8 +168,8 @@ public class GameRunner{
             }
         }
         /* When everything is added some elements must also be sorted */
-        game.getFlags().sort(new IDComparator());
-        game.getArchiveMarkers().sort(new IDComparator());
+        game.getFlags().sort(new IDComparator<>());
+        game.getArchiveMarkers().sort(new IDComparator<>());
     }
 
     /**

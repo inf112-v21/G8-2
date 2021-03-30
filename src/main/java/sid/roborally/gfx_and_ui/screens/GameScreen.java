@@ -456,8 +456,6 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         Gdx.gl.glClearColor(0, 0, 0,1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        System.out.println("Rotation is: " + grunner.getRobotRotation(localPlayer));
-
         /* Sets cell-texture based on Player-texture-information */
         for(Player player : rr_app.getPlayers())
             rr_app.getPlayerLayer().setCell(
