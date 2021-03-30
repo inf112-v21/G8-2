@@ -16,8 +16,8 @@ import sid.roborally.gfx_and_ui.screens.MainMenuScreen;
 public class AppListener extends Game {
 
     private Skin skin;
-    public SpriteBatch batch;
-    public BitmapFont font;
+    private SpriteBatch batch;
+    private BitmapFont font;
     private RRApplication rr_app;
 
     private static final int BUTT_WIDTH = 150, BUTT_HEIGHT = 100;
@@ -29,6 +29,10 @@ public class AppListener extends Game {
         rr_app = new RRApplication(); //Our program
         this.setScreen(new MainMenuScreen(this));
     }
+
+    public SpriteBatch getBatch() { return batch; }
+
+    public BitmapFont getFont() { return font; }
 
     public Skin getSkin() { return skin; }
 

@@ -6,11 +6,8 @@ import sid.roborally.gfx_and_ui.AppListener;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
-import java.awt.*;
-
 /**
  * <h3>Main</h3>
- * @author Daniel Janols
  */
 public class Main {
 

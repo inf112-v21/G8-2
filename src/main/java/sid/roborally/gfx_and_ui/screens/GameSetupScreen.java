@@ -169,7 +169,6 @@ public class GameSetupScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         cam.update();
-        appListener.batch.setProjectionMatrix(cam.combined);
 
         if (mapBox.getSelected().equals(Map.DemoMap.name())) {
             window.setBackground(new TextureRegionDrawable(new TextureRegion(
@@ -183,11 +182,6 @@ public class GameSetupScreen implements Screen {
             window.setBackground(new TextureRegionDrawable(new TextureRegion(
                     new Texture("assets/application_skin/bigdemomap.jpg"))));
         }
-
-
-            appListener.batch.begin();
-            appListener.batch.end();
-
             stage.act();
             stage.draw();
         }

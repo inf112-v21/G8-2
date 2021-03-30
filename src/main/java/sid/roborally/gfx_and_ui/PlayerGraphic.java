@@ -31,7 +31,6 @@ public class PlayerGraphic {
     public PlayerGraphic(Player player, int textureIndex)
     {
         this.player = player;
-        /* Giving player its chosen textures */
         setSelectedStateGraphics(textureIndex);
     }
 
