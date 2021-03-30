@@ -8,7 +8,6 @@ import sid.roborally.game_mechanics.grid.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 
 /**
@@ -245,9 +244,9 @@ public class Game {
         }
 
         /* Check for possible addition of flag */
-        if(grid.positionHasFlag(p.getRobot().getPosition())) {
+        if(grid.positionHasFlag(playerPosition)) {
             Robot r = p.getRobot();
-            Flag flagAtPosition = grid.getFlagAtPosition(r.getPosition());
+            Flag flagAtPosition = grid.getFlagAtPosition(playerPosition);
             if (flagAtPosition != null) {
                 for (Flag flag : flags)
                     if (!r.getFlags().contains(flag))
@@ -280,7 +279,7 @@ public class Game {
      */
     public void addFlag(Flag f) {
         addGridObjectToGrid(f);
-        if(!containsFlagWithID(f.getId())) flags.add(f);
+        if(!containsFlagWithID(f.getID())) flags.add(f);
     }
 
     /**
@@ -301,7 +300,7 @@ public class Game {
      * @return Boolean
      */
     public boolean containsFlagWithID(int id){
-        for(Flag f : flags){ if (f.getId() == id) return true; }
+        for(Flag f : flags){ if (f.getID() == id) return true; }
         return false;
     }
 

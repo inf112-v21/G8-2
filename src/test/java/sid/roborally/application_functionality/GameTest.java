@@ -4,14 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.Game;
-import sid.roborally.game_mechanics.FlagIDComparator;
+import sid.roborally.game_mechanics.IDComparator;
 import sid.roborally.game_mechanics.grid.ArchiveMarker;
 import sid.roborally.game_mechanics.card.CardAction;
 import sid.roborally.game_mechanics.card.StepCard;
 import sid.roborally.game_mechanics.card.TurnCard;
 import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
-import sid.roborally.game_mechanics.grid.Robot;
 
 import java.util.ArrayList;
 
@@ -182,7 +181,7 @@ public class GameTest {
     }
 
     @Test
-    public void sortFlagsListBasedOffOfPriority() {
+    public void sortFlagsListBasedOffOfID() {
         ArrayList<Flag> expected = new ArrayList<>();
         
         Flag f1 = new Flag(0,0,1);
@@ -199,8 +198,30 @@ public class GameTest {
 
         assertNotEquals(expected,game.getFlags());
 
-        game.getFlags().sort(new FlagIDComparator());
+        game.getFlags().sort(new IDComparator());
         assertEquals(expected, game.getFlags());
+    }
+
+    @Test
+    public void sortArchiveMarkerListBasedOffOfID() {
+        ArrayList<ArchiveMarker> expected = new ArrayList<>();
+
+        ArchiveMarker a1 = new ArchiveMarker(0,0,1);
+        ArchiveMarker a2 = new ArchiveMarker(1,1,2);
+        ArchiveMarker a3 = new ArchiveMarker(2,2,3);
+
+        expected.add(a1);
+        expected.add(a2);
+        expected.add(a3);
+
+        game.addArchiveMarker(a3);
+        game.addArchiveMarker(a1);
+        game.addArchiveMarker(a2);
+
+        assertNotEquals(expected,game.getArchiveMarkers());
+
+        game.getArchiveMarkers().sort(new IDComparator());
+        assertEquals(expected, game.getArchiveMarkers());
     }
 
     @Test

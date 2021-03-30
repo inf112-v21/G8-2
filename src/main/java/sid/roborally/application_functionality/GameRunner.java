@@ -5,10 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.application_functionality.reference.TileIDReference;
-import sid.roborally.game_mechanics.ArchiveMarkerIDComparator;
-import sid.roborally.game_mechanics.Direction;
-import sid.roborally.game_mechanics.FlagIDComparator;
-import sid.roborally.game_mechanics.Game;
+import sid.roborally.game_mechanics.*;
 import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardAction;
 import sid.roborally.game_mechanics.grid.*;
@@ -155,8 +152,8 @@ public class GameRunner{
             }
         }
         /* When everything is added some elements must also be sorted */
-        game.getFlags().sort(new FlagIDComparator());
-        game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
+        game.getFlags().sort(new IDComparator());
+        game.getArchiveMarkers().sort(new IDComparator());
     }
 
     /**
