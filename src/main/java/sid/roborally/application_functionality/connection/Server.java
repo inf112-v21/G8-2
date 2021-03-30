@@ -51,7 +51,12 @@ public class Server {
     private String IPAddress;
 
     /**
-     * Sets up the server
+     * Server constructor, also sets up essentials for information players and clients need.
+     * Starts server
+     *  Accepts clients.
+     *      *  Gets input from client.
+     *      *  Gets client's outputStream. (Allows to write to client)
+     *      *  Continually fetches client input. (Allows to read info sent from clients)
      * @param map the map the game is played on
      */
     public Server(Map map) {
@@ -74,10 +79,6 @@ public class Server {
 
     /**
      *  Sets up server with port number.
-     *  Accepts clients.
-     *  Gets input from client.
-     *  Gets client's outputStream.
-     *  Continually fetches client input.
      *  Catches: if port not available and if I/O operations are invalid.
      */
     public void startServer(){
