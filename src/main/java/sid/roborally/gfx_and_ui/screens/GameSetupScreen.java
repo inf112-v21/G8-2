@@ -49,7 +49,7 @@ public class GameSetupScreen implements Screen {
         skin = appListener.getSkin();
         this.window = new Window("Map Preview", skin);
         this.window.setPosition(window.getWidth()-100,window.getHeight());
-        this.window.setSize(300,300);
+        this.window.setSize(500,500);
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -82,6 +82,15 @@ public class GameSetupScreen implements Screen {
         buttonTable.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture("assets/application_skin/GameBackground.png"))));
 
+        /*
+         * Input for selectbox
+         */
+        mapBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateMapPreview();
+            }
+        });
 
         startGameButton.addListener(new InputListener(){
             @Override
@@ -89,14 +98,14 @@ public class GameSetupScreen implements Screen {
                 addPlayers(players, playerBox.getSelected());
                 setUpGame(players);
                 appListener.setScreen(new GameScreen(appListener));
-
-
             }
+
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
+
         backButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -108,8 +117,29 @@ public class GameSetupScreen implements Screen {
             }
         });
 
+        updateMapPreview();
         stage.addActor(buttonTable);
         stage.addActor(window);
+
+    }
+
+    /**
+     * Sets preview image
+     */
+    private void updateMapPreview() {
+
+        if (mapBox.getSelected().equals(Map.DemoMap.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/maps/example.png"))));
+        }
+        if (mapBox.getSelected().equals(Map.TwoPlayerDemo.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/maps/2player2flag.png"))));
+        }
+        if (mapBox.getSelected().equals(Map.BigMap.name())) {
+            window.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/maps/bigMap.png"))));
+        }
     }
 
     /**
@@ -137,12 +167,12 @@ public class GameSetupScreen implements Screen {
      * @param table table to hold all buttons and drop down menus
      */
     private void addButtons(Table table) {
+        table.add(startGameButton).padBottom(20);
+        table.row();
         table.add(mapBox);
         table.add(playerBox).padLeft(20).width(playerBox.getWidth()-10);
         table.row();
-        table.add(startGameButton);
-        table.row();
-        table.add(backButton);
+        table.add(backButton).padTop(80);
         table.setFillParent(true);
     }
 
@@ -175,20 +205,8 @@ public class GameSetupScreen implements Screen {
 
         cam.update();
 
-        if (mapBox.getSelected().equals(Map.DemoMap.name())) {
-            window.setBackground(new TextureRegionDrawable(new TextureRegion(
-                    new Texture("assets/application_skin/demomap.jpg"))));
-        }
-        if (mapBox.getSelected().equals(Map.TwoPlayerDemo.name())) {
-            window.setBackground(new TextureRegionDrawable(new TextureRegion(
-                    new Texture("assets/application_skin/2players2flags.jpg"))));
-        }
-        if (mapBox.getSelected().equals(Map.BigMap.name())) {
-            window.setBackground(new TextureRegionDrawable(new TextureRegion(
-                    new Texture("assets/application_skin/bigdemomap.jpg"))));
-        }
-            stage.act();
-            stage.draw();
+        stage.act();
+        stage.draw();
         }
 
     @Override
