@@ -20,6 +20,9 @@ import java.util.HashMap;
  *
  * Allows a player to become a host and let others connect to them to play RoboRally
  * @author Markus Edlin & Emil Eldøen
+ *
+ * Quick note: refer to other players as client for better distinction between the player acting as host
+ * and players connecting to host
  */
 public class Server {
     /**
@@ -55,11 +58,17 @@ public class Server {
         this.map = map;
         deck = new CardDeck();
 
-        listenSocket();
-        listenForClients();
-        sendDeckToClients(deck);
-        sendMapToClients();
-        sendNumPlayersToClients();
+        startServer();
+        findPlayers();
+
+        //Send deck of cards to client
+        sendToPlayers(deck);
+
+        //Send map to client
+        sendToPlayers(map);
+
+        //Send number of players to client
+        sendToPlayers(4);
         //listenForCardSelection();
     }
 
@@ -71,7 +80,7 @@ public class Server {
      *  Continually fetches client input.
      *  Catches: if port not available and if I/O operations are invalid.
      */
-    public void listenSocket(){
+    public void startServer(){
         // Tries to create server
         try{
             server = new ServerSocket(4321);
@@ -90,7 +99,7 @@ public class Server {
      * of all client's input and output
      * as well as which player belongs to which client
      */
-    public void listenForClients(){
+    public void findPlayers(){
         while(waitingForPlayers){
             waitingForPlayers = false; //setting to false immediately to only run once for currently one client
             try{
@@ -106,7 +115,12 @@ public class Server {
             }
         }
     }
-    public void sendToClient(Object thing){
+
+    /**
+     * Sends different objects (things) the clients may need to run the game
+     * @param thing
+     */
+    public void sendToPlayers(Object thing){
         try{
             for(Socket c : clientsOut.keySet()){
                 serverToClientOutput = clientsOut.get(c);
@@ -118,49 +132,6 @@ public class Server {
             e.printStackTrace();
         }
 
-    }
-
-    /**
-     * @param deck the deck of all the cards used in a game
-     */
-    public void sendDeckToClients(CardDeck deck){
-        sendToClient(deck);
-        /*try {
-            for (Socket c : clientsOut.keySet()) {
-                serverToClientOutput = clientsOut.get(c);
-                serverToClientOutput.writeObject(deck);
-                serverToClientOutput.flush();
-            }
-        } catch (IOException e){
-            System.out.println("Cards could not be sent to client!");
-            e.printStackTrace();
-        }*/
-    }
-
-    public void sendMapToClients(){
-        sendToClient(map);
-        /*try{
-            for(Socket c : clientsOut.keySet()){
-                serverToClientOutput = clientsOut.get(c);
-                serverToClientOutput.writeObject(map);
-                serverToClientOutput.flush();
-            }
-        } catch (IOException e) {
-            System.out.println("Map couldn't be sent to client!");
-            e.printStackTrace();
-        }*/
-    }
-
-    private void sendNumPlayersToClients(){
-        try{
-            for(Socket c : clientsOut.keySet()){
-                serverToClientOutput = clientsOut.get(c);
-                serverToClientOutput.writeInt(clientsOut.size()+1); //+1 because server counts as one player
-                serverToClientOutput.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

@@ -103,8 +103,8 @@ public class Client {
 
     private void getNumPlayers() {
         try{
-            numPlayers = serverToClientInput.readInt();
-        } catch (IOException e) {
+            numPlayers = (int) serverToClientInput.readObject();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
