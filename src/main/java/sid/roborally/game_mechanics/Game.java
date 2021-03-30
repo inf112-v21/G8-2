@@ -42,9 +42,8 @@ public class Game {
     /* Constants */
     private static int DEAL_CARD_AMOUNT = 5;
 
-    /*
-     * * * * * Initial methods
-     */
+
+    //=========Set-up methods===========================================================
 
     /**
      * <p>Game constructor.</p>
@@ -72,9 +71,8 @@ public class Game {
     public void newGrid(int width, int height)
     { grid = new Grid(width, height); }
 
-    /*
-     * * * * * Phase-methods
-     */
+
+    //=========Phase methods============================================================
 
     /**
      * <p>Runs a gameround.</p>
@@ -105,9 +103,8 @@ public class Game {
         resetCardAssociations();
     }
 
-    /*
-     * * * * * Card methods
-     */
+
+    //=========Card methods=============================================================
 
     /**
      * <p>Resets card-associations.</p>
@@ -130,9 +127,8 @@ public class Game {
         dealer.resetDeck();
     }
 
-    /*
-     * * * * * Player Methods:
-     */
+
+    //=========Player methods===========================================================
 
     /**
      * <p>Adds a player to the Game's Player-set.</p>
@@ -267,9 +263,8 @@ public class Game {
         }
     }
 
-    /*
-     * * * * * Adding Board-elements
-     */
+
+    //=========Adding Board-elements====================================================
 
     /**
      * <p>Adds a GridObject-instance to the Game's Grid.</p>
@@ -296,9 +291,8 @@ public class Game {
         if(!containsArchiveMarkerWithID(am.getID())) archiveMarkers.add(am);
     }
 
-    /*
-     * * * * * Checks
-     */
+
+    //=========Checks===================================================================
 
     /**
      * <p>Checks if game contains Flag with ID.</p>
@@ -320,9 +314,8 @@ public class Game {
         return false;
     }
 
-    /*
-     * * * * * Getters and Setters.
-     */
+
+    //=========Getters and Setters======================================================
 
     /**
      * <p>Sets cards chosen by Player p.</p>

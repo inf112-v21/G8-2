@@ -97,10 +97,6 @@ public class MultiplayerScreen implements Screen{
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         cam.update();
-        appListener.batch.setProjectionMatrix(cam.combined);
-
-        appListener.batch.begin();
-        appListener.batch.end();
 
         stage.act();
         stage.draw();
