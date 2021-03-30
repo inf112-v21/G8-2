@@ -56,10 +56,8 @@ public class GameRunner{
         players = new HashSet<>();
     }
 
-    /*
-     * * * * * Game-running methods start
-     *
-     * These methods are used for running the game and communicating
+    //=========Game-running methods start===============================================
+    /* These methods are used for running the game and communicating
      * between GUI and Game
      */
 
@@ -80,9 +78,8 @@ public class GameRunner{
         game.runRound();
     }
 
-    /*
-     * * * * * Game-running methods end
-     */
+
+    //==========Getters and Setters=====================================================
 
     public void giveGameScreen(GameScreen gs) { gameScreen = gs; }
 
@@ -107,9 +104,8 @@ public class GameRunner{
         adjustSetup();
     }
 
-    /*
-     * * * * * Game-setup methods
-     */
+
+    //=========Game-setup methods=======================================================
 
     public void setUpGame(Map map) {
         /* First tell game what texture it should use*/
@@ -198,9 +194,7 @@ public class GameRunner{
         game.addArchiveMarker(am);
     }
 
-    /*
-     * * * * * Game-running
-     */
+    //=========Game-running=============================================================
 
     /**
      * This method will run the game that has been created, and loop until it's over
@@ -220,9 +214,8 @@ public class GameRunner{
             inputActive = false;
     }
 
-    /*
-     * * * * * Tiled methods:
-     */
+
+    //=========Tiled-related methods====================================================
 
     /**
      * <p>Returns local TiledMap instance</p>
@@ -236,9 +229,8 @@ public class GameRunner{
      */
     public TiledMapTileLayer getPlayerLayer() { return player_layer; }
 
-    /*
-     * * * * * Player-related-methods
-     */
+
+    //=========Player-related methods===================================================
 
     public void addPlayer(Player p) { players.add(p); }
 
@@ -258,9 +250,8 @@ public class GameRunner{
         player_layer.setCell(localPlayerPos.getX(), localPlayerPos.getY(), null);
     }
 
-    /*
-     * * * * * Keyboard-input:
-     */
+
+    //=========Keyboard-input===========================================================
 
     /**
      * <p>Tells the gamerunner that it has recieved a UP-input
@@ -349,9 +340,5 @@ public class GameRunner{
 
     public void giveGameCards(ArrayList<Card> chosenCards) {
         game.setPlayerChosenCards(getLocal(),chosenCards);
-    }
-
-    public GameScreen getGameScreen() {
-        return gameScreen;
     }
 }

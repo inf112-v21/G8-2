@@ -27,6 +27,7 @@ public class AppListener extends Game {
         skin = new Skin(Gdx.files.internal("assets/application_skin/rusty-robot-ui.json"));
         font = new BitmapFont();
         rr_app = new RRApplication(); //Our program
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
         this.setScreen(new MainMenuScreen(this));
     }
 

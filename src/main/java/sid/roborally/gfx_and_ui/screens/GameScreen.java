@@ -95,31 +95,33 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     private InputMultiplexer inputMultiplexer;
 
-    /*
-     * * * * VARIABLES END
-     */
+
+    //=======Main Methods===============================================================
 
     public GameScreen(final AppListener appListener) {
         this.appListener = appListener;
 
-        /* Initial set-up*/
         getInitialInfo();
 
-        /* Our game-control overlay */
         setUpUIStage();
 
-        /* Sets up visuals for board */
         setUpCamAndRenderer();
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+        startGame();
+    }
+
+    /**
+     * <p>Starts the game by setting up and running a round, then doing it repeatedly.</p>
+     */
+    private void startGame() {
         grunner.setUpRound();
         updateCardSelection();
     }
 
-    /*
-     * Backend-communication
-     */
+
+    //=========Backend-communication====================================================
 
     /**
      * <p>Gives GameRunner-instance currently chosen cards.</p>
@@ -155,9 +157,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         return true;
     }
 
-    /*
-     * * * * * HUD-updating
-     */
+
+    //=========HUD-updating=============================================================
 
     /**
      * <p>Called when GUI has to be updated after changing values</p>
@@ -240,9 +241,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         chosenCardsIndices.add(reg5index);
     }
 
-    /*
-     * * * * * Set-up
-     */
+
+    //=========Set-up===================================================================
 
     /**
      * <p>Gets all initial information. Called in constructor.</p>
@@ -272,7 +272,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         controlTable = new Table();
         controlTable.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture(CONTROL_TABLE_BACKGROUND))));
-        controlTable.setSize(uiView.getWorldWidth(), uiView.getWorldHeight()/5);
+        controlTable.setSize(uiView.getScreenWidth(), uiView.getScreenHeight()/5f);
         controlTable.left().top();
 
         /* Register-titles */
@@ -395,7 +395,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     }
 
     /**
-     * <p>Sets up cam and renderer to clean up constructor</p>
+     * <p>Sets up cam and renderer (The board-visuals)</p>
      */
     private void setUpCamAndRenderer() {
         /* Creates camera */
@@ -433,9 +433,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         uiStage.draw();
     }
 
-    /*
-     * * * * * Rendering
-     */
+
+    //=========Rendering================================================================
 
     @Override
     public void render(float delta) {
@@ -484,9 +483,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         updateRendWithCam();
     }
 
-    /*
-     * * * * * Interface-implementations
-     */
+
+    //=========Interface-implementations================================================
 
     @Override
     public void create() {
@@ -496,9 +494,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     public void render() {
     }
 
-    /*
-     * * * * * Input-listening
-     */
+
+    //=========Input-listening==========================================================
 
     @Override
     public boolean scrolled(int amount) {
@@ -577,9 +574,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         rend.setView(cam);
     }
 
-    /*
-     * * * * * Other interface-implementations
-     */
+
+    //=========Other interface-implementations==========================================
 
     @Override
     public void dispose() {
