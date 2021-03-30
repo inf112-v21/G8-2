@@ -42,7 +42,6 @@ public class Game {
     /* Constants */
     private static int DEAL_CARD_AMOUNT = 5;
 
-
     //=========Set-up methods===========================================================
 
     /**
@@ -71,7 +70,6 @@ public class Game {
     public void newGrid(int width, int height)
     { grid = new Grid(width, height); }
 
-
     //=========Phase methods============================================================
 
     /**
@@ -82,10 +80,6 @@ public class Game {
             if(chosenProgramCards.get(p) != null)
                 for(Card card : chosenProgramCards.get(p))
                     useCardOnPlayerRobot(p, card);
-
-        //TODO: GET PLAYER CHOSEN CARDS
-
-        //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
 
         //TODO: MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
 

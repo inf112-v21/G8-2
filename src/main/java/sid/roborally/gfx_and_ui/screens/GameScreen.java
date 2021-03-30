@@ -211,11 +211,14 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     private void updateCardSelection() {
 
         Array<String> givenCardStrings = new Array<>();
-        for(Card card : givenCards)
-            if(card instanceof StepCard)
-                givenCardStrings.add(((StepCard) card).getSteps() + " " + card.getName() + ": Pri " + card.getPriority());
+        int counter = 1;
+        for(Card card : givenCards) {
+            if (card instanceof StepCard)
+                givenCardStrings.add(counter + ": " + ((StepCard) card).getSteps() + " " + card.getName() + ": Pri " + card.getPriority());
             else
-                givenCardStrings.add(card.getName() + ": Pri " + card.getPriority());
+                givenCardStrings.add(counter + ": " + card.getName() + ": Pri " + card.getPriority());
+            counter++;
+        }
 
         Array<String> reg1array = new Array<>();
         reg1array.add(baseOptionReg1);
