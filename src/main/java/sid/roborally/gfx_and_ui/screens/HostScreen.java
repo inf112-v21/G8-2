@@ -41,7 +41,7 @@ public class HostScreen implements Screen {
 
         table.setFillParent(true);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/imnotbraveenough.png"))));
+                new Texture("assets/application_skin/GameBackground.jpg"))));
         stage.addActor(table);
 
         cam = new OrthographicCamera();

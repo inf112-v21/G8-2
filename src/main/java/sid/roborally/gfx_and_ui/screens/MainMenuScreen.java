@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
@@ -29,22 +26,33 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private Button singleplayerButton,multiplayerButton,optionsButton,exitButton;
-    private Table table;
+    private Table buttonTable, backgroundTable;
+    private Window titleWindow;
 
     public MainMenuScreen(final AppListener appListener) {
         this.appListener = appListener;
-        this.table = new Table();
+        this.buttonTable = new Table();
+        this.backgroundTable = new Table();
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
 
         stage = new Stage(new ScreenViewport());
 
-        table.setFillParent(true);
-        stage.addActor(table);
+        buttonTable.setFillParent(true);
+        backgroundTable.setFillParent(true);
+        stage.addActor(backgroundTable);
+        stage.addActor(buttonTable);
 
         Gdx.input.setInputProcessor(stage);
 
         skin = appListener.getSkin();
+
+        this.titleWindow = new Window("", skin);
+        titleWindow.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/RoboRally.png"))));
+
+        backgroundTable.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/GameBackground.jpg"))));
 
         singleplayerButton = new TextButton("Singleplayer",skin,"default");
         multiplayerButton = new TextButton("Multiplayer",skin,"default");
@@ -92,14 +100,14 @@ public class MainMenuScreen implements Screen {
                 return true;
             }
         });
-        table.add(singleplayerButton);
-        table.row();
-        table.add(multiplayerButton);
-        table.row();
-        table.add(optionsButton);
-        table.row();
-        table.add(exitButton);
-
+        backgroundTable.add(titleWindow).padBottom(700);
+        buttonTable.add(singleplayerButton);
+        buttonTable.row();
+        buttonTable.add(multiplayerButton);
+        buttonTable.row();
+        buttonTable.add(optionsButton);
+        buttonTable.row();
+        buttonTable.add(exitButton);
     }
 
     @Override

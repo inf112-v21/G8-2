@@ -40,7 +40,7 @@ public class OptionsScreen implements Screen {
         /* Theoden-background */
         table.setFillParent(true);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/youhavenopower.jpg"))));
+                new Texture("assets/application_skin/GameBackground.jpg"))));
         table.center();
 
 
