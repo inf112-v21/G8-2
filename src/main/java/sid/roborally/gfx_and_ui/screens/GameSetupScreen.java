@@ -78,7 +78,7 @@ public class GameSetupScreen implements Screen {
         buttonTable = new Table();
         addButtons(buttonTable);
         buttonTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/GameBackground.jpg"))));
+                new Texture("assets/application_skin/GameBackground.png"))));
 
 
         startGameButton.addListener(new InputListener(){

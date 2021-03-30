@@ -56,7 +56,7 @@ public class MultiplayerScreen implements Screen{
         buttonTable.center();
         buttonTable.setFillParent(true);
         buttonTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/GameBackground.jpg"))));
+                new Texture("assets/application_skin/GameBackground.png"))));
 
         hostButton.addListener(new InputListener(){
             @Override

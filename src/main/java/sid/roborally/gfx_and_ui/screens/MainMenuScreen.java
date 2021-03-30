@@ -52,7 +52,7 @@ public class MainMenuScreen implements Screen {
                 new Texture("assets/application_skin/RoboRally.png"))));
 
         backgroundTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/GameBackground.jpg"))));
+                new Texture("assets/application_skin/GameBackground.png"))));
 
         singleplayerButton = new TextButton("Singleplayer",skin,"default");
         multiplayerButton = new TextButton("Multiplayer",skin,"default");
