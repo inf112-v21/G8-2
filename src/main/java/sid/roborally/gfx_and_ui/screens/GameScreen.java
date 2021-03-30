@@ -113,13 +113,36 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     }
 
     /**
-     * <p>Starts the game by setting up and running a round, then doing it repeatedly.</p>
+     * <p>Starts the game by setting up and running a round.</p>
      */
     private void startGame() {
-        grunner.setUpRound();
-        updateCardSelection();
+        newRound();
     }
 
+    /**
+     * <p>Starts a new round (by dealing the cards).</p>
+     */
+    private void newRound() {
+        grunner.setUpRound();
+    }
+
+    /**
+     * <p>Checks if card selection is valid, and if so, runs.</p>
+     */
+    private void commitRobotProgram() {
+        if(!cardSelectionValid()) return;
+
+        chosenCards = new ArrayList<>();
+        chosenCards.add(givenCards.get(reg1index));
+        chosenCards.add(givenCards.get(reg2index));
+        chosenCards.add(givenCards.get(reg3index));
+        chosenCards.add(givenCards.get(reg4index));
+        chosenCards.add(givenCards.get(reg5index));
+        giveGamerunnerChosenCards();
+        grunner.runRound();
+
+        newRound();
+    }
 
     //=========Backend-communication====================================================
 
@@ -164,6 +187,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
      * <p>Called when GUI has to be updated after changing values</p>
      */
     public void updateGUI() {
+        updateCardSelection();
         updateWindowCards();
     }
 
@@ -353,16 +377,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                         updateCardSelection();
-                        if(cardSelectionValid()) {
-                            chosenCards = new ArrayList<>();
-                            chosenCards.add(givenCards.get(reg1index));
-                            chosenCards.add(givenCards.get(reg2index));
-                            chosenCards.add(givenCards.get(reg3index));
-                            chosenCards.add(givenCards.get(reg4index));
-                            chosenCards.add(givenCards.get(reg5index));
-                            giveGamerunnerChosenCards();
-                            grunner.runRound();
-                        }
+                        commitRobotProgram();
                     }
                     @Override
                     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
