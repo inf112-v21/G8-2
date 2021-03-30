@@ -57,7 +57,7 @@ public class HostScreen implements Screen {
 
         table.add(hostGameButton);
         table.row();
-        table.add(backButton);
+        table.add(backButton).width(hostGameButton.getWidth());
 
         backButton.addListener(new InputListener() {
             @Override

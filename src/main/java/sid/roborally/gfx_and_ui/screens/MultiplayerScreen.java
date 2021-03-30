@@ -48,11 +48,11 @@ public class MultiplayerScreen implements Screen{
         joinButton = new TextButton("Join game",buttonSkin,"default");
         backButton = new TextButton("Go back",buttonSkin,"default");
 
-        buttonTable.add(hostButton);
+        buttonTable.add(hostButton).width(joinButton.getWidth());
         buttonTable.row();
         buttonTable.add(joinButton);
         buttonTable.row();
-        buttonTable.add(backButton);
+        buttonTable.add(backButton).width(joinButton.getWidth());
         buttonTable.center();
         buttonTable.setFillParent(true);
         buttonTable.setBackground(new TextureRegionDrawable(new TextureRegion(

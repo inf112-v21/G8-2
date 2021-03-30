@@ -103,11 +103,11 @@ public class MainMenuScreen implements Screen {
         backgroundTable.add(titleWindow).padBottom(700);
         buttonTable.add(singleplayerButton);
         buttonTable.row();
-        buttonTable.add(multiplayerButton);
+        buttonTable.add(multiplayerButton).width(singleplayerButton.getWidth());
         buttonTable.row();
-        buttonTable.add(optionsButton);
+        buttonTable.add(optionsButton).width(singleplayerButton.getWidth());
         buttonTable.row();
-        buttonTable.add(exitButton);
+        buttonTable.add(exitButton).width(singleplayerButton.getWidth());
     }
 
     @Override

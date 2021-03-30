@@ -61,9 +61,9 @@ public class OptionsScreen implements Screen {
 
         table.add(fullscreenButton);
         table.row();
-        table.add(windowedButton);
+        table.add(windowedButton).width(fullscreenButton.getWidth());
         table.row();
-        table.add(backButton);
+        table.add(backButton).width(fullscreenButton.getWidth());
 
 
         fullscreenButton.addListener(new InputListener() {

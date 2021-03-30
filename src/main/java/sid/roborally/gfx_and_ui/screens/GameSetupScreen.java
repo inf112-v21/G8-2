@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -135,7 +137,8 @@ public class GameSetupScreen implements Screen {
      * @param table table to hold all buttons and drop down menus
      */
     private void addButtons(Table table) {
-        table.add(mapBox, playerBox);
+        table.add(mapBox);
+        table.add(playerBox).padLeft(20).width(playerBox.getWidth()-10);
         table.row();
         table.add(startGameButton);
         table.row();
