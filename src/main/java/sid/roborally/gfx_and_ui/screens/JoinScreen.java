@@ -68,7 +68,7 @@ public class JoinScreen implements Screen {
         table.row();
         table.add(backButton);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/GameBackground.jpg"))));
+                new Texture("assets/application_skin/GameBackground.png"))));
 
 
         backButton.addListener(new InputListener() {
