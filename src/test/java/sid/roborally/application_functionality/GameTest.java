@@ -198,7 +198,7 @@ public class GameTest {
 
         assertNotEquals(expected,game.getFlags());
 
-        game.getFlags().sort(new IDComparator());
+        game.getFlags().sort(new IDComparator<>());
         assertEquals(expected, game.getFlags());
     }
 
@@ -220,7 +220,7 @@ public class GameTest {
 
         assertNotEquals(expected,game.getArchiveMarkers());
 
-        game.getArchiveMarkers().sort(new IDComparator());
+        game.getArchiveMarkers().sort(new IDComparator<>());
         assertEquals(expected, game.getArchiveMarkers());
     }
 
@@ -234,6 +234,16 @@ public class GameTest {
     public void flagsListContainsFlagWithIDOneTest(){
         game.addFlag(new Flag(1,1,1));
         assertTrue(game.containsFlagWithID(1));
+    }
+    @Test
+    public void emptyFlagsListTest() {
+        game.addFlag(new Flag(1,1,1));
+        ArrayList<Flag> expected = new ArrayList<>();
+
+        assertNotEquals(expected,game.getFlags());
+
+        game.emptyFlags();
+        assertEquals(expected,game.getFlags());
     }
     @Test
     public void archiveListContainsArchiveWithIDOneTest() {

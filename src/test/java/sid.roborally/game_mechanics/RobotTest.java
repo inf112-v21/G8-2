@@ -2,6 +2,7 @@ package sid.roborally.game_mechanics;
 
 import org.junit.Test;
 import sid.roborally.game_mechanics.grid.ArchiveMarker;
+import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 
@@ -71,5 +72,13 @@ public class RobotTest {
         ArchiveMarker am = new ArchiveMarker(0,0,1);
         r.setArchiveMarker(am);
         assertEquals(am, r.getArchiveMarker());
+    }
+
+    @Test
+    public void RobotContainsFlagWithIDOneTest() {
+        assertFalse(r.containsFlagWithID(1));
+
+        r.addFlag(new Flag(1,1,1));
+        assertTrue(r.containsFlagWithID(1));
     }
 }

@@ -152,6 +152,7 @@ public class GameRunner{
      */
     private void adjustSetup() {
         game.newGrid(board_layer.getWidth(), board_layer.getHeight());
+        game.emptyFlags();
         giveMapDataToGrid();
     }
 

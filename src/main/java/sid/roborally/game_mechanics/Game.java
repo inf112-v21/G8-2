@@ -239,21 +239,21 @@ public class Game {
 
         /* Check for possible addition of flag */
         if(grid.positionHasFlag(playerPosition)) {
-            Robot r = p.getRobot();
             Flag flagAtPosition = grid.getFlagAtPosition(playerPosition);
-            if (flagAtPosition != null) {
-                for (Flag flag : flags)
-                    if (!r.getFlags().contains(flag))
-                        if (flagAtPosition.equals(flag))
-                            r.addFlag(flag);
-                        else break;
-            }
-        }
+            int flagID = flagAtPosition.getID();
+            HashSet<Flag> playerFlags = playerRobot.getFlags();
 
-        /* Check if all flags are found*/
-        if(p.getRobot().getFlags().containsAll(flags)){
-            p.getRobot().setHasWon(true);
-            p.playerWon();
+            if (flagID != 1){
+                if(!playerFlags.contains(flagAtPosition) && playerRobot.containsFlagWithID(flagID-1))
+                    playerRobot.addFlag(flagAtPosition);
+            }else
+                if (!playerFlags.contains(flagAtPosition)) playerRobot.addFlag(flagAtPosition);
+
+            /* Check if all flags are found*/
+            if(playerRobot.getFlags().containsAll(flags)){
+                playerRobot.setHasWon(true);
+                p.playerWon();
+            }
         }
     }
 
@@ -272,8 +272,12 @@ public class Game {
      * @param f Flag
      */
     public void addFlag(Flag f) {
-        addGridObjectToGrid(f);
-        if(!containsFlagWithID(f.getID())) flags.add(f);
+        if(!grid.positionHasFlag(f.getPosition())) addGridObjectToGrid(f);
+        if(!flags.contains(f)) flags.add(f);
+    }
+
+    public void emptyFlags(){
+        flags = new ArrayList<>();
     }
 
     /**
