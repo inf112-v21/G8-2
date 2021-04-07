@@ -5,6 +5,7 @@ import org.junit.Test;
 import sid.roborally.game_mechanics.Direction;
 import sid.roborally.game_mechanics.Game;
 import sid.roborally.game_mechanics.IDComparator;
+import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.grid.ArchiveMarker;
 import sid.roborally.game_mechanics.card.CardAction;
 import sid.roborally.game_mechanics.card.StepCard;
@@ -13,6 +14,7 @@ import sid.roborally.game_mechanics.grid.Flag;
 import sid.roborally.game_mechanics.grid.Position;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -56,6 +58,62 @@ public class GameTest {
         game.remove(p2);
 
         assertFalse(game.hasPlayer(p2));
+    }
+
+    /**
+     * <p>Checks that we can create a correct sequence
+     *    for what cards are played when and by who.</p>
+     */
+    @Test
+    public void canSortCardsByPriority() {
+        /* p1 cards */
+        ArrayList<Card> p1Cards = new ArrayList<>();
+        Card p1Card1 = new StepCard(100,3,CardAction.FORWARD);
+        p1Cards.add(p1Card1);
+        Card p1Card2 = new TurnCard(600,CardAction.TURN_LEFT);
+        p1Cards.add(p1Card2);
+
+        /* p2 cards */
+        ArrayList<Card> p2Cards = new ArrayList<>();
+        Card p2Card1 = new TurnCard(200,CardAction.FORWARD);
+        p2Cards.add(p2Card1);
+        Card p2Card2 = new TurnCard(150,CardAction.TURN_LEFT);
+        p2Cards.add(p2Card2);
+
+        /* p3 cards */
+        ArrayList<Card> p3Cards = new ArrayList<>();
+        Card p3Card1 = new TurnCard(105,CardAction.FORWARD);
+        p3Cards.add(p3Card1);
+        Card p3Card2 = new StepCard(5,2,CardAction.TURN_LEFT);
+        p3Cards.add(p3Card2);
+
+        game.addPlayer(p1);
+        game.addPlayer(p2);
+        game.addPlayer(p3);
+        game.setPlayerChosenCards(p1,p1Cards);
+        game.setPlayerChosenCards(p2,p2Cards);
+        game.setPlayerChosenCards(p3,p3Cards);
+
+        ArrayList<HashMap<Player,Card>> sortedPlayerCardPairs = game.getCardsByPriority();
+
+        /* Correct sequence is (what player it is is implicit)
+            p2Card1;
+            p2Card2;
+            p3Card1;
+            p1Card1;
+            p1Card2;
+            p3Card2;
+        */
+
+        assertFalse(sortedPlayerCardPairs.get(0).containsKey(p1));
+
+        /* Checking cards in order */
+        assertEquals(sortedPlayerCardPairs.remove(0).get(p2),p2Card1);
+        assertEquals(sortedPlayerCardPairs.remove(0).get(p2),p2Card2);
+        assertEquals(sortedPlayerCardPairs.remove(0).get(p3),p3Card1);
+        assertEquals(sortedPlayerCardPairs.remove(0).get(p1),p1Card1);
+        assertEquals(sortedPlayerCardPairs.remove(0).get(p1),p1Card2);
+        assertEquals(sortedPlayerCardPairs.remove(0).get(p3),p3Card2);
     }
 
     /**

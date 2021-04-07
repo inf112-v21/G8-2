@@ -121,6 +121,44 @@ public class Game {
         dealer.resetDeck();
     }
 
+    /**
+     * <p>Sorts the cards connected to the different players based on card-priority. <br>
+     *     if a higher priority card is behind a lower priority card, this card won't win until the
+     *     lower priority card has been added return-list</p>
+     * @return Associations between players and cards
+     */
+    public ArrayList<HashMap<Player,Card>> getCardsByPriority() {
+        ArrayList<HashMap<Player,Card>> retList = new ArrayList<>();
+        // ! This method depletes chosen-program-cards.
+        boolean allEmpty = false;
+        while (!allEmpty) {
+            /* Find highest ranked card of the players' next cards */
+            Player playerWithHighest = null; //Placeholder
+            for(Player p : players) {
+                if(playerWithHighest == null) {
+                    if (!chosenProgramCards.get(p).isEmpty()) playerWithHighest = p;
+                    continue;
+                }
+
+                if(!chosenProgramCards.get(p).isEmpty())
+                    if(chosenProgramCards.get(p).get(0).getPriority()
+                            > chosenProgramCards.get(playerWithHighest).get(0).getPriority())
+                        playerWithHighest = p;
+            }
+
+            /* Deciding next player-card pairing */
+            HashMap<Player,Card> nextPair = new HashMap<>();
+            nextPair.put(playerWithHighest,chosenProgramCards.get(playerWithHighest).remove(0));
+            retList.add(nextPair);
+
+            /* Checking if we can stop */
+            allEmpty = true;
+            for(Player p : players)
+                if(!chosenProgramCards.get(p).isEmpty()) allEmpty = false;
+        }
+        return retList;
+    }
+
 
     //=========Player methods===========================================================
 
