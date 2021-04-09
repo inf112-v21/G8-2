@@ -46,9 +46,10 @@ public class Server {
     private CardDeck deck;
 
     /**
-     * The IP address to be printed on server setup page
+     * The IP address and port to be printed on server setup page
      */
     private String IPAddress;
+    private int port = 4321;
 
     /**
      * Server constructor, also sets up essentials for information players and clients need.
@@ -84,7 +85,7 @@ public class Server {
     public void startServer(){
         // Tries to create server
         try{
-            server = new ServerSocket(4321);
+            server = new ServerSocket(port);
             //Fetches local IP adress
             IPAddress = InetAddress.getLocalHost().getHostAddress();
             System.out.println(IPAddress);
@@ -154,5 +155,18 @@ public class Server {
     }
     public String getAddress(){
         return IPAddress;
+    }
+
+    /**
+     * Ends the server and closes the connection
+     */
+    public void closeServer(){
+        try{
+            server.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Server couldn't be closed");
+        }
+
     }
 }
