@@ -1,12 +1,14 @@
 package sid.roborally.game_mechanics.card;
 
+import java.io.Serializable;
+
 /**
  * <h3>Card</h3>
  * <p>General-card class. Different cards inherits from this.</p>
  *
  * @author Emil ELdooen
  */
-public abstract class Card {
+public abstract class Card implements Serializable {
 
     private int priority; //Determines card-playing order.
     private CardAction action;
