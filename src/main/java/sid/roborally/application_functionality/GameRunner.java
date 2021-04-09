@@ -5,13 +5,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.application_functionality.reference.TileIDReference;
-import sid.roborally.game_mechanics.ArchiveMarkerIDComparator;
-import sid.roborally.game_mechanics.Direction;
-import sid.roborally.game_mechanics.FlagIDComparator;
-import sid.roborally.game_mechanics.Game;
+import sid.roborally.game_mechanics.*;
+import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardAction;
 import sid.roborally.game_mechanics.grid.*;
+import sid.roborally.gfx_and_ui.screens.GameScreen;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -40,6 +40,7 @@ public class GameRunner{
 
     /* The game that is run */
     private Game game;
+    private GameScreen gameScreen;
     private boolean inputActive;
 
     /**
@@ -47,9 +48,41 @@ public class GameRunner{
      */
     public GameRunner() {
         game = new Game();
+        game.giveGameRunner(this);
         inputActive = true;
         players = new HashSet<>();
     }
+
+    //=========Game-running methods start===============================================
+    /* These methods are used for running the game and communicating
+     * between GUI and Game
+     */
+
+    /**
+     * <p>This method sets up a round. It deals the cards two the players and
+     * then updates GUI with its given cards.</p>
+     */
+    public void setUpRound() {
+        game.dealToPlayers();
+        gameScreen.giveCards(game.getPlayerGivenCards(getLocal()));
+        gameScreen.updateGUI();
+    }
+
+    /**
+     * <p>This method runs the cards chosen. If the game isn't over, it will call setUpRound again.</p>
+     */
+    public void runRound() {
+        game.runRound();
+    }
+
+
+    //==========Getters and Setters=====================================================
+
+    public void giveGameScreen(GameScreen gs) { gameScreen = gs; }
+
+    public Player getLocal() { return game.getLocal(); }
+    public int getBoardWidth() { return board_layer.getWidth(); }
+    public int getBoardHeight() { return board_layer.getHeight(); }
 
     /**
      * <p>Sets the currentGameTexture</p>
@@ -68,9 +101,24 @@ public class GameRunner{
         adjustSetup();
     }
 
-    /*
-     * * * * * Game-setup methods
+    /**
+     * <p>Returns the orientation (1 pr 90 degrees, north-west-south-east [counter-clockwise])</p>
+     * @param p Player
+     * @return Orientation
      */
+    public int getRobotRotation(Player p) {
+        Direction dir = p.getRobot().getOrientation();
+        switch (dir) {
+            case NORTH: return 0;
+            case EAST: return 3;
+            case SOUTH: return 2;
+            case WEST: return 1;
+        }
+        return 0;
+    }
+
+
+    //=========Game-setup methods=======================================================
 
     public void setUpGame(Map map) {
         /* First tell game what texture it should use*/
@@ -104,6 +152,7 @@ public class GameRunner{
      */
     private void adjustSetup() {
         game.newGrid(board_layer.getWidth(), board_layer.getHeight());
+        game.emptyFlags();
         giveMapDataToGrid();
     }
 
@@ -120,8 +169,8 @@ public class GameRunner{
             }
         }
         /* When everything is added some elements must also be sorted */
-        game.getFlags().sort(new FlagIDComparator());
-        game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
+        game.getFlags().sort(new IDComparator<>());
+        game.getArchiveMarkers().sort(new IDComparator<>());
     }
 
     /**
@@ -159,9 +208,7 @@ public class GameRunner{
         game.addArchiveMarker(am);
     }
 
-    /*
-     * * * * * Game-running
-     */
+    //=========Game-running=============================================================
 
     /**
      * This method will run the game that has been created, and loop until it's over
@@ -181,9 +228,8 @@ public class GameRunner{
             inputActive = false;
     }
 
-    /*
-     * * * * * Tiled methods:
-     */
+
+    //=========Tiled-related methods====================================================
 
     /**
      * <p>Returns local TiledMap instance</p>
@@ -197,9 +243,8 @@ public class GameRunner{
      */
     public TiledMapTileLayer getPlayerLayer() { return player_layer; }
 
-    /*
-     * * * * * Player-related-methods
-     */
+
+    //=========Player-related methods===================================================
 
     public void addPlayer(Player p) { players.add(p); }
 
@@ -213,15 +258,14 @@ public class GameRunner{
      * Resets the local position of the given Player-instance in the player-layer.
      * @param p Player
      */
-    private void resetPlayerTexture(Player p)
+    public void resetPlayerTexture(Player p)
     {
         Position localPlayerPos = p.getRobot().getPosition();
         player_layer.setCell(localPlayerPos.getX(), localPlayerPos.getY(), null);
     }
 
-    /*
-     * * * * * Keyboard-input:
-     */
+
+    //=========Keyboard-input===========================================================
 
     /**
      * <p>Tells the gamerunner that it has recieved a UP-input
@@ -308,4 +352,7 @@ public class GameRunner{
         game.movePlayerRobot(game.getLocal(),game.getLocal().getRobot().getOrientation(),1);
     }
 
+    public void giveGameCards(ArrayList<Card> chosenCards) {
+        game.setPlayerChosenCards(getLocal(),chosenCards);
+    }
 }

@@ -11,7 +11,8 @@ import sid.roborally.game_mechanics.card.CardAction;
 public enum Map {
     /* The different maps */
     DemoMap,
-    TwoPlayerDemo;
+    TwoPlayerDemo,
+    BigMap;
 
     private static final String MAP_FOLDER_PATH = "assets/maps/";
 
@@ -26,6 +27,8 @@ public enum Map {
                 return MAP_FOLDER_PATH + "example.tmx";
             case TwoPlayerDemo:
                 return MAP_FOLDER_PATH + "2player2flag.tmx";
+            case BigMap:
+                return MAP_FOLDER_PATH + "bigMap.tmx";
             default: return "";
         }
     }

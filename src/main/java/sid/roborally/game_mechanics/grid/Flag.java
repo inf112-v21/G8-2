@@ -16,7 +16,7 @@ public class Flag extends GridObject {
         this.id = id;
     }
 
-    public int getId() {
+    public int getID() {
         return this.id;
     }
 

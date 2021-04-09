@@ -18,14 +18,14 @@ public class FlagTest {
 
     @Test
     public void FlagCreationGetIDTest() {
-        int result = f.getId();
+        int result = f.getID();
         assertEquals(1, result);
     }
 
     @Test
     public void SetFlagIdToTwoShouldEqualTwo() {
         f.setId(2);
-        int result = f.getId();
+        int result = f.getID();
         assertEquals(2, result);
     }
 
