@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import sid.roborally.application_functionality.connection.Client;
+import sid.roborally.application_functionality.connection.Server;
 import sid.roborally.gfx_and_ui.AppListener;
 
 /**
@@ -29,8 +31,11 @@ public class JoinScreen implements Screen {
     private Skin skin;
     private Button joinButton,backButton;
     private Table table;
-    TextField joinIP;
-    TextField joinPort;
+    private Label portLabel, IPLabel, errorLabel;
+    private TextField joinIP;
+    private TextField joinPort;
+    private TextField.TextFieldStyle messageStyle;
+    private Client client;
 
     public JoinScreen(final AppListener appListener) {
         this.appListener = appListener;
@@ -48,19 +53,24 @@ public class JoinScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         skin = appListener.getSkin();
+        messageStyle = new TextField.TextFieldStyle();
 
         joinIP = new TextField("", skin);
-        joinIP.setColor(Color.RED);
-        joinIP.setMessageText("Enter IP");
-
         joinPort = new TextField("", skin);
-        joinPort.setColor(Color.RED);
-        joinPort.setMessageText("Enter Port");
+        portLabel = new Label("Enter port", skin);
+        IPLabel = new Label("Enter IP", skin);
+        errorLabel = new Label("", skin);
 
         backButton = new TextButton("Back", skin, "default");
         joinButton = new TextButton("Join game", skin,"default");
 
-        table.add(joinIP);
+        table.add(errorLabel);
+        table.row();
+        table.add(IPLabel);
+        table.row();
+        table.add(joinIP).padBottom(30);
+        table.row();
+        table.add(portLabel);
         table.row();
         table.add(joinPort);
         table.row();
@@ -87,6 +97,14 @@ public class JoinScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 //appListener.setScreen(new MainMenuScreen(appListener));
+                errorLabel.setText("");
+                try {
+                    client = new Client(joinIP.getText(), Integer.parseInt(joinPort.getText()));
+                    System.out.println("client is here");
+                    client.getDeck();
+                } catch (NumberFormatException e) {
+                    errorLabel.setText("IP or port is invalid");
+                }
                 System.out.println("Attempting to join: "+ joinIP.getText() + " on port " + joinPort.getText());
             }
             @Override

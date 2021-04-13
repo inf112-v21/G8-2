@@ -44,6 +44,7 @@ public class Server {
     private HashMap<Socket, Player> clientpLayers = new HashMap<>();
     private HashMap<Socket, ArrayList<Card>>playerSelect = new HashMap<>(); // Change key back to Player after testing
     private CardDeck deck;
+    private String errorMessage;
 
     /**
      * The IP address and port to be printed on server setup page
@@ -58,23 +59,21 @@ public class Server {
      *      *  Gets input from client.
      *      *  Gets client's outputStream. (Allows to write to client)
      *      *  Continually fetches client input. (Allows to read info sent from clients)
-     * @param map the map the game is played on
      */
-    public Server(Map map) {
-        this.map = map;
-        deck = new CardDeck();
+    public Server(int port) {
 
+        this.port = port;
         startServer();
-        findPlayers();
+        //findPlayers();
 
         //Send deck of cards to client
-        sendToPlayers(deck);
+        //sendToPlayers(deck);
 
         //Send map to client
-        sendToPlayers(map);
+        //sendToPlayers(map);
 
         //Send number of players to client
-        sendToPlayers(4);
+        //sendToPlayers(4);
         //listenForCardSelection();
     }
 
@@ -86,13 +85,17 @@ public class Server {
         // Tries to create server
         try{
             server = new ServerSocket(port);
-            //Fetches local IP adress
+            //Fetches local IP address
             IPAddress = InetAddress.getLocalHost().getHostAddress();
             System.out.println(IPAddress);
+            this.errorMessage = "";
         } catch (IOException e) {
-            System.out.println("Could not listen on port 4321");
-            System.exit(-1);
+            this.errorMessage = "Could not listen on port " + port;
         }
+    }
+
+    public String getErrorMessage() {
+        return this.errorMessage;
     }
 
     /**
