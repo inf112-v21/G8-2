@@ -41,7 +41,7 @@ public class PlayerGraphic {
     private void setSelectedStateGraphics(int index)
     {
         TextureRegion tex = new TextureRegion(
-                new Texture(PlayerTexture.Player1.getTexturePath()));
+                new Texture(PlayerTexture.Player3.getTexturePath()));
 
         //[][0]:Alive; [][1]:Dead; [][2]:Won;
         TextureRegion[][] playerTextures = tex.split(300,300);
