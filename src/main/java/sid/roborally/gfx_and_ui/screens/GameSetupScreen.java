@@ -92,20 +92,6 @@ public class GameSetupScreen implements Screen {
             }
         });
 
-        startGameButton.addListener(new InputListener(){
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                addPlayers(players, playerBox.getSelected());
-                setUpGame(players);
-                appListener.setScreen(new GameScreen(appListener));
-            }
-
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-
         backButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -142,15 +128,24 @@ public class GameSetupScreen implements Screen {
         }
     }
 
-    /**
-     * Starts the game with the selected map, and the selected amount of players
-     * @param players a list of players
-     */
-    private void setUpGame(ArrayList<Player> players) {
-        for (Player player : players)
-            rr_app.getGameRunner().addPlayer(player);
-        rr_app.getGameRunner().setUpGame(Map.values()[mapBox.getSelectedIndex()]);
-        rr_app.startGame();
+    public SelectBox<String> getMapBox() {
+        return mapBox;
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public SelectBox<Integer> getPlayerBox() {
+        return playerBox;
+    }
+
+    public RRApplication getRR_app() {
+        return rr_app;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     /**
@@ -176,21 +171,8 @@ public class GameSetupScreen implements Screen {
         table.setFillParent(true);
     }
 
-    /**
-     * Adds the amount of players you want to have into an ArrayList
-     * @param players ArrayList to hold players
-     * @param amount amount of players
-     */
-    private void addPlayers(ArrayList<Player> players, int amount) {
-        Player localPlayer = new Player(1, true);
-        localPlayer.setLocal();
-        players.add(localPlayer);
-        if (amount > 1) {
-            for (int i = 2; i <= amount; i++) {
-                Player newPlayer = new Player(i, true);
-                players.add(newPlayer);
-            }
-        }
+    public Button getStartGameButton() {
+        return startGameButton;
     }
 
     @Override
