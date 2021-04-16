@@ -63,7 +63,7 @@ public class MainMenuScreen implements Screen {
         singleplayerButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new GameSetupScreen(appListener));
+                appListener.setScreen(new SingleplayerSetupScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

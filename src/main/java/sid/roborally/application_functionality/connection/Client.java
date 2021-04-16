@@ -30,6 +30,7 @@ public class Client {
     private ObjectInputStream serverToClientInput;
     private String hostAddress;
     private int numPlayers;
+    private int port;
 
     /**
      * Variables used to create a local instance of the game
@@ -39,13 +40,14 @@ public class Client {
     private RRApplication rr_app;
     private CardDeck deck;
 
-    public Client(String IPAddress) {
-        hostAddress = IPAddress;
+    public Client(String IPAddress, int port) {
+        this.port = port;
+        this.hostAddress = IPAddress;
         connectToServer();
-        getDeck(); //Needed to find cards from server
-        getMap();
-        getNumPlayers();
-        setUpClientGame();
+        //getDeck(); //Needed to find cards from server
+        //getMap();
+        //getNumPlayers();
+        //setUpClientGame();
         //sendCardSelectionToServer( cardsSelection );
     }
 
@@ -59,24 +61,23 @@ public class Client {
         //Create socket connection
         try{
             System.out.println("Connecting...");//feedback to user
-            serverSocket = new Socket(hostAddress, 4321);
+            serverSocket = new Socket(hostAddress, port);
             serverToClientInput = new ObjectInputStream(serverSocket.getInputStream());
             clientToServerOutput = new ObjectOutputStream(serverSocket.getOutputStream());
         } catch (UnknownHostException e) {
-            System.out.println("Unknown host: kq6py");
-            System.exit(1);
+            System.out.println("Unknown host: " + hostAddress + ":" + port);
         } catch  (IOException e) {
             System.out.println("No I/O");
-            System.exit(1);
         }
     }
 
     /**
      * Receives the deck of all cards used in the game
      */
-    private void getDeck(){
+    public void getDeck(){
         try{
             deck = (CardDeck) serverToClientInput.readObject();
+            System.out.println(deck.getNextCard().getName());
         } catch (IOException e) {
             System.out.println("No card output from server!");
             e.printStackTrace();
@@ -89,9 +90,10 @@ public class Client {
     /**
      * Receives map from server
      */
-    private void getMap(){
+    public void getMap(){
         try{
             map = (Map) serverToClientInput.readObject();
+            System.out.println(map.getMapPath());
         } catch (IOException e) {
             System.out.println("No map output from server!");
             e.printStackTrace();

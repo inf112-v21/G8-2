@@ -5,16 +5,18 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import sid.roborally.application_functionality.connection.Server;
+import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.gfx_and_ui.AppListener;
 
 /**
@@ -29,13 +31,22 @@ public class HostScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Table table;
-    private Button hostGameButton, backButton;
+    private Button hostGameButton, backButton, closeServerButton, lookForPlayersButton;
     private Skin skin;
+    protected Server server;
+    private TextField IPField, portField;
+    private Label errorLabel, portLabel, IPLabel;
+    BitmapFont font;
+    SpriteBatch batch;
 
-    public HostScreen(final AppListener appListener) {
+    public HostScreen(final AppListener appListener, Server server, int mapIndex) {
+        this.server = server;
         this.appListener = appListener;
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
+        font = new BitmapFont();
+        batch = new SpriteBatch();
+
 
         table.center();
 
@@ -51,18 +62,40 @@ public class HostScreen implements Screen {
 
         skin = appListener.getSkin();
 
-        hostGameButton = new TextButton("Start game", skin, "default");
+        this.IPField = new TextField("", skin);
+        this.IPLabel = new Label("", skin);
+        this.portField = new TextField("4321", skin);
+        this.errorLabel = new Label("", skin);
+        this.portLabel = new Label("Port", skin);
+
 
         backButton = new TextButton("Back", skin, "default");
 
-        table.add(hostGameButton);
-        table.row();
-        table.add(backButton).width(hostGameButton.getWidth());
+        closeServerButton = new TextButton("Close server", skin, "default");
 
-        backButton.addListener(new InputListener() {
+        lookForPlayersButton = new TextButton("Look for players", skin, "default");
+
+        table.add(IPLabel).width(200);
+        table.row();
+        table.add(IPField).width(200).padBottom(30);
+        table.row();
+        table.add(portLabel);
+        table.row();
+        table.add(portField);
+        table.row();
+        table.add(lookForPlayersButton);
+        table.row();
+        table.add(closeServerButton).padRight(20);
+        IPField.setText(server.getAddress());
+        IPLabel.setText("Host IP Address");
+        IPLabel.setAlignment(Align.center);
+        IPField.setAlignment(Align.center);
+
+        closeServerButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new MultiplayerScreen(appListener));
+                server.closeServer();
+                appListener.setScreen(new MultiplayerSetupScreen(appListener));
             }
 
             @Override
@@ -70,7 +103,19 @@ public class HostScreen implements Screen {
                 return true;
             }
         });
+        lookForPlayersButton.addListener(new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                server.findPlayers();
+                server.sendToAllPlayers(server.getServerDeck());
+                server.sendToAllPlayers(Map.values()[mapIndex]);
+            }
 
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
     }
 
     @Override
