@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.application_functionality.reference.PlayerTexture;
 import sid.roborally.gfx_and_ui.AppListener;
 
 import java.util.ArrayList;
@@ -35,12 +36,13 @@ public class GameSetupScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private TextButton startGameButton, backButton;
-    private SelectBox<String> mapBox;
+    private SelectBox<String> mapBox, playerModelBox;
     private SelectBox<Integer> playerBox;
     private Table buttonTable;
     private RRApplication rr_app;
     private ArrayList<Player> players;
-    private Window window;
+    private Window window, playerModelWindow;
+    private PlayerTexture localChosenPlayerTexture;
 
     public GameSetupScreen(AppListener appListener) {
         this.appListener = appListener;
@@ -50,6 +52,10 @@ public class GameSetupScreen implements Screen {
         this.window = new Window("Map Preview", skin);
         this.window.setPosition(window.getWidth()-100,window.getHeight());
         this.window.setSize(500,500);
+
+        this.playerModelWindow = new Window("Model Preview",skin);
+        this.playerModelWindow.setPosition(window.getWidth()+800,window.getHeight()-150);
+        this.playerModelWindow.setSize(300,300);
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -64,6 +70,14 @@ public class GameSetupScreen implements Screen {
 
         mapBox = new SelectBox<>(skin, "default");
         mapBox.setItems(mapNames);
+
+        Array<String> playerModelNames = new Array<>();
+        addPlayerModels(playerModelNames);
+
+        playerModelBox = new SelectBox<>(skin,"default");
+        //playerModelBox.setPosition(Gdx.graphics.getWidth() / 2f + 350f, Gdx.graphics.getHeight() / 2f + 83f);
+        playerModelBox.setSize(125, 35);
+        playerModelBox.setItems("Owl","Tank","X-Wing");
 
         /* Creating a drop down menu to select amount of players */
         playerBox = new SelectBox<>(skin, "default");
@@ -83,12 +97,24 @@ public class GameSetupScreen implements Screen {
                 new Texture("assets/application_skin/GameBackground.png"))));
 
         /*
-         * Input for selectbox
+         * Input for selectbox (mapbox)
          */
         mapBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 updateMapPreview();
+            }
+        }
+        );
+
+        /*
+         * Input for playermodelbox
+         */
+        playerModelBox.addListener(new ChangeListener() { //
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updatePlayerModelPreview();
+                updateSelectedPlayerTexture();
             }
         });
 
@@ -103,18 +129,31 @@ public class GameSetupScreen implements Screen {
             }
         });
 
+        updatePlayerModelPreview();
         updateMapPreview();
         stage.addActor(buttonTable);
         stage.addActor(window);
+        stage.addActor(playerModelWindow);
 
     }
+
+
 
     public Table getButtonTable() {
         return buttonTable;
     }
 
+
     /**
-     * Sets preview image
+     * Sets player model to the chosen item in playermodelbox
+     */
+    private void updateSelectedPlayerTexture() {
+        int chosen = playerModelBox.getSelectedIndex();
+        setLocalChosenPlayerTexture(PlayerTexture.values()[chosen]);
+    }
+
+    /**
+     * Sets preview image for map
      */
     private void updateMapPreview() {
 
@@ -129,6 +168,25 @@ public class GameSetupScreen implements Screen {
         if (mapBox.getSelected().equals(Map.BigMap.name())) {
             window.setBackground(new TextureRegionDrawable(new TextureRegion(
                     new Texture("assets/maps/bigMap.png"))));
+        }
+
+    }
+
+    /**
+     * Sets preview background
+     */
+    private void updatePlayerModelPreview() {
+        if (playerModelBox.getSelected().equals("Owl")) {
+            playerModelWindow.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/player_tex/player1.png"),0,0,300,300)));
+        }
+        if (playerModelBox.getSelected().equals("Tank")) {
+            playerModelWindow.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/player_tex/tank.png"),0,0,300,300)));
+        }
+        if (playerModelBox.getSelected().equals("X-Wing")) {
+            playerModelWindow.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/player_tex/xwing.png"),0,0,300,300)));
         }
     }
 
@@ -162,6 +220,15 @@ public class GameSetupScreen implements Screen {
     }
 
     /**
+     * Adds all available playermodels to an Array
+     * @param pmodel array of maps
+     */
+    private void addPlayerModels(Array<String> pmodel) {
+        for (PlayerTexture player : PlayerTexture.values())
+            pmodel.add(player.name());
+    }
+
+    /**
      * Adds all needed buttons to the screen
      * @param table table to hold all buttons and drop down menus
      */
@@ -170,6 +237,7 @@ public class GameSetupScreen implements Screen {
         table.row();
         table.add(mapBox);
         table.add(playerBox).padLeft(20).width(playerBox.getWidth()-10);
+        table.add(playerModelBox).padLeft(20);
         table.row();
         table.add(backButton).padTop(80);
         table.setFillParent(true);
