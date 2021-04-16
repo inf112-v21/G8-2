@@ -77,6 +77,7 @@ public class Client {
     public void getDeck(){
         try{
             deck = (CardDeck) serverToClientInput.readObject();
+            System.out.println(deck.getNextCard().getName());
         } catch (IOException e) {
             System.out.println("No card output from server!");
             e.printStackTrace();
@@ -89,9 +90,10 @@ public class Client {
     /**
      * Receives map from server
      */
-    private void getMap(){
+    public void getMap(){
         try{
             map = (Map) serverToClientInput.readObject();
+            System.out.println(map.getMapPath());
         } catch (IOException e) {
             System.out.println("No map output from server!");
             e.printStackTrace();

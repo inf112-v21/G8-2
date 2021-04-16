@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.application_functionality.connection.Server;
-import sid.roborally.game_mechanics.card.CardDeck;
+import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.gfx_and_ui.AppListener;
 
 /**
@@ -39,12 +39,14 @@ public class HostScreen implements Screen {
     BitmapFont font;
     SpriteBatch batch;
 
-    public HostScreen(final AppListener appListener) {
+    public HostScreen(final AppListener appListener, Server server, int mapIndex) {
+        this.server = server;
         this.appListener = appListener;
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
         font = new BitmapFont();
         batch = new SpriteBatch();
+
 
         table.center();
 
@@ -66,7 +68,6 @@ public class HostScreen implements Screen {
         this.errorLabel = new Label("", skin);
         this.portLabel = new Label("Port", skin);
 
-        hostGameButton = new TextButton("Start server", skin, "default");
 
         backButton = new TextButton("Back", skin, "default");
 
@@ -74,84 +75,6 @@ public class HostScreen implements Screen {
 
         lookForPlayersButton = new TextButton("Look for players", skin, "default");
 
-        table.add(portField);
-        table.row();
-        table.add(errorLabel);
-        table.row();
-        table.add(hostGameButton);
-        table.row();
-        table.add(backButton).width(hostGameButton.getWidth());
-
-        hostGameButton.addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                try {
-                    server = new Server(Integer.parseInt(portField.getText()));
-                    if (server.getErrorMessage().length() > 0) {
-                        //server.closeServer();
-                        errorLabel.setText(server.getErrorMessage());
-                    } else {
-                        setupServerMenu();
-                    }
-                } catch (NumberFormatException e) {
-                    errorLabel.setText("Port must be a whole number");
-                }
-                //appListener.setScreen(new ConnectionScreen(appListener));
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-
-        backButton.addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new MultiplayerScreen(appListener));
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-
-
-        closeServerButton.addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                server.closeServer();
-                appListener.setScreen(new MultiplayerScreen(appListener));
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-        lookForPlayersButton.addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                server.findPlayers();
-                server.sendToPlayers(new CardDeck());
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-    }
-
-    /**
-     * Sets up the menu items needed for the server
-     */
-    public void setupServerMenu() {
-        table.removeActor(hostGameButton);
-        table.removeActor(backButton);
-        table.removeActor(errorLabel);
-        table.row();
         table.add(IPLabel).width(200);
         table.row();
         table.add(IPField).width(200).padBottom(30);
@@ -167,6 +90,32 @@ public class HostScreen implements Screen {
         IPLabel.setText("Host IP Address");
         IPLabel.setAlignment(Align.center);
         IPField.setAlignment(Align.center);
+
+        closeServerButton.addListener(new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                server.closeServer();
+                appListener.setScreen(new MultiplayerSetupScreen(appListener));
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        lookForPlayersButton.addListener(new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                server.findPlayers();
+                server.sendToAllPlayers(server.getServerDeck());
+                server.sendToAllPlayers(Map.values()[mapIndex]);
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
     }
 
     @Override

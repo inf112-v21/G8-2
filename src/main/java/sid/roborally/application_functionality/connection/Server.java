@@ -63,6 +63,7 @@ public class Server {
     public Server(int port) {
 
         this.port = port;
+        deck = new CardDeck();
         startServer();
         //findPlayers();
 
@@ -125,7 +126,7 @@ public class Server {
      * Sends different objects (things) the clients may need to run the game
      * @param thing
      */
-    public void sendToPlayers(Object thing){
+    public void sendToAllPlayers(Object thing){
         try{
             for(Socket c : clientsOut.keySet()){
                 serverToClientOutput = clientsOut.get(c);
@@ -137,6 +138,17 @@ public class Server {
             e.printStackTrace();
         }
 
+    }
+
+    public void sendToPlayer(Object object, Socket player) {
+        try {
+            serverToClientOutput = clientsOut.get(player);
+            serverToClientOutput.writeObject(object);
+            serverToClientOutput.flush();
+        } catch (IOException e) {
+            System.out.println("Object " + object.getClass().toString() + " could not be sent");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -158,6 +170,10 @@ public class Server {
     }
     public String getAddress(){
         return IPAddress;
+    }
+
+    public CardDeck getServerDeck() {
+        return deck;
     }
 
     /**

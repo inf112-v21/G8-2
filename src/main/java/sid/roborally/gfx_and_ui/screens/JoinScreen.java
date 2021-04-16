@@ -102,6 +102,7 @@ public class JoinScreen implements Screen {
                     client = new Client(joinIP.getText(), Integer.parseInt(joinPort.getText()));
                     System.out.println("client is here");
                     client.getDeck();
+                    client.getMap();
                 } catch (NumberFormatException e) {
                     errorLabel.setText("IP or port is invalid");
                 }

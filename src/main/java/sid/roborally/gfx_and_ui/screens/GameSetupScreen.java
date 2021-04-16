@@ -34,7 +34,7 @@ public class GameSetupScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Skin skin;
-    private Button startGameButton, backButton;
+    private TextButton startGameButton, backButton;
     private SelectBox<String> mapBox;
     private SelectBox<Integer> playerBox;
     private Table buttonTable;
@@ -109,6 +109,10 @@ public class GameSetupScreen implements Screen {
 
     }
 
+    public Table getButtonTable() {
+        return buttonTable;
+    }
+
     /**
      * Sets preview image
      */
@@ -171,8 +175,12 @@ public class GameSetupScreen implements Screen {
         table.setFillParent(true);
     }
 
-    public Button getStartGameButton() {
+    public TextButton getStartGameButton() {
         return startGameButton;
+    }
+
+    public TextButton getBackButton() {
+        return backButton;
     }
 
     @Override
