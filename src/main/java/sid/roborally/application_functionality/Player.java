@@ -4,6 +4,8 @@ import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
 
+import java.io.Serializable;
+
 /**
  * <h3>Player</h3>
  *
@@ -19,7 +21,7 @@ import sid.roborally.gfx_and_ui.PlayerGraphic;
  *
  *  @author Daniel Janols
  * */
-public class Player {
+public class Player implements Serializable {
 
     private enum OwnerLocation {Local, AI, External} //External is a off-site-user (multiplayer)
     private enum State {Active, Won, Dead}

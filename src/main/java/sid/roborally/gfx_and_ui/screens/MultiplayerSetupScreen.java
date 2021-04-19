@@ -30,12 +30,12 @@ public class MultiplayerSetupScreen extends GameSetupScreen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 try {
-                    server = new Server(Integer.parseInt(portField.getText()));
+                    server = new Server(Integer.parseInt(portField.getText()), getPlayerBox().getSelected());
                     if (server.getErrorMessage().length() > 0) {
                         //server.closeServer();
                         errorLabel.setText(server.getErrorMessage());
                     } else {
-                        appListener.setScreen(new HostScreen(appListener, server, getMapBox().getSelectedIndex()));
+                        appListener.setScreen(new ServerScreen(appListener, server, getMapBox().getSelectedIndex(), getPlayerBox().getSelected()));
                     }
                 } catch (NumberFormatException e) {
                     errorLabel.setText("Port must be a whole number");

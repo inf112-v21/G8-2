@@ -41,10 +41,13 @@ public class Server {
     private boolean waitingForPlayers = true;
     private HashMap<Socket, ObjectInputStream> clientsIn = new HashMap<>();
     private HashMap<Socket, ObjectOutputStream> clientsOut = new HashMap<>();
-    private HashMap<Socket, Player> clientpLayers = new HashMap<>();
+    private HashMap<Socket, Player> clientPlayers = new HashMap<>();
     private HashMap<Socket, ArrayList<Card>>playerSelect = new HashMap<>(); // Change key back to Player after testing
+    private HashMap<Integer, ArrayList<Card>> chosenCards = new HashMap<>();
     private CardDeck deck;
+    private int numPlayers;
     private String errorMessage;
+    private Player serverPlayer;
 
     /**
      * The IP address and port to be printed on server setup page
@@ -60,11 +63,17 @@ public class Server {
      *      *  Gets client's outputStream. (Allows to write to client)
      *      *  Continually fetches client input. (Allows to read info sent from clients)
      */
-    public Server(int port) {
+    public Server(int port, Integer numPlayers) {
 
         this.port = port;
         deck = new CardDeck();
+        serverPlayer = new Player(1,true);
+        serverPlayer.setLocal();
+        this.numPlayers = numPlayers;
+
+
         startServer();
+
         //findPlayers();
 
         //Send deck of cards to client
@@ -106,20 +115,27 @@ public class Server {
      * as well as which player belongs to which client
      */
     public void findPlayers(){
-        while(waitingForPlayers){
-            waitingForPlayers = false; //setting to false immediately to only run once for currently one client
+
+        int playerNumber = 1;
+
+        while(waitingForPlayers && playerNumber != numPlayers){
+            //waitingForPlayers = false; //setting to false immediately to only run once for currently one client
             try{
                 Socket client = server.accept();
+                playerNumber++;
                 System.out.println("Client connected: "+ client.isConnected());
                 clientsOut.put(client, new ObjectOutputStream(client.getOutputStream()));
                 clientsIn.put(client, new ObjectInputStream(client.getInputStream()));
-                //clientPlayers.put(client, player (fra client eller lages på server))
+                Player p = new Player(playerNumber,true);
+                p.setExternal();
+                clientPlayers.put(client, p);
                 //playerSelect(client sin player og en tom kortstokk)
             } catch (IOException e) {
                 System.out.println("Accept failed: 4321");
                 System.exit(-1);
             }
         }
+        sendToAllPlayers(false);
     }
 
     /**
@@ -187,5 +203,23 @@ public class Server {
             System.out.println("Server couldn't be closed");
         }
 
+    }
+
+    public ArrayList<Player> getPlayers(){
+        ArrayList<Player> players = new ArrayList<>();
+
+        for (Socket s : clientPlayers.keySet()){
+            players.add(clientPlayers.get(s));
+        }
+        return players;
+    }
+
+    public void sendOrder(){
+        int n = 2;
+        for(Socket c : clientsIn.keySet()){
+            clientToServerInput = clientsIn.get(c);
+            sendToPlayer(n,c);
+            n++;
+        }
     }
 }

@@ -2,6 +2,7 @@ package sid.roborally.application_functionality.connection;
 
 
 import sid.roborally.application_functionality.GameRunner;
+import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.RRApplication;
 import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.game_mechanics.card.Card;
@@ -77,38 +78,55 @@ public class Client {
     public void getDeck(){
         try{
             deck = (CardDeck) serverToClientInput.readObject();
-            System.out.println(deck.getNextCard().getName());
+
         } catch (IOException e) {
             System.out.println("No card output from server!");
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             System.out.println("Deck not found!");
-            e.printStackTrace();
         }
     }
 
     /**
      * Receives map from server
      */
-    public void getMap(){
+    public Map getMap(){
         try{
             map = (Map) serverToClientInput.readObject();
-            System.out.println(map.getMapPath());
+            return map;
         } catch (IOException e) {
             System.out.println("No map output from server!");
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             System.out.println("Map not found!");
-            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getNumPlayers() {
+        try{
+            numPlayers = (int) serverToClientInput.readObject();
+            return numPlayers;
+        } catch (IOException | ClassNotFoundException e) {
+            return 0;
         }
     }
 
-    private void getNumPlayers() {
+    public int getOrder(){
         try{
-            numPlayers = (int) serverToClientInput.readObject();
+            return (int) serverToClientInput.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            return 0;
         }
+    }
+
+    public ArrayList<Player> getPlayers(){
+        try{
+            return (ArrayList<Player>) serverToClientInput.readObject();
+        } catch (IOException e) {
+            System.out.println("No card output from server!");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Deck not found!");
+        }
+        return null;
     }
 
     /**
@@ -128,8 +146,15 @@ public class Client {
             clientToServerOutput.writeObject(cards);
             clientToServerOutput.flush();
         } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
+
+    public boolean getWaitingForServer(){
+        try {
+            return (boolean) serverToClientInput.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        return true;
     }
 
 }

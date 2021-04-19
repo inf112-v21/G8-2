@@ -14,10 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.connection.Server;
 import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.gfx_and_ui.AppListener;
+
+import java.util.ArrayList;
 
 /**
  * <h3>HostScreen</h3>
@@ -25,7 +29,7 @@ import sid.roborally.gfx_and_ui.AppListener;
  *
  * @author Andreas Henriksen
  */
-public class HostScreen implements Screen {
+public class ServerScreen implements Screen {
 
     private final AppListener appListener;
     private OrthographicCamera cam;
@@ -38,14 +42,20 @@ public class HostScreen implements Screen {
     private Label errorLabel, portLabel, IPLabel;
     BitmapFont font;
     SpriteBatch batch;
+    private int mapIndex;
+    private int numPlayers;
+    private ArrayList<Player> players;
 
-    public HostScreen(final AppListener appListener, Server server, int mapIndex) {
+    public ServerScreen(final AppListener appListener, Server server, int mapIndex, int numPlayers) {
         this.server = server;
         this.appListener = appListener;
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
         font = new BitmapFont();
         batch = new SpriteBatch();
+        this.mapIndex = mapIndex;
+        this.numPlayers = numPlayers;
+        players = new ArrayList<>();
 
 
         table.center();
@@ -109,6 +119,19 @@ public class HostScreen implements Screen {
                 server.findPlayers();
                 server.sendToAllPlayers(server.getServerDeck());
                 server.sendToAllPlayers(Map.values()[mapIndex]);
+                server.sendToAllPlayers((numPlayers));
+                server.sendOrder();
+                //server.sendToAllPlayers(server.getPlayers());
+                Player serverPlayer = new Player(1,true);
+                serverPlayer.setLocal();
+                players.add(serverPlayer);
+                for(int i = 2; i<=numPlayers;i++){
+                    Player p = new Player(i,true);
+                    p.setExternal();
+                    players.add(p);
+                }
+                setUpGame(players);
+                appListener.setScreen(new GameScreen(appListener));
             }
 
             @Override
@@ -116,6 +139,16 @@ public class HostScreen implements Screen {
                 return true;
             }
         });
+    }
+    /**
+     * Starts the game with the selected map, and the selected amount of players
+     * @param players a list of players
+     */
+    private void setUpGame(ArrayList<Player> players) {
+        for (Player player : players)
+            appListener.getRRApp().getGameRunner().addPlayer(player);
+        appListener.getRRApp().getGameRunner().setUpGame(Map.values()[mapIndex]);
+        appListener.getRRApp().startGame();
     }
 
     @Override

@@ -71,7 +71,7 @@ public class MultiplayerScreen implements Screen{
         joinButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new JoinScreen(appListener));
+                appListener.setScreen(new ClientScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

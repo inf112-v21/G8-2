@@ -7,13 +7,15 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.reference.PlayerTexture;
 
+import java.io.Serializable;
+
 /**
  * <h3>PlayerGraphic</h3>
  *
  * <p>This class will be connected to a Player instance, and will be passed
  *    by the Player outwards when graphics-information about the Player is needed.</p>
  */
-public class PlayerGraphic {
+public class PlayerGraphic implements Serializable {
 
     /* Player's state-cells (graphics for different states) */
     TiledMapTileLayer.Cell playerLive;
