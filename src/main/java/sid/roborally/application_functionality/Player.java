@@ -56,6 +56,10 @@ public class Player {
         this.startID = startID;
     }
 
+    public void givePlayerTexture(PlayerTexture pt) {
+        p_graphic = new PlayerGraphic(this, pt);
+    }
+
     /**
      * <p>Sets player-robot start position. Must be called before the game starts</p>
      * @param pos Start-position

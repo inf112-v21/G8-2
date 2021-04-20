@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.reference.Map;
+import sid.roborally.application_functionality.reference.PlayerTexture;
 import sid.roborally.gfx_and_ui.AppListener;
 
 import java.util.ArrayList;
@@ -45,8 +46,9 @@ public class SingleplayerSetupScreen extends GameSetupScreen {
      * @param amount amount of players
      */
     private void addPlayers(ArrayList<Player> players, int amount) {
-        Player localPlayer = new Player(1, true);
+        Player localPlayer = new Player(1);
         localPlayer.setLocal();
+        localPlayer.givePlayerTexture(getLocalChosenPlayerTexture());
         players.add(localPlayer);
         if (amount > 1) {
             for (int i = 2; i <= amount; i++) {

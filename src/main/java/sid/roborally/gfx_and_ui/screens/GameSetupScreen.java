@@ -48,6 +48,8 @@ public class GameSetupScreen implements Screen {
         this.appListener = appListener;
         rr_app = appListener.getRRApp();
         this.players = new ArrayList<>();
+        localChosenPlayerTexture = PlayerTexture.Player1;
+
         skin = appListener.getSkin();
         this.window = new Window("Map Preview", skin);
         this.window.setPosition(window.getWidth()-100,window.getHeight());
@@ -138,6 +140,9 @@ public class GameSetupScreen implements Screen {
     }
 
 
+
+    public void setLocalChosenPlayerTexture(PlayerTexture pt) { localChosenPlayerTexture = pt; }
+    public PlayerTexture getLocalChosenPlayerTexture() { return localChosenPlayerTexture; }
 
     public Table getButtonTable() {
         return buttonTable;
@@ -242,6 +247,7 @@ public class GameSetupScreen implements Screen {
         table.add(backButton).padTop(80);
         table.setFillParent(true);
     }
+
 
     public TextButton getStartGameButton() {
         return startGameButton;
