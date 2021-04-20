@@ -52,12 +52,12 @@ public class GameSetupScreen implements Screen {
 
         skin = appListener.getSkin();
         this.window = new Window("Map Preview", skin);
-        this.window.setPosition(window.getWidth()-100,window.getHeight());
-        this.window.setSize(500,500);
+        this.window.setPosition(Gdx.graphics.getHeight()/10f,Gdx.graphics.getHeight()/10f);
+        this.window.setSize(Gdx.graphics.getHeight()/4f,Gdx.graphics.getHeight()/4f);
 
         this.playerModelWindow = new Window("Model Preview",skin);
-        this.playerModelWindow.setPosition(window.getWidth()+800,window.getHeight()-150);
-        this.playerModelWindow.setSize(300,300);
+        this.playerModelWindow.setPosition(Gdx.graphics.getHeight()/2f,Gdx.graphics.getHeight()/10f);
+        this.playerModelWindow.setSize(Gdx.graphics.getHeight()/4f,Gdx.graphics.getHeight()/4f);
 
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -79,7 +79,7 @@ public class GameSetupScreen implements Screen {
         playerModelBox = new SelectBox<>(skin,"default");
         //playerModelBox.setPosition(Gdx.graphics.getWidth() / 2f + 350f, Gdx.graphics.getHeight() / 2f + 83f);
         playerModelBox.setSize(125, 35);
-        playerModelBox.setItems("Owl","Tank","X-Wing");
+        playerModelBox.setItems("Owl","Tank","X-Wing","The One");
 
         /* Creating a drop down menu to select amount of players */
         playerBox = new SelectBox<>(skin, "default");
@@ -192,6 +192,10 @@ public class GameSetupScreen implements Screen {
         if (playerModelBox.getSelected().equals("X-Wing")) {
             playerModelWindow.setBackground(new TextureRegionDrawable(new TextureRegion(
                     new Texture("assets/player_tex/xwing.png"),0,0,300,300)));
+        }
+        if (playerModelBox.getSelected().equals("The One")) {
+            playerModelWindow.setBackground(new TextureRegionDrawable(new TextureRegion(
+                    new Texture("assets/player_tex/advent.png"),0,0,300,300)));
         }
     }
 

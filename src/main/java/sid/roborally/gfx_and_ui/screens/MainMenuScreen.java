@@ -2,14 +2,17 @@ package sid.roborally.gfx_and_ui.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
@@ -26,12 +29,13 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private Button singleplayerButton,multiplayerButton,optionsButton,exitButton;
-    private Table buttonTable, backgroundTable;
-    private Window titleWindow;
+    private Table buttonTable, buttonFrameTable, backgroundTable;
+    private Window titleWindow,buttonWindow;
 
     public MainMenuScreen(final AppListener appListener) {
         this.appListener = appListener;
         this.buttonTable = new Table();
+        this.buttonFrameTable = new Table();
         this.backgroundTable = new Table();
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -39,8 +43,10 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
 
         buttonTable.setFillParent(true);
+        buttonFrameTable.setFillParent(true);
         backgroundTable.setFillParent(true);
         stage.addActor(backgroundTable);
+        stage.addActor(buttonFrameTable);
         stage.addActor(buttonTable);
 
         Gdx.input.setInputProcessor(stage);
@@ -50,6 +56,8 @@ public class MainMenuScreen implements Screen {
         this.titleWindow = new Window("", skin);
         titleWindow.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture("assets/application_skin/RoboRally.png"))));
+
+        this.buttonWindow = new Window("yoyo", skin);
 
         backgroundTable.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture("assets/application_skin/GameBackground.png"))));
@@ -100,7 +108,10 @@ public class MainMenuScreen implements Screen {
                 return true;
             }
         });
+
         backgroundTable.add(titleWindow).padBottom(700);
+        buttonFrameTable.add(buttonWindow);
+
         buttonTable.add(singleplayerButton);
         buttonTable.row();
         buttonTable.add(multiplayerButton).width(singleplayerButton.getWidth());
