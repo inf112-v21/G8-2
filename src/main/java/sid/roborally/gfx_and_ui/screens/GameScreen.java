@@ -23,6 +23,7 @@ import sid.roborally.game_mechanics.card.StepCard;
 import sid.roborally.gfx_and_ui.AppListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * <h3>GameScreen</h3>
@@ -138,8 +139,9 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         chosenCards.add(givenCards.get(reg3index));
         chosenCards.add(givenCards.get(reg4index));
         chosenCards.add(givenCards.get(reg5index));
+
         giveGamerunnerChosenCards();
-        grunner.runRound();
+        runCardSelection();
 
         newRound();
     }
@@ -178,6 +180,28 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
             if(duplicateCounter>1) return false;
         }
         return true;
+    }
+
+    /**
+     * <p>Will run the selected card, one by one, so it is possible to see the pieces move.</p>
+     */
+    private void runCardSelection() {
+        for(HashMap<Player,Card> association : grunner.getChosenCardsInOrder()) {
+            /* Getting player and card*/
+            Player p = grunner.getLocal(); //Is supposed to be overridden
+            Card card;
+            /* Getting player */
+            for(Player player : association.keySet()) p = player; //Should only run one time.
+            card = association.get(p); //Can't be null, that will crash the program
+
+            grunner.moveWithCard(p,card);
+            System.out.println("TAG 1");
+            /* Make move visible */
+
+            render(Gdx.graphics.getDeltaTime());
+            System.out.println("TAG 2");
+
+        }
     }
 
 
@@ -472,6 +496,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
         uiStage.act();
         uiStage.draw();
+        System.out.println("TAG RENDER");
     }
 
     private void updateRendWithCam() {

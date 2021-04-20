@@ -6,6 +6,7 @@ import sid.roborally.game_mechanics.card.*;
 import sid.roborally.game_mechanics.grid.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -155,6 +156,54 @@ public class Game {
             allEmpty = true;
             for(Player p : players)
                 if(!chosenProgramCards.get(p).isEmpty()) allEmpty = false;
+        }
+        return retList;
+    }
+
+    /**
+     * <p>Splits card into possible 1 step cards, as to be able to individually apply them from GameScreen. Rotation is not changed.</p>
+     * @param association Pairing between player and card
+     * @return Association with player and sub-cards
+     */
+    private ArrayList<HashMap<Player,Card>> splitCardToSubCards(HashMap<Player,Card> association) {
+        Player p = new Player(0);
+        Card card;
+        /* Getting player */
+        for(Player player : association.keySet()) p = player; //Should only run one time.
+        card = association.get(p); //Can't be null, that will crash the program
+
+        ArrayList<HashMap<Player,Card>> retList = new ArrayList<>();
+
+        /* If it is a step card it has to be split up */
+        if (card instanceof StepCard) {
+            int steps = ((StepCard) card).getSteps(); // ≥ 1
+            Card singleStepCard = new StepCard(card.getPriority(), 1, card.getAction());
+            while (steps > 0) {
+                HashMap<Player,Card> newAssociation = new HashMap<>();
+                newAssociation.put(p,singleStepCard);
+                retList.add(newAssociation);
+                steps--;
+            }
+        }
+        else {
+            HashMap<Player, Card> newAssociation = new HashMap<>();
+            newAssociation.put(p, card);
+            retList.add(newAssociation);
+        }
+        return retList;
+    }
+
+    /**
+     * <p>Sorts and breaks the order of cards into single-set card-associations for GameScreen to be able to
+     * move card 1 step at a time (so it can be rendered)</p>
+     * @return Player/Card-associations
+     */
+    public ArrayList<HashMap<Player,Card>> getMoveSequenceAsPlayerCardAssocs() {
+        ArrayList<HashMap<Player,Card>> retList = new ArrayList<>();
+
+        for(HashMap<Player,Card> association : getCardsByPriority()) {
+            //for(HashMap<Player,Card> breakdown : splitCardToSubCards(association))
+            retList.addAll(splitCardToSubCards(association));    //retList.add(breakdown);
         }
         return retList;
     }
