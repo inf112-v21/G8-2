@@ -56,6 +56,7 @@ Husk å skrive hvilke bugs som finnes i de kravene dere har utført (dersom det 
 Bugs:
 
 Bilder i GUI av sprites og kart skaleres ikke riktig når vi går i vindu modus og kan blokkere GUI elementer. Fikses ved å justere størrelsen på skjermen etter den er satt til vindu.
+
 Når server ser etter spillere, eller klient venter på server fryses spillet. Dette kan føre til at når en kobler seg til et spill, men ikke har nok spillere, at programmet må avsluttes manuelt siden det forblir i en evig while-løkke.
 Kort kan ikke kommites i vindu-modus.
 
