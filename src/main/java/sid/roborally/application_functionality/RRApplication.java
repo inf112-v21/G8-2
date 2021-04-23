@@ -45,28 +45,6 @@ public class RRApplication {
         return grunner;
     }
 
-    /*
-     * Demo and Test-functionality:
-     */
-
-    /**
-     * <p>Sets up a demogame</p>
-     */
-    public void setUpDemoGame() {
-
-        //TODO velg alle settings før vi kommer hit og setter de
-
-        /* Add player */
-        Player demoPlayer = new Player(1, true);
-        demoPlayer.setLocal();
-        grunner.addPlayer(demoPlayer);
-
-        /* Set up game */
-        grunner.setUpGame(Map.TwoPlayerDemo);
-
-        inputHolder = InputHolder.GameRunner;
-        grunner.runGame();
-    }
 
     /*
      * Functionality:

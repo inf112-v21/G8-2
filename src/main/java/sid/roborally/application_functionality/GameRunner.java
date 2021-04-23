@@ -12,6 +12,7 @@ import sid.roborally.game_mechanics.grid.*;
 import sid.roborally.gfx_and_ui.screens.GameScreen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -75,6 +76,15 @@ public class GameRunner{
         game.runRound();
     }
 
+    /**
+     * <p>Returns a list gameScreen can go trough and move objects with.</p>
+     * @return associations
+     */
+    public ArrayList<HashMap<Player,Card>> getChosenCardsInOrder() { return game.getMoveSequenceAsPlayerCardAssocs(); }
+
+    public void moveWithCard(Player p, Card card) {
+        game.useCardOnPlayerRobot(p,card);
+    }
 
     //==========Getters and Setters=====================================================
 

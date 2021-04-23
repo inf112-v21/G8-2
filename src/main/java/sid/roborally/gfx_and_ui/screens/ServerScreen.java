@@ -35,7 +35,7 @@ public class ServerScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Table table;
-    private Button hostGameButton, backButton, closeServerButton, lookForPlayersButton;
+    private Button closeServerButton, lookForPlayersButton;
     private Skin skin;
     protected Server server;
     private TextField IPField, portField;
@@ -79,31 +79,16 @@ public class ServerScreen implements Screen {
         this.portLabel = new Label("Port", skin);
 
 
-        backButton = new TextButton("Back", skin, "default");
-
+        //Initializes the necessary TextButtons for the screen
         closeServerButton = new TextButton("Close server", skin, "default");
-
         lookForPlayersButton = new TextButton("Look for players", skin, "default");
 
-        table.add(IPLabel).width(200);
-        table.row();
-        table.add(IPField).width(200).padBottom(30);
-        table.row();
-        table.add(portLabel);
-        table.row();
-        table.add(portField);
-        table.row();
-        table.add(lookForPlayersButton);
-        table.row();
-        table.add(closeServerButton).padRight(20);
-        IPField.setText(server.getAddress());
-        IPLabel.setText("Host IP Address");
-        IPLabel.setAlignment(Align.center);
-        IPField.setAlignment(Align.center);
+        addMenuActors();
 
         closeServerButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                //Closes the server and goes back to MultiplayerSetupScreen
                 server.closeServer();
                 appListener.setScreen(new MultiplayerSetupScreen(appListener));
             }
@@ -116,6 +101,7 @@ public class ServerScreen implements Screen {
         lookForPlayersButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                //Starts searching for clients that wants to connect to server
                 server.findPlayers();
                 server.sendToAllPlayers(server.getServerDeck());
                 server.sendToAllPlayers(Map.values()[mapIndex]);
@@ -149,6 +135,27 @@ public class ServerScreen implements Screen {
             appListener.getRRApp().getGameRunner().addPlayer(player);
         appListener.getRRApp().getGameRunner().setUpGame(Map.values()[mapIndex]);
         appListener.getRRApp().startGame();
+    }
+
+    /**
+     * Adds the actors needed for the HostScreen
+     */
+    private void addMenuActors() {
+        table.add(IPLabel).width(200);
+        table.row();
+        table.add(IPField).width(200).padBottom(30);
+        table.row();
+        table.add(portLabel);
+        table.row();
+        table.add(portField);
+        table.row();
+        table.add(lookForPlayersButton);
+        table.row();
+        table.add(closeServerButton).padRight(20);
+        IPField.setText(server.getAddress());
+        IPLabel.setText("Host IP Address");
+        IPLabel.setAlignment(Align.center);
+        IPField.setAlignment(Align.center);
     }
 
     @Override

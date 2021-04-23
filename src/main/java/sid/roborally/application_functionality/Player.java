@@ -1,5 +1,6 @@
 package sid.roborally.application_functionality;
 
+import sid.roborally.application_functionality.reference.PlayerTexture;
 import sid.roborally.game_mechanics.grid.Position;
 import sid.roborally.game_mechanics.grid.Robot;
 import sid.roborally.gfx_and_ui.PlayerGraphic;
@@ -36,12 +37,11 @@ public class Player implements Serializable {
      * <p>Player constructor that specifies a chosen skin-texture index.</p>
      *
      * @param startID What start position should player have
-     * @param textureIndex Texture-index
      */
-    public Player(int startID, int textureIndex) {
+    public Player(int startID) {
         playerState = State.Active;
         ownerLocation = OwnerLocation.AI; //AI basic setting if nothing else given.
-        p_graphic = new PlayerGraphic(this, textureIndex);
+        p_graphic = null;
         this.startID = startID;
     }
 
@@ -54,8 +54,12 @@ public class Player implements Serializable {
      */
     public Player(int startID, boolean giveGraphics) {
         playerState = State.Active;
-        p_graphic = giveGraphics ? new PlayerGraphic(this, 0) : null;
+        p_graphic = giveGraphics ? new PlayerGraphic(this, PlayerTexture.Player1) : null;
         this.startID = startID;
+    }
+
+    public void givePlayerTexture(PlayerTexture pt) {
+        p_graphic = new PlayerGraphic(this, pt);
     }
 
     /**

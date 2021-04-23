@@ -45,11 +45,6 @@ public class Client {
         this.port = port;
         this.hostAddress = IPAddress;
         connectToServer();
-        //getDeck(); //Needed to find cards from server
-        //getMap();
-        //getNumPlayers();
-        //setUpClientGame();
-        //sendCardSelectionToServer( cardsSelection );
     }
 
     /**
@@ -134,11 +129,9 @@ public class Client {
      */
     private void setUpClientGame(){
         rr_app = new RRApplication();
-        //TODO:rr_app.setUpLibgdxApplication();
         gameRunner = rr_app.getGameRunner();
 
         System.out.println("Map: "+map);
-        //gameRunner.setUpGame(map, numPlayers);
     }
 
     private void sendCardSelectionToServer(ArrayList<Card> cards){

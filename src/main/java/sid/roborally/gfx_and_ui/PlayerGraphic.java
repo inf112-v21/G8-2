@@ -28,29 +28,29 @@ public class PlayerGraphic implements Serializable {
      * <p>PlayerGraphics constructor creates an instance with a player and
      *    a index for what skin-texture-set the player will have.</p>
      * @param player The player that owns this class.
-     * @param textureIndex Index in skin-texture-array.
+     * @param pt PlayerTexture type
      */
-    public PlayerGraphic(Player player, int textureIndex)
+    public PlayerGraphic(Player player, PlayerTexture pt)
     {
         this.player = player;
-        setSelectedStateGraphics(textureIndex);
+        setSelectedStateGraphics(pt);
     }
 
     /**
-     * <p>Choses what skin-texture to associate with this PlayerGraphic instance</p>
-     * @param index Skin-index
+     * <p>Choses what Player-texture to associate with this PlayerGraphic instance</p>
+     * @param pt Playertexture
      */
-    private void setSelectedStateGraphics(int index)
+    private void setSelectedStateGraphics(PlayerTexture pt)
     {
         TextureRegion tex = new TextureRegion(
-                new Texture(PlayerTexture.Player1.getTexturePath()));
+                new Texture(pt.getTexturePath()));
 
         //[][0]:Alive; [][1]:Dead; [][2]:Won;
         TextureRegion[][] playerTextures = tex.split(300,300);
 
-        playerLive = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerTextures[index][0]));
-        playerDead = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerTextures[index][1]));
-        playerWin = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerTextures[index][2]));
+        playerLive = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerTextures[0][0]));
+        playerDead = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerTextures[0][1]));
+        playerWin = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerTextures[0][2]));
     }
 
     /**

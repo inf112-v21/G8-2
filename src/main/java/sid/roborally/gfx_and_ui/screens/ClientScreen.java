@@ -12,12 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.connection.Client;
-import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.gfx_and_ui.AppListener;
-
-import java.util.ArrayList;
 
 /**
  * <h3>JoinScreen</h3>
@@ -25,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author Andreas Henriksen
  */
-public class ClientScreen implements Screen {
+public class JoinScreen implements Screen {
     private final AppListener appListener;
     private OrthographicCamera cam;
     private Stage stage;
@@ -35,20 +31,17 @@ public class ClientScreen implements Screen {
     private Label portLabel, IPLabel, errorLabel;
     private TextField joinIP;
     private TextField joinPort;
-    private TextField.TextFieldStyle messageStyle;
     private Client client;
-    private Map map;
-    private ArrayList<Player> players;
-    private int numPlayers;
 
-    public ClientScreen(final AppListener appListener) {
-        players = new ArrayList<>();
+    public JoinScreen(final AppListener appListener) {
         this.appListener = appListener;
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
 
         table.setFillParent(true);
         table.center();
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/GameBackground.png"))));
         stage.addActor(table);
 
 
@@ -58,7 +51,6 @@ public class ClientScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         skin = appListener.getSkin();
-        messageStyle = new TextField.TextFieldStyle();
 
         joinIP = new TextField("", skin);
         joinPort = new TextField("", skin);
@@ -69,22 +61,7 @@ public class ClientScreen implements Screen {
         backButton = new TextButton("Back", skin, "default");
         joinButton = new TextButton("Join game", skin,"default");
 
-        table.add(errorLabel);
-        table.row();
-        table.add(IPLabel);
-        table.row();
-        table.add(joinIP).padBottom(30);
-        table.row();
-        table.add(portLabel);
-        table.row();
-        table.add(joinPort);
-        table.row();
-        table.add(joinButton);
-        table.row();
-        table.add(backButton).width(joinButton.getWidth());
-        table.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/GameBackground.png"))));
-
+        addMenuActors();
 
         backButton.addListener(new InputListener() {
             @Override
@@ -101,30 +78,14 @@ public class ClientScreen implements Screen {
         joinButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                //appListener.setScreen(new MainMenuScreen(appListener));
                 errorLabel.setText("");
                 try {
+                    //Tries to connect to a server with the same IP and port
                     client = new Client(joinIP.getText(), Integer.parseInt(joinPort.getText()));
-                    System.out.println("client is here");
-                    boolean waitingForServer = true;
-                    while(waitingForServer){
-                        waitingForServer = client.getWaitingForServer();
-                    }
+
+                    //Gets the deck and map from server
                     client.getDeck();
-                    map = client.getMap();
-                    numPlayers = client.getNumPlayers();
-                    int order = client.getOrder();
-                    for(int i = 1; i<=numPlayers;i++){
-                        Player p = new Player(i,true);
-
-                        if(i==order) p.setLocal();
-                        else p.setExternal();
-
-                        players.add(p);
-                    }
-                    setUpGame(players);
-                    appListener.setScreen(new GameScreen(appListener));
-
+                    client.getMap();
                 } catch (NumberFormatException e) {
                     errorLabel.setText("IP or port is invalid");
                 }
@@ -139,14 +100,22 @@ public class ClientScreen implements Screen {
     }
 
     /**
-     * Starts the game with the selected map, and the selected amount of players
-     * @param players a list of players
+     * Adds the actors needed for this menu
      */
-    private void setUpGame(ArrayList<Player> players) {
-        for (Player player : players)
-            appListener.getRRApp().getGameRunner().addPlayer(player);
-        appListener.getRRApp().getGameRunner().setUpGame(map);
-        appListener.getRRApp().startGame();
+    private void addMenuActors() {
+        table.add(errorLabel);
+        table.row();
+        table.add(IPLabel);
+        table.row();
+        table.add(joinIP).padBottom(30);
+        table.row();
+        table.add(portLabel);
+        table.row();
+        table.add(joinPort);
+        table.row();
+        table.add(joinButton);
+        table.row();
+        table.add(backButton).width(joinButton.getWidth());
     }
 
     @Override
