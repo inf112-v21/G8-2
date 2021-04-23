@@ -42,4 +42,14 @@ public class Robot extends GridObject {
     public HashSet<Flag> getFlags() { return flags; }
 
     public void addFlag(Flag f) { flags.add(f); }
+
+    /**
+     * <p>Checks if robot flag list contains Flag with ID.</p>
+     * @param id ID
+     * @return Boolean
+     */
+    public boolean containsFlagWithID(int id){
+        for(Flag f : flags){ if (f.getID() == id) return true; }
+        return false;
+    }
 }

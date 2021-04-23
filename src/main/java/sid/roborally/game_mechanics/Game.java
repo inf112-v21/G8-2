@@ -6,9 +6,9 @@ import sid.roborally.game_mechanics.card.*;
 import sid.roborally.game_mechanics.grid.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 
 /**
@@ -43,9 +43,7 @@ public class Game {
     /* Constants */
     private static int DEAL_CARD_AMOUNT = 5;
 
-    /*
-     * * * * * Initial methods
-     */
+    //=========Set-up methods===========================================================
 
     /**
      * <p>Game constructor.</p>
@@ -73,9 +71,7 @@ public class Game {
     public void newGrid(int width, int height)
     { grid = new Grid(width, height); }
 
-    /*
-     * * * * * Phase-methods
-     */
+    //=========Phase methods============================================================
 
     /**
      * <p>Runs a gameround.</p>
@@ -85,10 +81,6 @@ public class Game {
             if(chosenProgramCards.get(p) != null)
                 for(Card card : chosenProgramCards.get(p))
                     useCardOnPlayerRobot(p, card);
-
-        //TODO: GET PLAYER CHOSEN CARDS
-
-        //TODO: MOVE ROBOTS BASED ON CHOSEN CARDS
 
         //TODO: MOVE BOARD ELEMENTS (CONVEYOR, GEARS)
 
@@ -106,9 +98,8 @@ public class Game {
         resetCardAssociations();
     }
 
-    /*
-     * * * * * Card methods
-     */
+
+    //=========Card methods=============================================================
 
     /**
      * <p>Resets card-associations.</p>
@@ -131,9 +122,94 @@ public class Game {
         dealer.resetDeck();
     }
 
-    /*
-     * * * * * Player Methods:
+    /**
+     * <p>Sorts the cards connected to the different players based on card-priority. <br>
+     *     if a higher priority card is behind a lower priority card, this card won't win until the
+     *     lower priority card has been added return-list</p>
+     * @return Associations between players and cards
      */
+    public ArrayList<HashMap<Player,Card>> getCardsByPriority() {
+        ArrayList<HashMap<Player,Card>> retList = new ArrayList<>();
+        // ! This method depletes chosen-program-cards.
+        boolean allEmpty = false;
+        while (!allEmpty) {
+            /* Find highest ranked card of the players' next cards */
+            Player playerWithHighest = null; //Placeholder
+            for(Player p : players) {
+                if(playerWithHighest == null) {
+                    if (!chosenProgramCards.get(p).isEmpty()) playerWithHighest = p;
+                    continue;
+                }
+
+                if(!chosenProgramCards.get(p).isEmpty())
+                    if(chosenProgramCards.get(p).get(0).getPriority()
+                            > chosenProgramCards.get(playerWithHighest).get(0).getPriority())
+                        playerWithHighest = p;
+            }
+
+            /* Deciding next player-card pairing */
+            HashMap<Player,Card> nextPair = new HashMap<>();
+            nextPair.put(playerWithHighest,chosenProgramCards.get(playerWithHighest).remove(0));
+            retList.add(nextPair);
+
+            /* Checking if we can stop */
+            allEmpty = true;
+            for(Player p : players)
+                if(!chosenProgramCards.get(p).isEmpty()) allEmpty = false;
+        }
+        return retList;
+    }
+
+    /**
+     * <p>Splits card into possible 1 step cards, as to be able to individually apply them from GameScreen. Rotation is not changed.</p>
+     * @param association Pairing between player and card
+     * @return Association with player and sub-cards
+     */
+    private ArrayList<HashMap<Player,Card>> splitCardToSubCards(HashMap<Player,Card> association) {
+        Player p = new Player(0);
+        Card card;
+        /* Getting player */
+        for(Player player : association.keySet()) p = player; //Should only run one time.
+        card = association.get(p); //Can't be null, that will crash the program
+
+        ArrayList<HashMap<Player,Card>> retList = new ArrayList<>();
+
+        /* If it is a step card it has to be split up */
+        if (card instanceof StepCard) {
+            int steps = ((StepCard) card).getSteps(); // ≥ 1
+            Card singleStepCard = new StepCard(card.getPriority(), 1, card.getAction());
+            while (steps > 0) {
+                HashMap<Player,Card> newAssociation = new HashMap<>();
+                newAssociation.put(p,singleStepCard);
+                retList.add(newAssociation);
+                steps--;
+            }
+        }
+        else {
+            HashMap<Player, Card> newAssociation = new HashMap<>();
+            newAssociation.put(p, card);
+            retList.add(newAssociation);
+        }
+        return retList;
+    }
+
+    /**
+     * <p>Sorts and breaks the order of cards into single-set card-associations for GameScreen to be able to
+     * move card 1 step at a time (so it can be rendered)</p>
+     * @return Player/Card-associations
+     */
+    public ArrayList<HashMap<Player,Card>> getMoveSequenceAsPlayerCardAssocs() {
+        ArrayList<HashMap<Player,Card>> retList = new ArrayList<>();
+
+        for(HashMap<Player,Card> association : getCardsByPriority()) {
+            //for(HashMap<Player,Card> breakdown : splitCardToSubCards(association))
+            retList.addAll(splitCardToSubCards(association));    //retList.add(breakdown);
+        }
+        return retList;
+    }
+
+
+    //=========Player methods===========================================================
 
     /**
      * <p>Adds a player to the Game's Player-set.</p>
@@ -249,28 +325,27 @@ public class Game {
         }
 
         /* Check for possible addition of flag */
-        if(grid.positionHasFlag(p.getRobot().getPosition())) {
-            Robot r = p.getRobot();
-            Flag flagAtPosition = grid.getFlagAtPosition(r.getPosition());
-            if (flagAtPosition != null) {
-                for (Flag flag : flags)
-                    if (!r.getFlags().contains(flag))
-                        if (flagAtPosition.equals(flag))
-                            r.addFlag(flag);
-                        else break;
-            }
-        }
+        if(grid.positionHasFlag(playerPosition)) {
+            Flag flagAtPosition = grid.getFlagAtPosition(playerPosition);
+            int flagID = flagAtPosition.getID();
+            HashSet<Flag> playerFlags = playerRobot.getFlags();
 
-        /* Check if all flags are found*/
-        if(p.getRobot().getFlags().containsAll(flags)){
-            p.getRobot().setHasWon(true);
-            p.playerWon();
+            if (flagID != 1){
+                if(!playerFlags.contains(flagAtPosition) && playerRobot.containsFlagWithID(flagID-1))
+                    playerRobot.addFlag(flagAtPosition);
+            }else
+                if (!playerFlags.contains(flagAtPosition)) playerRobot.addFlag(flagAtPosition);
+
+            /* Check if all flags are found*/
+            if(playerRobot.getFlags().containsAll(flags)){
+                playerRobot.setHasWon(true);
+                p.playerWon();
+            }
         }
     }
 
-    /*
-     * * * * * Adding Board-elements
-     */
+
+    //=========Adding Board-elements====================================================
 
     /**
      * <p>Adds a GridObject-instance to the Game's Grid.</p>
@@ -284,8 +359,12 @@ public class Game {
      * @param f Flag
      */
     public void addFlag(Flag f) {
-        addGridObjectToGrid(f);
-        if(!containsFlagWithID(f.getId())) flags.add(f);
+        if(!grid.positionHasFlag(f.getPosition())) addGridObjectToGrid(f);
+        if(!flags.contains(f)) flags.add(f);
+    }
+
+    public void emptyFlags(){
+        flags = new ArrayList<>();
     }
 
     /**
@@ -297,9 +376,8 @@ public class Game {
         if(!containsArchiveMarkerWithID(am.getID())) archiveMarkers.add(am);
     }
 
-    /*
-     * * * * * Checks
-     */
+
+    //=========Checks===================================================================
 
     /**
      * <p>Checks if game contains Flag with ID.</p>
@@ -307,7 +385,7 @@ public class Game {
      * @return Boolean
      */
     public boolean containsFlagWithID(int id){
-        for(Flag f : flags){ if (f.getId() == id) return true; }
+        for(Flag f : flags){ if (f.getID() == id) return true; }
         return false;
     }
 
@@ -321,9 +399,8 @@ public class Game {
         return false;
     }
 
-    /*
-     * * * * * Getters and Setters.
-     */
+
+    //=========Getters and Setters======================================================
 
     /**
      * <p>Sets cards chosen by Player p.</p>

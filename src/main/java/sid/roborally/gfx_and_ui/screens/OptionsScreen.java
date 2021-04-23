@@ -40,7 +40,7 @@ public class OptionsScreen implements Screen {
         /* Theoden-background */
         table.setFillParent(true);
         table.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/youhavenopower.jpg"))));
+                new Texture("assets/application_skin/GameBackground.png"))));
         table.center();
 
 
@@ -61,9 +61,9 @@ public class OptionsScreen implements Screen {
 
         table.add(fullscreenButton);
         table.row();
-        table.add(windowedButton);
+        table.add(windowedButton).width(fullscreenButton.getWidth());
         table.row();
-        table.add(backButton);
+        table.add(backButton).width(fullscreenButton.getWidth());
 
 
         fullscreenButton.addListener(new InputListener() {
@@ -113,10 +113,6 @@ public class OptionsScreen implements Screen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         cam.update();
-        appListener.batch.setProjectionMatrix(cam.combined);
-
-        appListener.batch.begin();
-        appListener.batch.end();
 
         stage.act();
         stage.draw();

@@ -5,16 +5,14 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.application_functionality.reference.TileIDReference;
-import sid.roborally.game_mechanics.ArchiveMarkerIDComparator;
-import sid.roborally.game_mechanics.Direction;
-import sid.roborally.game_mechanics.FlagIDComparator;
-import sid.roborally.game_mechanics.Game;
+import sid.roborally.game_mechanics.*;
 import sid.roborally.game_mechanics.card.Card;
 import sid.roborally.game_mechanics.card.CardAction;
 import sid.roborally.game_mechanics.grid.*;
 import sid.roborally.gfx_and_ui.screens.GameScreen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -56,10 +54,8 @@ public class GameRunner{
         players = new HashSet<>();
     }
 
-    /*
-     * * * * * Game-running methods start
-     *
-     * These methods are used for running the game and communicating
+    //=========Game-running methods start===============================================
+    /* These methods are used for running the game and communicating
      * between GUI and Game
      */
 
@@ -80,9 +76,17 @@ public class GameRunner{
         game.runRound();
     }
 
-    /*
-     * * * * * Game-running methods end
+    /**
+     * <p>Returns a list gameScreen can go trough and move objects with.</p>
+     * @return associations
      */
+    public ArrayList<HashMap<Player,Card>> getChosenCardsInOrder() { return game.getMoveSequenceAsPlayerCardAssocs(); }
+
+    public void moveWithCard(Player p, Card card) {
+        game.useCardOnPlayerRobot(p,card);
+    }
+
+    //==========Getters and Setters=====================================================
 
     public void giveGameScreen(GameScreen gs) { gameScreen = gs; }
 
@@ -107,9 +111,24 @@ public class GameRunner{
         adjustSetup();
     }
 
-    /*
-     * * * * * Game-setup methods
+    /**
+     * <p>Returns the orientation (1 pr 90 degrees, north-west-south-east [counter-clockwise])</p>
+     * @param p Player
+     * @return Orientation
      */
+    public int getRobotRotation(Player p) {
+        Direction dir = p.getRobot().getOrientation();
+        switch (dir) {
+            case NORTH: return 0;
+            case EAST: return 3;
+            case SOUTH: return 2;
+            case WEST: return 1;
+        }
+        return 0;
+    }
+
+
+    //=========Game-setup methods=======================================================
 
     public void setUpGame(Map map) {
         /* First tell game what texture it should use*/
@@ -143,6 +162,7 @@ public class GameRunner{
      */
     private void adjustSetup() {
         game.newGrid(board_layer.getWidth(), board_layer.getHeight());
+        game.emptyFlags();
         giveMapDataToGrid();
     }
 
@@ -159,8 +179,8 @@ public class GameRunner{
             }
         }
         /* When everything is added some elements must also be sorted */
-        game.getFlags().sort(new FlagIDComparator());
-        game.getArchiveMarkers().sort(new ArchiveMarkerIDComparator());
+        game.getFlags().sort(new IDComparator<>());
+        game.getArchiveMarkers().sort(new IDComparator<>());
     }
 
     /**
@@ -198,9 +218,7 @@ public class GameRunner{
         game.addArchiveMarker(am);
     }
 
-    /*
-     * * * * * Game-running
-     */
+    //=========Game-running=============================================================
 
     /**
      * This method will run the game that has been created, and loop until it's over
@@ -220,9 +238,8 @@ public class GameRunner{
             inputActive = false;
     }
 
-    /*
-     * * * * * Tiled methods:
-     */
+
+    //=========Tiled-related methods====================================================
 
     /**
      * <p>Returns local TiledMap instance</p>
@@ -236,9 +253,8 @@ public class GameRunner{
      */
     public TiledMapTileLayer getPlayerLayer() { return player_layer; }
 
-    /*
-     * * * * * Player-related-methods
-     */
+
+    //=========Player-related methods===================================================
 
     public void addPlayer(Player p) { players.add(p); }
 
@@ -258,9 +274,8 @@ public class GameRunner{
         player_layer.setCell(localPlayerPos.getX(), localPlayerPos.getY(), null);
     }
 
-    /*
-     * * * * * Keyboard-input:
-     */
+
+    //=========Keyboard-input===========================================================
 
     /**
      * <p>Tells the gamerunner that it has recieved a UP-input
@@ -349,9 +364,5 @@ public class GameRunner{
 
     public void giveGameCards(ArrayList<Card> chosenCards) {
         game.setPlayerChosenCards(getLocal(),chosenCards);
-    }
-
-    public GameScreen getGameScreen() {
-        return gameScreen;
     }
 }

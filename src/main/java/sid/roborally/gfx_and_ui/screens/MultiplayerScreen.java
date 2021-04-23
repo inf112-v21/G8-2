@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.gfx_and_ui.AppListener;
 
@@ -39,24 +42,29 @@ public class MultiplayerScreen implements Screen{
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
+        buttonTable.setFillParent(true);
+        buttonTable.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/GameBackground.png"))));
+        stage.addActor(buttonTable);
+
         buttonSkin = appListener.getSkin();
 
         hostButton = new TextButton("Host game",buttonSkin,"default");
         joinButton = new TextButton("Join game",buttonSkin,"default");
         backButton = new TextButton("Go back",buttonSkin,"default");
 
-        buttonTable.add(hostButton);
+        buttonTable.add(hostButton).width(joinButton.getWidth());
         buttonTable.row();
         buttonTable.add(joinButton);
         buttonTable.row();
-        buttonTable.add(backButton);
+        buttonTable.add(backButton).width(joinButton.getWidth());
         buttonTable.center();
-        buttonTable.setFillParent(true);
+
 
         hostButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new HostScreen(appListener));
+                appListener.setScreen(new MultiplayerSetupScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -66,7 +74,7 @@ public class MultiplayerScreen implements Screen{
         joinButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                appListener.setScreen(new JoinScreen(appListener));
+                appListener.setScreen(new ClientScreen(appListener));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -83,8 +91,6 @@ public class MultiplayerScreen implements Screen{
                 return true;
             }
         });
-
-        stage.addActor(buttonTable);
     }
 
     @Override
@@ -97,10 +103,6 @@ public class MultiplayerScreen implements Screen{
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         cam.update();
-        appListener.batch.setProjectionMatrix(cam.combined);
-
-        appListener.batch.begin();
-        appListener.batch.end();
 
         stage.act();
         stage.draw();

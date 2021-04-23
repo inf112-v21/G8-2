@@ -23,6 +23,7 @@ import sid.roborally.game_mechanics.card.StepCard;
 import sid.roborally.gfx_and_ui.AppListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * <h3>GameScreen</h3>
@@ -95,31 +96,57 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
 
     private InputMultiplexer inputMultiplexer;
 
-    /*
-     * * * * VARIABLES END
-     */
+
+    //=======Main Methods===============================================================
 
     public GameScreen(final AppListener appListener) {
         this.appListener = appListener;
 
-        /* Initial set-up*/
         getInitialInfo();
 
-        /* Our game-control overlay */
         setUpUIStage();
 
-        /* Sets up visuals for board */
         setUpCamAndRenderer();
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-        grunner.setUpRound();
-        updateCardSelection();
+        startGame();
     }
 
-    /*
-     * Backend-communication
+    /**
+     * <p>Starts the game by setting up and running a round.</p>
      */
+    private void startGame() {
+        newRound();
+    }
+
+    /**
+     * <p>Starts a new round (by dealing the cards).</p>
+     */
+    private void newRound() {
+        grunner.setUpRound();
+    }
+
+    /**
+     * <p>Checks if card selection is valid, and if so, runs.</p>
+     */
+    private void commitRobotProgram() {
+        if(!cardSelectionValid()) return;
+
+        chosenCards = new ArrayList<>();
+        chosenCards.add(givenCards.get(reg1index));
+        chosenCards.add(givenCards.get(reg2index));
+        chosenCards.add(givenCards.get(reg3index));
+        chosenCards.add(givenCards.get(reg4index));
+        chosenCards.add(givenCards.get(reg5index));
+
+        giveGamerunnerChosenCards();
+        runCardSelection();
+
+        newRound();
+    }
+
+    //=========Backend-communication====================================================
 
     /**
      * <p>Gives GameRunner-instance currently chosen cards.</p>
@@ -155,14 +182,36 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         return true;
     }
 
-    /*
-     * * * * * HUD-updating
+    /**
+     * <p>Will run the selected card, one by one, so it is possible to see the pieces move.</p>
      */
+    private void runCardSelection() {
+        for(HashMap<Player,Card> association : grunner.getChosenCardsInOrder()) {
+            /* Getting player and card*/
+            Player p = grunner.getLocal(); //Is supposed to be overridden
+            Card card;
+            /* Getting player */
+            for(Player player : association.keySet()) p = player; //Should only run one time.
+            card = association.get(p); //Can't be null, that will crash the program
+
+            grunner.moveWithCard(p,card);
+            System.out.println("TAG 1");
+            /* Make move visible */
+
+            render(Gdx.graphics.getDeltaTime());
+            System.out.println("TAG 2");
+
+        }
+    }
+
+
+    //=========HUD-updating=============================================================
 
     /**
      * <p>Called when GUI has to be updated after changing values</p>
      */
     public void updateGUI() {
+        updateCardSelection();
         updateWindowCards();
     }
 
@@ -186,11 +235,14 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     private void updateCardSelection() {
 
         Array<String> givenCardStrings = new Array<>();
-        for(Card card : givenCards)
-            if(card instanceof StepCard)
-                givenCardStrings.add(((StepCard) card).getSteps() + " " + card.getName() + ": Pri " + card.getPriority());
+        int counter = 1;
+        for(Card card : givenCards) {
+            if (card instanceof StepCard)
+                givenCardStrings.add(counter + ": " + ((StepCard) card).getSteps() + " " + card.getName() + ": Pri " + card.getPriority());
             else
-                givenCardStrings.add(card.getName() + ": Pri " + card.getPriority());
+                givenCardStrings.add(counter + ": " + card.getName() + ": Pri " + card.getPriority());
+            counter++;
+        }
 
         Array<String> reg1array = new Array<>();
         reg1array.add(baseOptionReg1);
@@ -240,9 +292,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         chosenCardsIndices.add(reg5index);
     }
 
-    /*
-     * * * * * Set-up
-     */
+
+    //=========Set-up===================================================================
 
     /**
      * <p>Gets all initial information. Called in constructor.</p>
@@ -272,7 +323,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         controlTable = new Table();
         controlTable.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture(CONTROL_TABLE_BACKGROUND))));
-        controlTable.setSize(uiView.getWorldWidth(), uiView.getWorldHeight()/5);
+        controlTable.setSize(uiView.getScreenWidth(), uiView.getScreenHeight()/5f);
         controlTable.left().top();
 
         /* Register-titles */
@@ -353,16 +404,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
                     @Override
                     public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                         updateCardSelection();
-                        if(cardSelectionValid()) {
-                            chosenCards = new ArrayList<>();
-                            chosenCards.add(givenCards.get(reg1index));
-                            chosenCards.add(givenCards.get(reg2index));
-                            chosenCards.add(givenCards.get(reg3index));
-                            chosenCards.add(givenCards.get(reg4index));
-                            chosenCards.add(givenCards.get(reg5index));
-                            giveGamerunnerChosenCards();
-                            grunner.runRound();
-                        }
+                        commitRobotProgram();
                     }
                     @Override
                     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -395,7 +437,7 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     }
 
     /**
-     * <p>Sets up cam and renderer to clean up constructor</p>
+     * <p>Sets up cam and renderer (The board-visuals)</p>
      */
     private void setUpCamAndRenderer() {
         /* Creates camera */
@@ -433,9 +475,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         uiStage.draw();
     }
 
-    /*
-     * * * * * Rendering
-     */
+
+    //=========Rendering================================================================
 
     @Override
     public void render(float delta) {
@@ -447,13 +488,15 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
             rr_app.getPlayerLayer().setCell(
                     player.getRobot().getPosition().getX(), //Player x-position
                     player.getRobot().getPosition().getY(), //Player y-position
-                    player.getPlayerGraphic().getPlayerTexture()); //Player-state texture
+                    player.getPlayerGraphic().getPlayerTexture()
+                            .setRotation(grunner.getRobotRotation(player))); //Player-state texture
 
         /* Render the map */
         rend.render();
 
         uiStage.act();
         uiStage.draw();
+        System.out.println("TAG RENDER");
     }
 
     private void updateRendWithCam() {
@@ -484,9 +527,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         updateRendWithCam();
     }
 
-    /*
-     * * * * * Interface-implementations
-     */
+
+    //=========Interface-implementations================================================
 
     @Override
     public void create() {
@@ -496,9 +538,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
     public void render() {
     }
 
-    /*
-     * * * * * Input-listening
-     */
+
+    //=========Input-listening==========================================================
 
     @Override
     public boolean scrolled(int amount) {
@@ -577,9 +618,8 @@ public class GameScreen extends InputAdapter implements ApplicationListener, Scr
         rend.setView(cam);
     }
 
-    /*
-     * * * * * Other interface-implementations
-     */
+
+    //=========Other interface-implementations==========================================
 
     @Override
     public void dispose() {
