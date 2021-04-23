@@ -14,8 +14,10 @@ Clicking any button should result in feedback as a light to notify of a click.
     Back - Clicking back -> returns you to the main menu
 
 - Multiplayer: Choose to either host a game, join a game or go back.
-    - Host a game: WIP
-    - Join a game: WIP - Type in an IP address and a port number. Join button displays which IP and port you're trying to join.
+    - Host a game: Click on Host Game. Choose the map, amount of players and port to host on. Click on Look for Players,
+      the screen will then freeze until it finds all clients trying to connect, and when it finds all players, the chosen map will load. 
+    - Join a game: Click on Join Game. Enter the host IP address and port number. You will then join the server if it exists, 
+      and a map will load when all clients are connected.
 
 - Options: Select fullscreen mode -> fullscreen, windowed mode -> windowed mode, or go back -> Main Menu.
 
