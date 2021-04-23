@@ -57,7 +57,7 @@ public class MainMenuScreen implements Screen {
         titleWindow.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture("assets/application_skin/RoboRally.png"))));
 
-        this.buttonWindow = new Window("yoyo", skin);
+        //this.buttonWindow = new Window("yoyo", skin);
 
         backgroundTable.setBackground(new TextureRegionDrawable(new TextureRegion(
                 new Texture("assets/application_skin/GameBackground.png"))));
