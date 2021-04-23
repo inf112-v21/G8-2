@@ -28,6 +28,7 @@ Ble ikke ferdig med alt, men lærte fortsatt mye om å jobbe sammen og hvor vans
 Samarbeid har vært bra. 
 
 Ting som kunne gjort annerledes
+
 Multiplayer tok over veldig, og vi burde byttet fokus fra multiplayer til at prosjektet skulle funger ordentlig for enkeltspillere. En av grunnene til at vi ikke byttet fokus fra multiplayer var bl.a sunk cost fallacy, og en tankegang om at det å lage server og client i etterkant ville ført til en større teknisk gjeld.
 Testing av server og klient var vanskelig, vi kunne ikke komme oss på samme nett og eneste testingen vi fikk gjort var lokalt på 2 forskjellige instanser av spillet.
 Burde gjort screens mer abstract, siden screens bruker mye samme metoder. Ville gjort koden mer leselig.
@@ -59,6 +60,7 @@ Del 2: krav
 
 Husk å skrive hvilke bugs som finnes i de kravene dere har utført (dersom det finnes bugs).
 Bugs:
+
 Bilder i GUI av sprites og kart skaleres ikke riktig når vi går i vindu modus og kan blokkere GUI elementer. Fikses ved å justere størrelsen på skjermen etter den er satt til vindu.
 Når server ser etter spillere, eller klient venter på server fryses spillet. Dette kan føre til at når en kobler seg til et spill, men ikke har nok spillere, at programmet må avsluttes manuelt siden det forblir i en evig while-løkke.
 Kort kan ikke kommites i vindu-modus.
