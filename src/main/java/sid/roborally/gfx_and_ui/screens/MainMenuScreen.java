@@ -33,7 +33,6 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final AppListener appListener) {
         this.appListener = appListener;
         this.buttonTable = new Table();
-        this.buttonFrameTable = new Table();
         this.backgroundTable = new Table();
         cam = new OrthographicCamera();
         cam.setToOrtho(false, 800, 480);
@@ -41,10 +40,8 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
 
         buttonTable.setFillParent(true);
-        buttonFrameTable.setFillParent(true);
         backgroundTable.setFillParent(true);
         stage.addActor(backgroundTable);
-        stage.addActor(buttonFrameTable);
         stage.addActor(buttonTable);
 
         Gdx.input.setInputProcessor(stage);
