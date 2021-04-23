@@ -12,8 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import sid.roborally.application_functionality.Player;
 import sid.roborally.application_functionality.connection.Client;
+import sid.roborally.application_functionality.reference.Map;
 import sid.roborally.gfx_and_ui.AppListener;
+
+import java.util.ArrayList;
 
 /**
  * <h3>JoinScreen</h3>
@@ -21,7 +25,7 @@ import sid.roborally.gfx_and_ui.AppListener;
  *
  * @author Andreas Henriksen
  */
-public class JoinScreen implements Screen {
+public class ClientScreen implements Screen {
     private final AppListener appListener;
     private OrthographicCamera cam;
     private Stage stage;
@@ -31,9 +35,14 @@ public class JoinScreen implements Screen {
     private Label portLabel, IPLabel, errorLabel;
     private TextField joinIP;
     private TextField joinPort;
+    private TextField.TextFieldStyle messageStyle;
     private Client client;
+    private Map map;
+    private ArrayList<Player> players;
+    private int numPlayers;
 
-    public JoinScreen(final AppListener appListener) {
+    public ClientScreen(final AppListener appListener) {
+        players = new ArrayList<>();
         this.appListener = appListener;
         this.table = new Table();
         stage = new Stage(new ScreenViewport());
@@ -51,6 +60,7 @@ public class JoinScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         skin = appListener.getSkin();
+        messageStyle = new TextField.TextFieldStyle();
 
         joinIP = new TextField("", skin);
         joinPort = new TextField("", skin);
@@ -82,10 +92,26 @@ public class JoinScreen implements Screen {
                 try {
                     //Tries to connect to a server with the same IP and port
                     client = new Client(joinIP.getText(), Integer.parseInt(joinPort.getText()));
-
-                    //Gets the deck and map from server
+                    System.out.println("client is here");
+                    boolean waitingForServer = true;
+                    while(waitingForServer){
+                        waitingForServer = client.getWaitingForServer();
+                    }
                     client.getDeck();
-                    client.getMap();
+                    map = client.getMap();
+                    numPlayers = client.getNumPlayers();
+                    int order = client.getOrder();
+                    for(int i = 1; i<=numPlayers;i++){
+                        Player p = new Player(i,true);
+
+                        if(i==order) p.setLocal();
+                        else p.setExternal();
+
+                        players.add(p);
+                    }
+                    setUpGame(players);
+                    appListener.setScreen(new GameScreen(appListener));
+
                 } catch (NumberFormatException e) {
                     errorLabel.setText("IP or port is invalid");
                 }
@@ -116,6 +142,16 @@ public class JoinScreen implements Screen {
         table.add(joinButton);
         table.row();
         table.add(backButton).width(joinButton.getWidth());
+    }
+    /**
+     * Starts the game with the selected map, and the selected amount of players
+     * @param players a list of players
+     */
+    private void setUpGame(ArrayList<Player> players) {
+        for (Player player : players)
+            appListener.getRRApp().getGameRunner().addPlayer(player);
+        appListener.getRRApp().getGameRunner().setUpGame(map);
+        appListener.getRRApp().startGame();
     }
 
     @Override

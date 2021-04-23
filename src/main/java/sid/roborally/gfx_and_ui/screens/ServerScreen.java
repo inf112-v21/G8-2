@@ -35,7 +35,7 @@ public class ServerScreen implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Table table;
-    private Button closeServerButton, lookForPlayersButton;
+    private Button hostGameButton, backButton, closeServerButton, lookForPlayersButton;
     private Skin skin;
     protected Server server;
     private TextField IPField, portField;
@@ -79,7 +79,8 @@ public class ServerScreen implements Screen {
         this.portLabel = new Label("Port", skin);
 
 
-        //Initializes the necessary TextButtons for the screen
+        backButton = new TextButton("Back", skin, "default");
+
         closeServerButton = new TextButton("Close server", skin, "default");
         lookForPlayersButton = new TextButton("Look for players", skin, "default");
 
