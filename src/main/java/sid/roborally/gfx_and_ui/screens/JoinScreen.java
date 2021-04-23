@@ -1,9 +1,7 @@
 package sid.roborally.gfx_and_ui.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import sid.roborally.application_functionality.connection.Client;
-import sid.roborally.application_functionality.connection.Server;
 import sid.roborally.gfx_and_ui.AppListener;
 
 /**
@@ -34,7 +31,6 @@ public class JoinScreen implements Screen {
     private Label portLabel, IPLabel, errorLabel;
     private TextField joinIP;
     private TextField joinPort;
-    private TextField.TextFieldStyle messageStyle;
     private Client client;
 
     public JoinScreen(final AppListener appListener) {
@@ -44,6 +40,8 @@ public class JoinScreen implements Screen {
 
         table.setFillParent(true);
         table.center();
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/GameBackground.png"))));
         stage.addActor(table);
 
 
@@ -53,7 +51,6 @@ public class JoinScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         skin = appListener.getSkin();
-        messageStyle = new TextField.TextFieldStyle();
 
         joinIP = new TextField("", skin);
         joinPort = new TextField("", skin);
@@ -64,22 +61,7 @@ public class JoinScreen implements Screen {
         backButton = new TextButton("Back", skin, "default");
         joinButton = new TextButton("Join game", skin,"default");
 
-        table.add(errorLabel);
-        table.row();
-        table.add(IPLabel);
-        table.row();
-        table.add(joinIP).padBottom(30);
-        table.row();
-        table.add(portLabel);
-        table.row();
-        table.add(joinPort);
-        table.row();
-        table.add(joinButton);
-        table.row();
-        table.add(backButton).width(joinButton.getWidth());
-        table.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/GameBackground.png"))));
-
+        addMenuActors();
 
         backButton.addListener(new InputListener() {
             @Override
@@ -96,11 +78,12 @@ public class JoinScreen implements Screen {
         joinButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                //appListener.setScreen(new MainMenuScreen(appListener));
                 errorLabel.setText("");
                 try {
+                    //Tries to connect to a server with the same IP and port
                     client = new Client(joinIP.getText(), Integer.parseInt(joinPort.getText()));
-                    System.out.println("client is here");
+
+                    //Gets the deck and map from server
                     client.getDeck();
                     client.getMap();
                 } catch (NumberFormatException e) {
@@ -114,6 +97,25 @@ public class JoinScreen implements Screen {
             }
         });
 
+    }
+
+    /**
+     * Adds the actors needed for this menu
+     */
+    private void addMenuActors() {
+        table.add(errorLabel);
+        table.row();
+        table.add(IPLabel);
+        table.row();
+        table.add(joinIP).padBottom(30);
+        table.row();
+        table.add(portLabel);
+        table.row();
+        table.add(joinPort);
+        table.row();
+        table.add(joinButton);
+        table.row();
+        table.add(backButton).width(joinButton.getWidth());
     }
 
     @Override

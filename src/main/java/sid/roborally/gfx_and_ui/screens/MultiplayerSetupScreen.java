@@ -30,9 +30,9 @@ public class MultiplayerSetupScreen extends GameSetupScreen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 try {
+                    //Tries to setup a server with the given port
                     server = new Server(Integer.parseInt(portField.getText()));
                     if (server.getErrorMessage().length() > 0) {
-                        //server.closeServer();
                         errorLabel.setText(server.getErrorMessage());
                     } else {
                         appListener.setScreen(new HostScreen(appListener, server, getMapBox().getSelectedIndex()));

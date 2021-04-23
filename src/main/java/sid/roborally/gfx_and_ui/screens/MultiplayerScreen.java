@@ -42,6 +42,11 @@ public class MultiplayerScreen implements Screen{
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
+        buttonTable.setFillParent(true);
+        buttonTable.setBackground(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/application_skin/GameBackground.png"))));
+        stage.addActor(buttonTable);
+
         buttonSkin = appListener.getSkin();
 
         hostButton = new TextButton("Host game",buttonSkin,"default");
@@ -54,9 +59,7 @@ public class MultiplayerScreen implements Screen{
         buttonTable.row();
         buttonTable.add(backButton).width(joinButton.getWidth());
         buttonTable.center();
-        buttonTable.setFillParent(true);
-        buttonTable.setBackground(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/application_skin/GameBackground.png"))));
+
 
         hostButton.addListener(new InputListener(){
             @Override
@@ -88,8 +91,6 @@ public class MultiplayerScreen implements Screen{
                 return true;
             }
         });
-
-        stage.addActor(buttonTable);
     }
 
     @Override
