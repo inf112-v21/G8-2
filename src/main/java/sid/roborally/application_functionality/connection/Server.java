@@ -65,17 +65,6 @@ public class Server {
         this.port = port;
         deck = new CardDeck();
         startServer();
-        //findPlayers();
-
-        //Send deck of cards to client
-        //sendToPlayers(deck);
-
-        //Send map to client
-        //sendToPlayers(map);
-
-        //Send number of players to client
-        //sendToPlayers(4);
-        //listenForCardSelection();
     }
 
     /**
@@ -113,8 +102,6 @@ public class Server {
                 System.out.println("Client connected: "+ client.isConnected());
                 clientsOut.put(client, new ObjectOutputStream(client.getOutputStream()));
                 clientsIn.put(client, new ObjectInputStream(client.getInputStream()));
-                //clientPlayers.put(client, player (fra client eller lages på server))
-                //playerSelect(client sin player og en tom kortstokk)
             } catch (IOException e) {
                 System.out.println("Accept failed: 4321");
                 System.exit(-1);
