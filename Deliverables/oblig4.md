@@ -1,5 +1,7 @@
 Oblig 4 SiD
+
 Del 1	Team og projsket
+
 •	Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt?
 Roller fungerer bra, noen roller viste seg å være mindre fast satt som f.eks møtestyrer, referat skriver. Rollene dekker et vidt spekter av arbeidsområder
 Spesifikasjons mester: Hovedansvarlig for å skrive bruker historier, kravspesifikasjoner og arbeidsoppgaver, sier ifra dersom spesifikasjoner mangles til implementasjoner. (Terje)
