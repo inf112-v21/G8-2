@@ -35,12 +35,6 @@ Burde gjort screens mer abstract, siden screens bruker mye samme metoder. Ville 
 Passe på at alle skjønner hvordan programmet fungerer før ny funksjonalitet implementeres.
 Burde hatt en bedre løsning på par-programmering. Førte til ganske ujevn commits siden kun en person fikk commitebe for det arbeidet.
 En utpekt teamlead hadde kanskje vært en god ide for å holde prosjektet i en bestemt retning.
-
-
-
-
-
-Legg ved skjermdump av project board ved innlevering. Sørg for at det er oppdatert med siste status ved innlevering.
  
 
 
