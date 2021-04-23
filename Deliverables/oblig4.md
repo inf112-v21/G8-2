@@ -3,6 +3,7 @@ Oblig 4 SiD
 Del 1	Team og projsket
 
 •	Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt?
+
 Roller fungerer bra, noen roller viste seg å være mindre fast satt som f.eks møtestyrer, referat skriver. Rollene dekker et vidt spekter av arbeidsområder
 Spesifikasjons mester: Hovedansvarlig for å skrive bruker historier, kravspesifikasjoner og arbeidsoppgaver, sier ifra dersom spesifikasjoner mangles til implementasjoner. (Terje)
 Kartdesigner: Lager kartene som brukes i spillet og kart for testing av spill elementer (Emil)
@@ -13,10 +14,12 @@ Refactoring entusiast: Den som ser mest over kodekvalitet og refaktorerer koden 
 Spillekspert: Har god kontroll over regler i RoboRally og sørger for at implementasjonen følger disse reglene. (Markus og Andreas)
 
 •	Er det noen erfaringer enten team-messig eller mtp prosjektmetodikk som er verdt å nevne? Synes teamet at de valgene dere har tatt er gode? Hvis ikke, hva kan dere gjøre annerledes for å forbedre måten teamet fungerer på?
+
 Scrum og kanban fortsetter å fungere.
 Par-programmering gir god feedback og raskere løsninger.
 Valgte denne uken å fokusere på å gjøre programmet bedre istedenfor å legge til ny funksjonalitet med unntak av server.
 Server har ikke fått implementert full flerspiller, men kan få 2 eller flere spillere til å lage samme brett, det som mangler er å sende over de valgte kortene og utføre logikken, noe som vi ikke hadde tid til å få gjort.
+
 •	Gjør et retrospektiv hvor dere vurderer prosjektet har gått. Hva har dere gjort bra, hva hadde dere gjort annerledes hvis dere begynte på nytt?
 
 Prosjektet har vært lærerikt, gått bra å jobbe sammen. 
