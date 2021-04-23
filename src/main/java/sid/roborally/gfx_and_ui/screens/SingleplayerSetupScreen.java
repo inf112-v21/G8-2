@@ -46,7 +46,7 @@ public class SingleplayerSetupScreen extends GameSetupScreen {
      * @param amount amount of players
      */
     private void addPlayers(ArrayList<Player> players, int amount) {
-        Player localPlayer = new Player(1);
+        Player localPlayer = new Player(1, true);
         localPlayer.setLocal();
         localPlayer.givePlayerTexture(getLocalChosenPlayerTexture());
         players.add(localPlayer);
