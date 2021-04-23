@@ -105,7 +105,7 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        backgroundTable.add(titleWindow).padBottom(700);
+        backgroundTable.add(titleWindow).padBottom(Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/3f); //700
         buttonTable.add(singleplayerButton);
         buttonTable.row();
         buttonTable.add(multiplayerButton).width(singleplayerButton.getWidth());
